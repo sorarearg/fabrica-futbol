@@ -1,0 +1,98 @@
+{
+  "_ayuda": "Editá este archivo desde GitHub (ícono del lápiz). fabrica_activa: en false el reloj no publica nada (las muestras andan igual); ponela en true cuando conectemos la primera red. usuario: tu @ en las redes (si lo dejás vacío, el video sale sin marca). email_aviso: adónde llega el mail diario. plan_semanal: qué serie sale cada día (1=lunes ... 7=domingo). horarios: a qué hora sale cada día (hora de Argentina). publicar: poné true en cada red a medida que la conectes. segundos_max: tope de duración del video; la historia dura lo que necesite, sin relleno. titulo_max: largo máximo del título. fondos: 'ilustraciones' (dibujos hechos con IA, como Cuyo News) o 'clips' (videos de Pixabay). estilo_imagen: cómo se dibujan las ilustraciones (en inglés). voz_gemini: Charon (narrador grave), Puck, Orus, Fenrir, o 'auto'. voz_estilo: cómo tiene que sonar el narrador. musica: archivo mp3 en la carpeta assets (si no está, va sin música); musica_volumen: 0.08 es bajita. Para probar una historia puntual, usá Actions → 'Muestra corta' y escribí el tema.",
+  "fabrica_activa": false,
+  "usuario": "",
+  "email_aviso": "rventrura95@gmail.com",
+  "firma": "Historias reales contadas con ilustraciones hechas con IA.",
+  "gemini_modelos": [
+    "gemini-3.8-flash",
+    "gemini-flash-latest",
+    "gemini-3.6-flash",
+    "gemini-3.5-flash-lite",
+    "gemini-flash-lite-latest"
+  ],
+  "gemini_pensamiento": "low",
+  "voz": "es-AR-TomasNeural",
+  "voz_velocidad": "+10%",
+  "voz_pausa_maxima": 0.32,
+  "voz_motor": "gemini",
+  "voz_gemini": "Charon",
+  "voz_genero": "hombre",
+  "voz_tempo": 1.0,
+  "voz_estilo": "Español rioplatense de Buenos Aires, con voseo y acento porteño natural. Narrador de historias que atrapa: tono intrigante y cercano, como alguien que te cuenta un secreto increíble en voz baja y después remata con energía. Ritmo ágil, pausas cortas solo antes de los giros, sin sonar a locutor de noticiero ni a alguien leyendo.",
+  "voz_gemini_modelos": [
+    "gemini-3.8-flash-tts",
+    "gemini-3.8-flash-lite-tts",
+    "gemini-3.1-flash-tts-preview"
+  ],
+  "musica": "assets/music.mp3",
+  "musica_volumen": 0.07,
+  "segundos_max": 58,
+  "palabras_max": 150,
+  "titulo_max": 40,
+  "fondos": "ilustraciones",
+  "estilo_imagen": "Cinematic digital painting, storybook illustration style, warm dramatic lighting, rich colors, painterly brush strokes, detailed but clean, single clear focal subject in the center, vertical portrait composition, no text, no letters, no words, no numbers, no logos, no watermark. Scene: ",
+  "oscurecer": 0.12,
+  "postales_por_video": 0,
+  "fuentes_por_video": 2,
+  "plan_semanal": {
+    "1": "inventos",
+    "2": "laplata",
+    "3": "caso",
+    "4": "personaje",
+    "5": "viral",
+    "6": "laplata",
+    "7": "leyendas"
+  },
+  "horarios": {
+    "1": "20:00",
+    "2": "19:00",
+    "3": "21:00",
+    "4": "20:30",
+    "5": "19:00",
+    "6": "13:00",
+    "7": "13:30"
+  },
+  "carrusel_dias": [],
+  "publicar": {
+    "instagram_reel": false,
+    "instagram_carrusel": false,
+    "youtube": false,
+    "tiktok": false,
+    "facebook": false
+  },
+  "youtube_privacidad": "public",
+  "tiktok_privacidad": "SELF_ONLY",
+  "series": {
+    "inventos": {
+      "nombre": "Lo hizo un argentino",
+      "prompt": "Serie: LO HIZO UN ARGENTINO.\nUn invento, un descubrimiento o un \"primero del mundo\" hecho por un argentino o en Argentina (la birome, la huella digital, el colectivo, el bypass, la transfusión con sangre citratada, el dulce de leche como mito, etcétera). Elegí uno con una historia humana detrás: quién era, qué problema tenía, qué le salió mal, cómo se enteró el mundo.\n- Si el \"invento argentino\" es discutido o es un mito, decilo y contá qué hay de cierto: eso también engancha.",
+      "canales": []
+    },
+    "laplata": {
+      "nombre": "La Plata secreta",
+      "prompt": "Serie: LA PLATA SECRETA.\nUna historia real, curiosa y poco conocida de la ciudad de La Plata (provincia de Buenos Aires): su fundación y sus rarezas (la ciudad planificada, las diagonales, los números de las calles, la Catedral sin terminar durante un siglo, el Museo de Ciencias Naturales, la República de los Niños, la Universidad, personajes platenses, crímenes, mitos urbanos, el Bosque, los estadios, la quema del muñeco de fin de año, edificios abandonados, etcétera).\n- Tiene que interesarle también a alguien que nunca pisó La Plata: contala como algo increíble que pasó en una ciudad argentina.\n- Nombrá lugares concretos (calles, plazas, edificios) solo si estás seguro.",
+      "canales": []
+    },
+    "caso": {
+      "nombre": "Caso real",
+      "prompt": "Serie: CASO REAL.\nUn crimen, un robo, una estafa o un misterio real de Argentina que se resolvió (o que sigue abierto y tiene una vuelta increíble). Ejemplos del tipo: el primer crimen resuelto por huella digital, el robo del siglo en el Banco Río, estafas famosas, fugas de película.\n- Respeto por las víctimas: nada morboso ni detalles de violencia gráfica. El foco está en la investigación, la vuelta inesperada o el ingenio.\n- Si hay personas condenadas, contá solo lo que dijo la Justicia. Si es una sospecha, decí que es una sospecha.",
+      "canales": []
+    },
+    "personaje": {
+      "nombre": "El argentino que...",
+      "prompt": "Serie: EL ARGENTINO QUE...\nUn argentino o argentina con una historia increíble y poco conocida: el hacker que encontró Estados Unidos espiando sus redes, el que se escapó de algo imposible, la primera en lograr algo, alguien que llegó lejísimos desde abajo, un ídolo olvidado.\n- El título y el gancho arrancan por lo que HIZO, no por quién era (\"El pibe que hackeó a la Marina de Estados Unidos\").\n- Personas vivas: solo hechos públicos y verificables, nada de su vida privada.",
+      "canales": []
+    },
+    "viral": {
+      "nombre": "Se hizo viral",
+      "prompt": "Serie: SE HIZO VIRAL.\nUna historia argentina que explotó en redes, en la tele o en los diarios (un video, un personaje, una noticia insólita, un récord, un meme con historia real detrás) y qué pasó después, o lo que casi nadie sabe de esa historia.\n- Contá el momento viral en la primera frase y después la parte que la gente no conoce.\n- Personas comunes que se volvieron virales: con respeto, sin burlarte y sin datos privados.\n- Si no estás seguro de un detalle (fechas, cifras, vistas), no lo pongas.",
+      "canales": []
+    },
+    "leyendas": {
+      "nombre": "Leyendas argentinas",
+      "prompt": "Serie: LEYENDAS ARGENTINAS.\nUna leyenda, mito popular o creencia argentina (el lobizón y el séptimo hijo varón, la Difunta Correa, el Gauchito Gil, la Llorona, el Pombero, la Salamanca, fantasmas famosos, mitos urbanos de ciudades argentinas) y qué hay de real detrás.\n- Contala con clima, como un cuento de fogón, y al final separá lo que es leyenda de lo que es historia comprobada (por ejemplo, la ley del padrinazgo presidencial del séptimo hijo existe de verdad).\n- Con respeto por las creencias religiosas y populares: contás, no te burlás.",
+      "canales": []
+    }
+  }
+}

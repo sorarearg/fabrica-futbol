@@ -1,0 +1,18 @@
+{
+ "titulo": "La huella que la delató",
+ "descripcion": "En 1892 una huella con sangre en una puerta de Necochea resolvió un crimen y cambió la investigación policial en todo el mundo. ¿La conocías?",
+ "hashtags": ["#historiaargentina", "#casoreal", "#laplata", "#curiosidades", "#argentina", "#historias"],
+ "miniatura": {"linea1": "La huella que la delató", "linea2": "Necochea, 1892", "emoji": "🖐️",
+               "prompt": "a bloody fingerprint on an old wooden door frame, 1890s Argentina, candle light, dramatic shadows"},
+ "fuentes": ["Wikipedia: Juan Vucetich", "Wikipedia: Francisca Rojas"],
+ "escenas": [
+  {"texto_voz": "En mil ochocientos noventa y dos, una madre de Necochea juró que un vecino había matado a sus dos hijos.", "texto_pantalla": "Necochea, 1892", "prompt": "a distressed woman in 1890s rural Argentine clothing pointing accusingly, police officers around, dusk", "broll": [], "emoji": "😱"},
+  {"texto_voz": "Pero en el marco de la puerta había una mancha de sangre. Con una huella.", "texto_pantalla": "", "prompt": "close-up of an old wooden door frame with a dark fingerprint mark, candle light", "broll": [], "emoji": "🖐️"},
+  {"texto_voz": "Y esa huella no era del vecino.", "texto_pantalla": "", "prompt": "a 1890s police inspector with a thick mustache staring at a door frame in shock", "broll": [], "emoji": "🔍"},
+  {"texto_voz": "En La Plata, un policía llamado Juan Vucetich había inventado un sistema para comparar huellas digitales.", "texto_pantalla": "", "prompt": "a 1890s police office in La Plata, a man with a mustache studying fingerprint cards under a lamp", "broll": [], "emoji": "🗂️"},
+  {"texto_voz": "El inspector cortó ese pedazo de madera y lo mandó a comparar.", "texto_pantalla": "", "prompt": "a 1890s Argentine police inspector cutting a piece of wooden door frame with a saw", "broll": [], "emoji": "🪚"},
+  {"texto_voz": "La huella era de ella. Francisca Rojas terminó confesando.", "texto_pantalla": "", "prompt": "a woman in 1890s clothing lowering her head in a police room, dim light, silhouettes", "broll": [], "emoji": "⚖️"},
+  {"texto_voz": "Fue el primer crimen del mundo resuelto por una huella digital. Y el método salió de La Plata.", "texto_pantalla": "", "prompt": "a giant glowing fingerprint over a vintage map of Argentina, painterly", "broll": [], "emoji": "🌎"},
+  {"texto_voz": "Mandáselo a alguien que ame los policiales.", "texto_pantalla": "", "prompt": "an old detective notebook and magnifying glass on a wooden desk", "broll": [], "emoji": "📲"}
+ ]
+}
