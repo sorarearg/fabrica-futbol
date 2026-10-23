@@ -1,0 +1,88 @@
+name: Muestra corta
+
+# Genera el guion completo, la portada y los primeros segundos del video, SIN publicar nada.
+# Se usa desde Actions → "Muestra corta" → Run workflow. El resultado queda en la carpeta muestras/ultima.
+on:
+  workflow_dispatch:
+    inputs:
+      serie:
+        description: "Serie"
+        type: choice
+        default: caso
+        options: [inventos, laplata, caso, personaje, viral, leyendas]
+      tema:
+        description: "Tema puntual (opcional, por ejemplo: Vucetich y la primera huella). Vacío = lo elige la IA"
+        required: false
+        default: ""
+      segundos:
+        description: "Segundos de video de la muestra"
+        required: false
+        default: "12"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fabrica
+  cancel-in-progress: false
+
+jobs:
+  muestra:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      SERIE: ${{ inputs.serie }}
+      TEMA: ${{ inputs.tema }}
+      SEGUNDOS: ${{ inputs.segundos }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+      CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      POLLINATIONS_KEY: ${{ secrets.POLLINATIONS_KEY }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Modelo de Whisper (para sincronizar subtítulos) en caché
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: whisper-base-v1
+
+      - name: Instalar herramientas
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-color-emoji > /dev/null
+          pip install -q -r requirements.txt
+          mkdir -p fonts
+          for f in ofl/anton/Anton-Regular.ttf ofl/poppins/Poppins-Regular.ttf ofl/poppins/Poppins-SemiBold.ttf ofl/poppins/Poppins-Bold.ttf ofl/poppins/Poppins-ExtraBold.ttf ofl/poppins/Poppins-Black.ttf; do
+            curl -fsSL -o "fonts/$(basename $f)" "https://github.com/google/fonts/raw/main/$f" || echo "No bajó $f"
+          done
+
+      - name: Escribir el guion y armar la muestra
+        run: python -m fabrica.main muestra
+
+      - name: Guardar la muestra en muestras/ultima
+        if: always()
+        run: |
+          if [ -d out/muestra ]; then
+            rm -rf muestras/ultima && mkdir -p muestras && cp -r out/muestra muestras/ultima
+            git config user.name "fabrica-bot"
+            git config user.email "fabrica-bot@users.noreply.github.com"
+            git add muestras
+            git diff --cached --quiet || git commit -m "Muestra $(date +%F-%H%M) [skip ci]"
+            git push || (git pull --rebase && git push)
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: muestra
+          path: out/muestra
+          if-no-files-found: ignore
