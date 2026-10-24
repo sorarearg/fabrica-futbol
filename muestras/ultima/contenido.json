@@ -1,0 +1,117 @@
+{
+  "titulo": "¿El bidón de Branco fue real?",
+  "descripcion": "Mundial noventa: Brasil nos peloteaba y Branco tomó agua del banco argentino. Años después Diego lo contó entre risas, pero Bilardo lo negó a muerte. ¿Vos qué decís: mito o viveza criolla?",
+  "hashtags": [
+    "#futbol",
+    "#futbolargentino",
+    "#mundial",
+    "#seleccionargentina",
+    "#mitos",
+    "#historiasdelfutbol"
+  ],
+  "miniatura": {
+    "linea1": "EL AGUA",
+    "linea2": "DE BRANCO",
+    "emoji": "🧴",
+    "prompt": "A tired Brazilian soccer player in a yellow jersey drinking from a green plastic sports water bottle offered by an Argentine staff member on a World Cup pitch, dramatic retro daylight, 1990 style.",
+    "foto": "Branco (futbolista)"
+  },
+  "veredicto": "A MEDIAS",
+  "fuentes": [
+    "Wikipedia: Brasil vs. Argentina (Copa Mundial de Fútbol de 1990)",
+    "Wikipedia: Branco (futbolista)"
+  ],
+  "escenas": [
+    {
+      "texto_voz": "Mundial noventa, octavos de final. Brasil nos está bailando y no sabemos cómo pararlos.",
+      "texto_pantalla": "EL BIDÓN DE BRANCO",
+      "emoji": "⚽",
+      "prompt": "An intense soccer match between Brazil and Argentina in a packed 1990 Italian stadium, dramatic retro lighting, yellow shirts against striped light blue and white jerseys.",
+      "foto": "",
+      "broll": []
+    },
+    {
+      "texto_voz": "Minuto treinta y nueve. Entra Galíndez a atender a Troglio con varios bidones de agua.",
+      "texto_pantalla": "",
+      "emoji": "🏃",
+      "prompt": "A team medic in a tracksuit running onto a lush green football pitch carrying two plastic water bottles, 1990 World Cup atmosphere.",
+      "foto": "Pedro Troglio",
+      "broll": []
+    },
+    {
+      "texto_voz": "Había botellas transparentes y bidones verdes. Monzón agarra uno verde y Galíndez se lo saca al toque.",
+      "texto_pantalla": "",
+      "emoji": "🚫",
+      "prompt": "A muscular soccer player reaching for a green plastic bottle while a trainer urgently grabs his hand, retro football field.",
+      "foto": "Pedro Monzón",
+      "broll": []
+    },
+    {
+      "texto_voz": "Branco, lateral brasileño, pide un trago. Giusti, con toda la picardía, le pasa el verde.",
+      "texto_pantalla": "",
+      "emoji": "🧴",
+      "prompt": "A Brazilian soccer player in a yellow kit sweating under the sun, reaching out to take a green plastic bottle from an opponent.",
+      "foto": "Branco (futbolista)",
+      "broll": []
+    },
+    {
+      "texto_voz": "Branco toma agua. Y a los pocos minutos dice que empezó a marearse feo.",
+      "texto_pantalla": "",
+      "emoji": "😵",
+      "prompt": "A sweaty Brazilian soccer player touching his forehead looking dizzy and disoriented on the football pitch, intense bright sun.",
+      "foto": "Branco (futbolista)",
+      "broll": []
+    },
+    {
+      "texto_voz": "Años después, Maradona contó entre risas en televisión que al bidón le habían puesto somníferos.",
+      "texto_pantalla": "",
+      "emoji": "🎙️",
+      "prompt": "A famous curly-haired Argentine footballer laughing during a nineties television studio interview, warm studio lights.",
+      "foto": "Diego Maradona",
+      "broll": []
+    },
+    {
+      "texto_voz": "Bilardo y Grondona lo negaron a muerte. Ruggeri y Olarticoechea dijeron que algo pasó, pero que era un secreto del vestuario.",
+      "texto_pantalla": "",
+      "emoji": "🤫",
+      "prompt": "An intense older football manager with a classic grey suit gesturing aggressively from the sideline, 1990 style.",
+      "foto": "Carlos Salvador Bilardo",
+      "broll": []
+    },
+    {
+      "texto_voz": "Veredicto: a medias. El agua existió y Diego lo ventiló, pero nunca se probó químicamente qué tenía ese bidón.",
+      "texto_pantalla": "",
+      "emoji": "⚖️",
+      "prompt": "A solitary green sports water bottle sitting on a pristine football pitch under stadium spotlights, mystery atmosphere.",
+      "foto": "",
+      "broll": []
+    },
+    {
+      "texto_voz": "¿Vos qué decís: viveza criolla o mito de vestuario? Te leo en comentarios.",
+      "texto_pantalla": "",
+      "emoji": "💬",
+      "prompt": "Passionate soccer fans cheering wildly in the grandstands of an old-school nineties stadium, confetti and flags.",
+      "foto": "",
+      "broll": []
+    }
+  ],
+  "carrusel": [],
+  "palabras": 143,
+  "wikipedia": [
+    {
+      "titulo": "Brasil vs. Argentina (Copa Mundial de Fútbol de 1990)",
+      "url": "https://es.wikipedia.org/wiki/Brasil_vs._Argentina_(Copa_Mundial_de_F%C3%BAtbol_de_1990)",
+      "idioma": "es"
+    },
+    {
+      "titulo": "Branco (futbolista)",
+      "url": "https://es.wikipedia.org/wiki/Branco_(futbolista)",
+      "idioma": "es"
+    }
+  ],
+  "web": [],
+  "datos_futbol": false,
+  "tema": "El bidón con somníferos que tomó Branco en Argentina contra Brasil en el Mundial Italia noventa",
+  "puntaje": 9,
+  "fecha_tapa": ""
+}
