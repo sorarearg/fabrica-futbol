@@ -1,117 +1,94 @@
 {
-  "titulo": "¿El bidón de Branco fue real?",
-  "descripcion": "Mundial noventa: Brasil nos peloteaba y Branco tomó agua del banco argentino. Años después Diego lo contó entre risas, pero Bilardo lo negó a muerte. ¿Vos qué decís: mito o viveza criolla?",
+  "titulo": "Enzo Pérez al arco: la noche épica",
+  "descripcion": "Sin arqueros, con once jugadores justos y noventa minutos por Copa Libertadores. Mirá la noche más insólita de River. ¿Te acordás dónde viste este partido?",
   "hashtags": [
     "#futbol",
     "#futbolargentino",
-    "#mundial",
-    "#seleccionargentina",
-    "#mitos",
+    "#copalibertadores",
+    "#riverplate",
+    "#enzoperez",
     "#historiasdelfutbol"
   ],
   "miniatura": {
-    "linea1": "EL AGUA",
-    "linea2": "DE BRANCO",
-    "emoji": "🧴",
-    "prompt": "A tired Brazilian soccer player in a yellow jersey drinking from a green plastic sports water bottle offered by an Argentine staff member on a World Cup pitch, dramatic retro daylight, 1990 style.",
-    "foto": "Branco (futbolista)"
+    "linea1": "ATAJÓ DESGARRADO",
+    "linea2": "EN LIBERTADORES",
+    "emoji": "🧤",
+    "prompt": "An Argentine midfielder wearing a bright green goalkeeper jersey and goalie gloves, standing between the goalposts under intense stadium floodlights, looking determined.",
+    "foto": "Enzo Pérez"
   },
-  "veredicto": "A MEDIAS",
+  "veredicto": "",
   "fuentes": [
-    "Wikipedia: Brasil vs. Argentina (Copa Mundial de Fútbol de 1990)",
-    "Wikipedia: Branco (futbolista)"
+    "Wikipedia: Enzo Pérez",
+    "Wikipedia: Club Atlético River Plate",
+    "Conmebol Libertadores 2021"
   ],
   "escenas": [
     {
-      "texto_voz": "Mundial noventa, octavos de final. Brasil nos está bailando y no sabemos cómo pararlos.",
-      "texto_pantalla": "EL BIDÓN DE BRANCO",
+      "texto_voz": "Mayo de dos mil veintiuno. River tiene que jugar por Copa Libertadores y no tiene arquero. Ni uno solo.",
+      "texto_pantalla": "Sin arqueros en la Libertadores",
+      "emoji": "🦠",
+      "prompt": "A soccer locker room with empty seats and hanging jerseys under dim lights.",
+      "foto": "Club Atlético River Plate",
+      "broll": []
+    },
+    {
+      "texto_voz": "Un brote de contagios le baja medio plantel. Conmebol no lo deja sumar juveniles y quedan once jugadores justos.",
+      "texto_pantalla": "",
+      "emoji": "📋",
+      "prompt": "A soccer team sheet on a clipboard held by a referee under bright stadium lights.",
+      "foto": "",
+      "broll": []
+    },
+    {
+      "texto_voz": "Y acá viene lo mejor: Enzo Pérez, desgarrado, pide ponerse los guantes.",
+      "texto_pantalla": "",
+      "emoji": "🧤",
+      "prompt": "A focused midfielder putting on green goalkeeper gloves in a stadium tunnel.",
+      "foto": "Enzo Pérez",
+      "broll": []
+    },
+    {
+      "texto_voz": "Buzo verde flúo, sin suplentes en el banco y a bancar la parada contra Independiente Santa Fe.",
+      "texto_pantalla": "",
+      "emoji": "🥅",
+      "prompt": "A soccer player acting as a goalkeeper standing inside the penalty box at night.",
+      "foto": "Enzo Pérez",
+      "broll": []
+    },
+    {
+      "texto_voz": "River metió dos goles de arranque, defendió cada pelota con el alma y terminó ganando dos a uno.",
+      "texto_pantalla": "",
       "emoji": "⚽",
-      "prompt": "An intense soccer match between Brazil and Argentina in a packed 1990 Italian stadium, dramatic retro lighting, yellow shirts against striped light blue and white jerseys.",
+      "prompt": "Soccer players in white and red sash jerseys celebrating a victory in a massive stadium.",
       "foto": "",
       "broll": []
     },
     {
-      "texto_voz": "Minuto treinta y nueve. Entra Galíndez a atender a Troglio con varios bidones de agua.",
+      "texto_voz": "Noventa minutos atajando en una pierna y victoria para la historia. Etiquetá al hincha de River que no se olvida más.",
       "texto_pantalla": "",
-      "emoji": "🏃",
-      "prompt": "A team medic in a tracksuit running onto a lush green football pitch carrying two plastic water bottles, 1990 World Cup atmosphere.",
-      "foto": "Pedro Troglio",
-      "broll": []
-    },
-    {
-      "texto_voz": "Había botellas transparentes y bidones verdes. Monzón agarra uno verde y Galíndez se lo saca al toque.",
-      "texto_pantalla": "",
-      "emoji": "🚫",
-      "prompt": "A muscular soccer player reaching for a green plastic bottle while a trainer urgently grabs his hand, retro football field.",
-      "foto": "Pedro Monzón",
-      "broll": []
-    },
-    {
-      "texto_voz": "Branco, lateral brasileño, pide un trago. Giusti, con toda la picardía, le pasa el verde.",
-      "texto_pantalla": "",
-      "emoji": "🧴",
-      "prompt": "A Brazilian soccer player in a yellow kit sweating under the sun, reaching out to take a green plastic bottle from an opponent.",
-      "foto": "Branco (futbolista)",
-      "broll": []
-    },
-    {
-      "texto_voz": "Branco toma agua. Y a los pocos minutos dice que empezó a marearse feo.",
-      "texto_pantalla": "",
-      "emoji": "😵",
-      "prompt": "A sweaty Brazilian soccer player touching his forehead looking dizzy and disoriented on the football pitch, intense bright sun.",
-      "foto": "Branco (futbolista)",
-      "broll": []
-    },
-    {
-      "texto_voz": "Años después, Maradona contó entre risas en televisión que al bidón le habían puesto somníferos.",
-      "texto_pantalla": "",
-      "emoji": "🎙️",
-      "prompt": "A famous curly-haired Argentine footballer laughing during a nineties television studio interview, warm studio lights.",
-      "foto": "Diego Maradona",
-      "broll": []
-    },
-    {
-      "texto_voz": "Bilardo y Grondona lo negaron a muerte. Ruggeri y Olarticoechea dijeron que algo pasó, pero que era un secreto del vestuario.",
-      "texto_pantalla": "",
-      "emoji": "🤫",
-      "prompt": "An intense older football manager with a classic grey suit gesturing aggressively from the sideline, 1990 style.",
-      "foto": "Carlos Salvador Bilardo",
-      "broll": []
-    },
-    {
-      "texto_voz": "Veredicto: a medias. El agua existió y Diego lo ventiló, pero nunca se probó químicamente qué tenía ese bidón.",
-      "texto_pantalla": "",
-      "emoji": "⚖️",
-      "prompt": "A solitary green sports water bottle sitting on a pristine football pitch under stadium spotlights, mystery atmosphere.",
-      "foto": "",
-      "broll": []
-    },
-    {
-      "texto_voz": "¿Vos qué decís: viveza criolla o mito de vestuario? Te leo en comentarios.",
-      "texto_pantalla": "",
-      "emoji": "💬",
-      "prompt": "Passionate soccer fans cheering wildly in the grandstands of an old-school nineties stadium, confetti and flags.",
-      "foto": "",
+      "emoji": "🏆",
+      "prompt": "A player wearing a green goalkeeper kit raising his arms in triumph under stadium lights.",
+      "foto": "Enzo Pérez",
       "broll": []
     }
   ],
   "carrusel": [],
-  "palabras": 143,
+  "palabras": 106,
   "wikipedia": [
     {
-      "titulo": "Brasil vs. Argentina (Copa Mundial de Fútbol de 1990)",
-      "url": "https://es.wikipedia.org/wiki/Brasil_vs._Argentina_(Copa_Mundial_de_F%C3%BAtbol_de_1990)",
+      "titulo": "Enzo Pérez",
+      "url": "https://es.wikipedia.org/wiki/Enzo_P%C3%A9rez",
       "idioma": "es"
     },
     {
-      "titulo": "Branco (futbolista)",
-      "url": "https://es.wikipedia.org/wiki/Branco_(futbolista)",
+      "titulo": "Club Atlético River Plate",
+      "url": "https://es.wikipedia.org/wiki/Club_Atl%C3%A9tico_River_Plate",
       "idioma": "es"
     }
   ],
   "web": [],
   "datos_futbol": false,
-  "tema": "El bidón con somníferos que tomó Branco en Argentina contra Brasil en el Mundial Italia noventa",
+  "tema": "Enzo Pérez atajando los noventa minutos con un desgarro en River contra Santa Fe por Copa Libertadores en 2021",
   "puntaje": 9,
-  "fecha_tapa": ""
+  "fecha_tapa": "Año 2021"
 }

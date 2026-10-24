@@ -1,14 +1,12 @@
-# Muestra · Mitos del fútbol
+# Muestra · Partidos insólitos
 
-**Idea elegida:** El bidón con somníferos que tomó Branco en Argentina contra Brasil en el Mundial Italia noventa (puntaje 9)
+**Idea elegida:** Enzo Pérez atajando los noventa minutos con un desgarro en River contra Santa Fe por Copa Libertadores en 2021 (puntaje 9)
 
-**Veredicto:** A MEDIAS
+**Título:** Enzo Pérez al arco: la noche épica (34 de 40 caracteres)
 
-**Título:** ¿El bidón de Branco fue real? (29 de 40 caracteres)
+**Duración del video completo:** 38 segundos · 106 palabras · 6 escenas
 
-**Duración del video completo:** 55 segundos · 143 palabras · 9 escenas
-
-**Esta muestra:** primeros 18 segundos · voz: gemini · Puck · tiempos estimado · imágenes: Pollinations (libre) (4), foto de Commons (1)
+**Esta muestra:** primeros 38 segundos · voz: gemini · Puck · tiempos estimado · imágenes: foto de Commons (1), Pollinations (libre) (9)
 
 ![Muestra](muestra.gif) ![Portada](thumb.jpg)
 
@@ -16,30 +14,27 @@
 
 ## Guion completo
 
-1. Mundial noventa, octavos de final. Brasil nos está bailando y no sabemos cómo pararlos.
-2. Minuto treinta y nueve. Entra Galíndez a atender a Troglio con varios bidones de agua.
-3. Había botellas transparentes y bidones verdes. Monzón agarra uno verde y Galíndez se lo saca al toque.
-4. Branco, lateral brasileño, pide un trago. Giusti, con toda la picardía, le pasa el verde.
-5. Branco toma agua. Y a los pocos minutos dice que empezó a marearse feo.
-6. Años después, Maradona contó entre risas en televisión que al bidón le habían puesto somníferos.
-7. Bilardo y Grondona lo negaron a muerte. Ruggeri y Olarticoechea dijeron que algo pasó, pero que era un secreto del vestuario.
-8. Veredicto: a medias. El agua existió y Diego lo ventiló, pero nunca se probó químicamente qué tenía ese bidón.
-9. ¿Vos qué decís: viveza criolla o mito de vestuario? Te leo en comentarios.
+1. Mayo de dos mil veintiuno. River tiene que jugar por Copa Libertadores y no tiene arquero. Ni uno solo.
+2. Un brote de contagios le baja medio plantel. Conmebol no lo deja sumar juveniles y quedan once jugadores justos.
+3. Y acá viene lo mejor: Enzo Pérez, desgarrado, pide ponerse los guantes.
+4. Buzo verde flúo, sin suplentes en el banco y a bancar la parada contra Independiente Santa Fe.
+5. River metió dos goles de arranque, defendió cada pelota con el alma y terminó ganando dos a uno.
+6. Noventa minutos atajando en una pierna y victoria para la historia. Etiquetá al hincha de River que no se olvida más.
 
 ## Texto para publicar
 
-Mundial noventa: Brasil nos peloteaba y Branco tomó agua del banco argentino. Años después Diego lo contó entre risas, pero Bilardo lo negó a muerte. ¿Vos qué decís: mito o viveza criolla?
+Sin arqueros, con once jugadores justos y noventa minutos por Copa Libertadores. Mirá la noche más insólita de River. ¿Te acordás dónde viste este partido?
 
-#futbol #futbolargentino #mundial #seleccionargentina #mitos #historiasdelfutbol
+#futbol #futbolargentino #copalibertadores #riverplate #enzoperez #historiasdelfutbol
 
 ## De dónde salen los datos
 
-- [Brasil vs. Argentina (Copa Mundial de Fútbol de 1990)](https://es.wikipedia.org/wiki/Brasil_vs._Argentina_(Copa_Mundial_de_F%C3%BAtbol_de_1990))
-- [Branco (futbolista)](https://es.wikipedia.org/wiki/Branco_(futbolista))
-- Wikipedia: Brasil vs. Argentina (Copa Mundial de Fútbol de 1990)
-- Wikipedia: Branco (futbolista)
+- [Enzo Pérez](https://es.wikipedia.org/wiki/Enzo_P%C3%A9rez)
+- [Club Atlético River Plate](https://es.wikipedia.org/wiki/Club_Atl%C3%A9tico_River_Plate)
+- Wikipedia: Enzo Pérez
+- Wikipedia: Club Atlético River Plate
+- Conmebol Libertadores 2021
 
 ## Fotos
 
-- Germanramos (CC BY 3.0), Wikimedia Commons
-- Unknown authorUnknown author (Public domain), Wikimedia Commons
+- Club Atlético River Plate (Public domain), Wikimedia Commons
