@@ -25,6 +25,23 @@ Genera y publica solo un video corto por día (Reels y Shorts) de fútbol. Todo 
 
 Se cambia en `config.json` (`plan_semanal` y `horarios`).
 
+## Pedidos programados (videos a pedido para una fecha)
+
+Para un video puntual en un día puntual (por ejemplo, la historia de las finales de Boca en la Sudamericana el día antes de la final), editá `data/pedidos.json` desde GitHub (abrilo → ícono del lápiz) y agregá una línea por fecha:
+
+```json
+"2026-11-27": { "tema": "Las finales de Boca en la Copa Sudamericana", "hora": "19:00", "en_lugar_del_del_dia": false }
+```
+
+- **fecha** (la clave): año-mes-día.
+- **tema**: lo que querés que cuente, con tus palabras.
+- **hora**: a qué hora se publica (hora de Argentina).
+- **en_lugar_del_del_dia**: `false` sale como video extra y el de la grilla sale igual; `true` lo reemplaza.
+- **serie** (opcional): por defecto `especial` (tono de previa de partido grande, con el contexto de las noticias de esos días). También podés poner `mitos`, `insolitos`, `ascenso`, etcétera.
+- Para dos pedidos el mismo día, poné una lista: `"2026-11-27": [ {...}, {...} ]`.
+- Antes de programarlo, podés probarlo con **Muestra corta** (serie `especial`, el tema y 60 segundos).
+- Lo publica el workflow **Extras**. Si falla, lo reintenta una vez.
+
 ## Tendencias
 
 Antes de elegir la idea de cada día, la fábrica mira qué es tendencia en el fútbol: lo más leído ayer en Wikipedia en español, las noticias más comentadas del día (Gemini busca en Google) y, si cargás el secreto opcional `YT_API_KEY`, los videos de deportes en tendencia en YouTube Argentina. Las ideas que se conectan de verdad con eso suman puntos, y la conexión se usa en el gancho (por ejemplo: el ídolo histórico del club que juega la final hoy). Se calcula una vez por día y queda en `data/tendencias.json`. Se apaga con `"usar_tendencias": false` en `config.json`.
@@ -60,7 +77,7 @@ Las claves nunca van en el código ni en el chat: siempre acá.
 - **Muestra corta**: escribe el guion completo, arma la portada y los primeros segundos del video, sin publicar. Podés elegir la serie y un tema puntual. El resultado queda en la carpeta `muestras/ultima` (abrí el `README.md` de esa carpeta para verlo todo junto).
 - **Publicación diaria**: la que corre sola. Con *Run workflow* se puede forzar una serie o un tema, y destildar "publicar" para solo generar.
 - **Probar conexiones**: revisa en un minuto si las llaves de Instagram, Facebook y YouTube andan, sin publicar nada. Usalo cada vez que cambies una llave.
-- **Efemérides (Un día como hoy)**: el reloj de los videos extra. Con *Run workflow* fabrica la próxima efeméride importante de hoy.
+- **Extras (pedidos programados y efemérides)**: el reloj de los videos extra. Con *Run workflow* podés fabricar ya el pedido de hoy o la próxima efeméride importante.
 - **Reporte semanal de competencia**: los lunes, cómo le fue a cada serie (necesita `YT_API_KEY`, opcional).
 
 ## Conectar las redes

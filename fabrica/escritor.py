@@ -274,7 +274,7 @@ def _previos(titulos_previos):
     return "\n".join("- " + t for t in titulos_previos[:60]) or "- (ninguno todavía)"
 
 
-def _material_de_la_serie(serie):
+def _material_de_la_serie(serie, tema=None):
     """Datos frescos que necesita la serie antes de elegir el tema (actualidad y efemérides)."""
     from . import datos_futbol, wiki
     fuente = serie.get("fuente", "wiki")
@@ -286,6 +286,22 @@ def _material_de_la_serie(serie):
             raise SinIdeas(f"No hay datos de football-data: {e}")
         otras, fuentes_web = datos_futbol.buscar_otras_ligas(modo)
         return (datos + ("\n\n" + otras if otras else "")), fuentes_web
+    if fuente == "especial" and tema:
+        # pedido puntual: lo que dicen las noticias de estos días sobre ese tema (Gemini busca en Google)
+        hoy = util.ahora().date()
+        try:
+            r = gemini("Sos un periodista deportivo argentino muy riguroso. Nunca inventás datos.",
+                       f'Buscá en Google noticias de los últimos días (hoy es {hoy:%d/%m/%Y}) relacionadas con: "{tema}". '
+                       "Contexto actual (partido que se viene, rival, fecha, estadio, cómo llegan, datos históricos que "
+                       "estén citando los medios). Solo datos que aparezcan en las noticias. Respondé solo JSON: "
+                       '{"datos": ["..."]}', temperatura=0.3, buscar=True)
+            datos = [x for x in r.get("datos", []) if isinstance(x, str) and x.strip()][:15]
+            if datos:
+                return "CONTEXTO ACTUAL (noticias de estos días):\n" + "\n".join("- " + x for x in datos), \
+                    list(ULTIMAS_FUENTES)
+        except Exception as e:  # noqa
+            util.log("La búsqueda del contexto actual falló:", util.ocultar(e))
+        return "", []
     if fuente == "efemeride":
         hoy = util.ahora().date()
         lineas = wiki.efemerides(hoy)
@@ -303,8 +319,8 @@ def elegir_tema(serie, titulos_previos, tema=None, material_yt=""):
     cfg = util.config()
     minimo = float(cfg.get("puntaje_minimo", 7))
     fuente = serie.get("fuente", "wiki")
-    datos, fuentes_web = _material_de_la_serie(serie)
-    solo_datos = bool(datos)  # actualidad y efemérides: las ideas tienen que salir de esos datos
+    datos, fuentes_web = _material_de_la_serie(serie, tema)
+    solo_datos = bool(datos) and fuente in ("actualidad", "efemeride")  # las ideas tienen que salir de esos datos
     tend = ""
     if cfg.get("usar_tendencias", True):
         try:
@@ -351,7 +367,7 @@ def elegir_tema(serie, titulos_previos, tema=None, material_yt=""):
             break
         consultas = [x for x in (c.get("wikipedia") or []) if x][:3] + ([tema] if tema else [])
         articulos = wiki.material(consultas, maximo_total=9000)
-        if articulos or (fuente == "actualidad" and solo_datos):
+        if articulos or (fuente == "actualidad" and solo_datos) or (fuente == "especial" and datos):
             util.log("Tema elegido:", c["tema"], f"({puntos(c):g})",
                      "· respaldo:", ", ".join(a["titulo"] for a in articulos) or "datos de la semana")
             return c, articulos, datos, fuentes_web

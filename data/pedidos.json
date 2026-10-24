@@ -1,0 +1,8 @@
+{
+  "_como_usarlo": "Agregá una línea por fecha como la de 2099-12-31 (esa es solo un ejemplo y nunca sale). hora: a qué hora se publica (hora de Argentina). en_lugar_del_del_dia: true reemplaza al video de la grilla de ese día; false sale como video extra. serie: opcional (especial, mitos, insolitos, ascenso...).",
+  "2099-12-31": {
+    "tema": "Las finales de Boca en la Copa Sudamericana",
+    "hora": "19:00",
+    "en_lugar_del_del_dia": false
+  }
+}

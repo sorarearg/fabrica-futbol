@@ -76,8 +76,16 @@ def generar(simulado=False):
     os.environ.setdefault("TTS_MAX_PAUSA", str(cfg.get("voz_pausa_maxima", 0.28)))
     from . import carrusel, escritor, investigar, montaje  # importa después de fijar la voz
 
-    efe = None
-    if os.getenv("MODO") == "efemeride":
+    efe = ped = None
+    if os.getenv("MODO") == "pedido":
+        ped = _pedido_pendiente(cfg)
+        if not ped:
+            util.log("No hay pedidos programados para fabricar ahora.")
+            return
+        os.environ["SERIE"] = ped.get("serie") or "especial"
+        os.environ["TEMA"] = ped["tema"]
+        _marcar_pedido(ped["id"], "intento")
+    elif os.getenv("MODO") == "efemeride":
         efe = _efemeride_pendiente(cfg)
         if not efe:
             util.log("No hay efemérides pendientes para publicar ahora.")
@@ -112,7 +120,7 @@ def generar(simulado=False):
                                                                (os.getenv("TEMA") or "").strip() or None)
     contenido["fecha_tapa"] = _fecha_tapa(contenido)
 
-    nombre_carpeta = fecha + (f"-efe{efe['n']}" if efe else "")
+    nombre_carpeta = fecha + (f"-efe{efe['n']}" if efe else "") + (f"-ped{ped['n']}" if ped else "")
     carpeta = SITIO / nombre_carpeta
     if SALIDA.exists():
         shutil.rmtree(SALIDA)
@@ -143,8 +151,9 @@ def generar(simulado=False):
                             for f in fuentes],
         "archivos": {"video": f"{nombre_carpeta}/video.mp4", "portada": f"{nombre_carpeta}/thumb.jpg",
                      "placas": [f"{nombre_carpeta}/{p.name}" for p in placas]},
-        "extra": bool(efe),
+        "extra": bool(efe) or bool(ped and not ped.get("en_lugar_del_del_dia")),
         "efemeride_n": efe["n"] if efe else None,
+        "pedido_id": ped["id"] if ped else None,
         "contenido": contenido,
         "video": meta_video,
     }
@@ -204,6 +213,8 @@ def publicar(base_url):
     util.guardar_json("data/historial.json", historial[-400:])
     if p.get("efemeride_n") is not None:
         _marcar_efemeride(p["fecha"], p["efemeride_n"], "publicada")
+    if p.get("pedido_id"):
+        _marcar_pedido(p["pedido_id"], "publicado")
     _registro(p, resultados, base)
     _mail_diario(p, resultados, base)
     resumen(base_url, resultados)
@@ -406,6 +417,8 @@ def toca():
         hoy = ahora.strftime("%Y-%m-%d")
         if not cfg.get("fabrica_activa", True):
             si, motivo = False, "la fábrica está apagada (config.json → fabrica_activa: false)"
+        elif any(x.get("en_lugar_del_del_dia") for x in _pedidos_de(hoy)):
+            si, motivo = False, "hoy sale un pedido programado en lugar del video de la grilla"
         elif objetivo is None:
             si, motivo = False, "hoy no tiene horario"
         elif any(h.get("fecha") == hoy and not h.get("extra") for h in util.leer_json("data/historial.json", [])):
@@ -427,6 +440,105 @@ def toca():
     if salida:
         with open(salida, "a", encoding="utf-8") as f:
             f.write(f"si={'true' if si else 'false'}\n")
+
+
+# ---------------------------------------------------------------- pedidos programados
+def _pedidos_de(fecha_iso):
+    """Pedidos del archivo data/pedidos.json para una fecha (acepta uno solo o una lista)."""
+    datos = util.leer_json("data/pedidos.json", {})
+    lista = datos.get(fecha_iso) or []
+    if isinstance(lista, dict):
+        lista = [lista]
+    salida = []
+    for n, x in enumerate(lista, 1):
+        if isinstance(x, dict) and str(x.get("tema", "")).strip():
+            x = dict(x)
+            x["n"], x["id"], x["fecha"] = n, f"{fecha_iso}#{n}", fecha_iso
+            salida.append(x)
+    return salida
+
+
+def _estado_pedidos():
+    return util.leer_json("data/estado.json", {}).get("pedidos", {})
+
+
+def _marcar_pedido(pid, que):
+    estado = util.leer_json("data/estado.json", {})
+    ped = estado.setdefault("pedidos", {})
+    actual = ped.setdefault(pid, {"intentos": 0, "estado": "pendiente"})
+    if que == "intento":
+        actual["intentos"] += 1
+    else:
+        actual["estado"] = que
+    # solo se guardan los de los últimos 30 días
+    import datetime as _dt
+    limite = (util.ahora().date() - _dt.timedelta(days=30)).isoformat()
+    estado["pedidos"] = {k: v for k, v in ped.items() if k[:10] >= limite}
+    util.guardar_json("data/estado.json", estado)
+
+
+def _hora_pedido(ped, ahora):
+    hh, mm = (int(x) for x in str(ped.get("hora") or "19:00").split(":")[:2])
+    return ahora.replace(hour=hh, minute=mm, second=0, microsecond=0)
+
+
+def _pedido_listo(ahora):
+    """El pedido de hoy que hay que fabricar ahora: desde 50 minutos antes de su hora y hasta 3 horas después."""
+    est = _estado_pedidos()
+    for ped in _pedidos_de(ahora.date().isoformat()):
+        e = est.get(ped["id"], {})
+        if e.get("estado") == "publicado" or e.get("intentos", 0) >= 2:
+            continue
+        faltan = (_hora_pedido(ped, ahora) - ahora).total_seconds() / 60
+        if -TARDE_MAX <= faltan <= 50:
+            return ped
+    return None
+
+
+def _pedido_pendiente(cfg):
+    return _pedido_listo(util.ahora()) if os.getenv("GITHUB_EVENT_NAME") == "schedule" else \
+        next((p for p in _pedidos_de(util.ahora().date().isoformat())
+              if _estado_pedidos().get(p["id"], {}).get("estado") != "publicado"), None)
+
+
+def esperar_pedido():
+    """Con el video del pedido listo, espera a su hora exacta antes de publicar."""
+    import time
+    if os.getenv("GITHUB_EVENT_NAME") != "schedule":
+        return
+    p = util.leer_json("out/publicacion.json", {})
+    if not p.get("pedido_id"):
+        return
+    ped = next((x for x in _pedidos_de(p["pedido_id"][:10]) if x["id"] == p["pedido_id"]), None)
+    if not ped:
+        return
+    segundos = (_hora_pedido(ped, util.ahora()) - util.ahora()).total_seconds()
+    if 0 < segundos < 70 * 60:
+        util.log(f"Pedido listo. Espero {segundos / 60:.0f} minutos para publicarlo a las {ped.get('hora')}.")
+        time.sleep(segundos)
+
+
+def toca_extra():
+    """Reloj de los videos extra: primero los pedidos programados (data/pedidos.json), después las efemérides."""
+    cfg = util.config()
+    salida = os.getenv("GITHUB_OUTPUT")
+    modo, motivo = "", ""
+    if os.getenv("GITHUB_EVENT_NAME") != "schedule":
+        modo = (os.getenv("MODO_MANUAL") or "pedido").strip()
+        motivo = "ejecución manual"
+    elif not cfg.get("fabrica_activa", True):
+        motivo = "la fábrica está apagada (config.json → fabrica_activa: false)"
+    else:
+        ped = _pedido_listo(util.ahora())
+        if ped:
+            modo, motivo = "pedido", f'pedido programado: {ped["tema"]} ({ped.get("hora", "19:00")})'
+    if not modo and os.getenv("GITHUB_EVENT_NAME") == "schedule" and cfg.get("fabrica_activa", True):
+        si = _toca_efemeride_si(cfg)
+        modo, motivo = ("efemeride", si) if si.startswith("toca") else ("", si)
+    util.log("¿Toca un video extra?", modo or "no", "·", motivo)
+    if salida:
+        with open(salida, "a", encoding="utf-8") as f:
+            f.write(f"si={'true' if modo else 'false'}\nmodo={modo}\n")
 
 
 # ---------------------------------------------------------------- efemérides (videos extra)
@@ -537,46 +649,31 @@ def _efemeride_pendiente(cfg):
     return None
 
 
-def toca_efemeride():
-    """Reloj de los videos extra de "Un día como hoy": en cada horario de efemérides publica la siguiente
-    efeméride importante del día, si la hay. Si no hay ninguna importante, no sale nada."""
-    cfg = util.config()
+def _toca_efemeride_si(cfg):
+    """Devuelve "toca ..." si en este horario corresponde publicar una efeméride; si no, el motivo."""
     conf = cfg.get("efemerides", {})
-    si, motivo = False, ""
     ahora = util.ahora()
     hoy = ahora.date()
-    if os.getenv("GITHUB_EVENT_NAME") != "schedule":
-        si, motivo = True, "ejecución manual"
-    elif not cfg.get("fabrica_activa", True):
-        motivo = "la fábrica está apagada (config.json → fabrica_activa: false)"
-    elif not conf.get("activas", True):
-        motivo = "las efemérides están apagadas (config.json → efemerides.activas)"
-    else:
-        horarios = []
-        for h in conf.get("horarios", ["10:30", "12:00", "15:30", "17:00"]):
-            hh, mm = (int(x) for x in h.split(":"))
-            horarios.append(ahora.replace(hour=hh, minute=mm, second=0, microsecond=0))
-        vencidos = [h for h in horarios if h <= ahora]
-        publicadas_hoy = sum(1 for x in util.leer_json("data/historial.json", [])
-                             if x.get("fecha") == hoy.isoformat() and x.get("extra"))
-        if not vencidos:
-            motivo = "todavía no llegó el primer horario de efemérides"
-        elif publicadas_hoy >= len(vencidos):
-            motivo = f"ya salieron {publicadas_hoy} efemérides hoy; la próxima, en el siguiente horario"
-        elif (ahora - vencidos[-1]).total_seconds() > 150 * 60 and len(vencidos) == len(horarios):
-            motivo = "ya pasaron los horarios de hoy"
-        else:
-            pendientes = [c for c in _ranking_efemerides(cfg, hoy).get(hoy.isoformat(), [])
-                          if c.get("estado") == "pendiente" and c.get("intentos", 0) < 2]
-            if pendientes:
-                si, motivo = True, f'toca la efeméride: {pendientes[0]["tema"]} ({pendientes[0]["puntaje"]:g})'
-            else:
-                motivo = "hoy no hay (más) efemérides importantes"
-    util.log("¿Toca efeméride?", "sí" if si else "no", "·", motivo)
-    salida = os.getenv("GITHUB_OUTPUT")
-    if salida:
-        with open(salida, "a", encoding="utf-8") as f:
-            f.write(f"si={'true' if si else 'false'}\n")
+    if not conf.get("activas", True):
+        return "las efemérides están apagadas (config.json → efemerides.activas)"
+    horarios = []
+    for h in conf.get("horarios", ["10:30", "12:00", "15:30", "17:00"]):
+        hh, mm = (int(x) for x in h.split(":"))
+        horarios.append(ahora.replace(hour=hh, minute=mm, second=0, microsecond=0))
+    vencidos = [h for h in horarios if h <= ahora]
+    publicadas_hoy = sum(1 for x in util.leer_json("data/historial.json", [])
+                         if x.get("fecha") == hoy.isoformat() and x.get("extra") and x.get("serie") == "undia")
+    if not vencidos:
+        return "todavía no llegó el primer horario de efemérides"
+    if publicadas_hoy >= len(vencidos):
+        return f"ya salieron {publicadas_hoy} efemérides hoy; la próxima, en el siguiente horario"
+    if (ahora - vencidos[-1]).total_seconds() > 150 * 60 and len(vencidos) == len(horarios):
+        return "ya pasaron los horarios de efemérides de hoy"
+    pendientes = [c for c in _ranking_efemerides(cfg, hoy).get(hoy.isoformat(), [])
+                  if c.get("estado") == "pendiente" and c.get("intentos", 0) < 2]
+    if pendientes:
+        return f'toca la efeméride: {pendientes[0]["tema"]} ({pendientes[0]["puntaje"]:g})'
+    return "hoy no hay (más) efemérides importantes"
 
 
 def esperar():
@@ -688,7 +785,8 @@ def reporte():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("accion", choices=["generar", "publicar", "resumen", "reporte", "toca", "esperar", "probar", "muestra", "toca_efemeride"])
+    ap.add_argument("accion", choices=["generar", "publicar", "resumen", "reporte", "toca", "esperar", "probar", "muestra", "toca_extra",
+                            "esperar_pedido"])
     ap.add_argument("--base-url", default="")
     ap.add_argument("--simulado", action="store_true")
     a = ap.parse_args()
@@ -705,8 +803,10 @@ if __name__ == "__main__":
             resumen(a.base_url)
         elif a.accion == "muestra":
             muestra()
-        elif a.accion == "toca_efemeride":
-            toca_efemeride()
+        elif a.accion == "toca_extra":
+            toca_extra()
+        elif a.accion == "esperar_pedido":
+            esperar_pedido()
         elif a.accion == "probar":
             from . import probar
             probar.probar()
