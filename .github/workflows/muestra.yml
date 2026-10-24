@@ -9,7 +9,7 @@ on:
         description: "Serie"
         type: choice
         default: mitos
-        options: [mitos, actualidad, previa, undia, quefue, ascenso, cuanto, records, insolitos, pases, apodos, cabalas]
+        options: [especial, mitos, actualidad, previa, undia, quefue, ascenso, cuanto, records, insolitos, pases, apodos, cabalas]
       tema:
         description: "Tema puntual (opcional, por ejemplo: el bidón de Branco). Vacío = lo elige la IA"
         required: false
@@ -23,7 +23,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: fabrica
+  group: fabrica-muestra
   cancel-in-progress: false
 
 jobs:

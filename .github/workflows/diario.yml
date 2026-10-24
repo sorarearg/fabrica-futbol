@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       serie:
-        description: "Forzar una serie (mitos, actualidad, previa, undia, quefue, ascenso, cuanto, records, insolitos, pases, apodos, cabalas). Vacío = la del día"
+        description: "Forzar una serie (especial, mitos, actualidad, previa, undia, quefue, ascenso, cuanto, records, insolitos, pases, apodos, cabalas). Vacío = la del día"
         required: false
         default: ""
       tema:
@@ -26,10 +26,6 @@ permissions:
   contents: write
   pages: write
   id-token: write
-
-concurrency:
-  group: fabrica
-  cancel-in-progress: false
 
 jobs:
   reloj:
@@ -51,6 +47,9 @@ jobs:
 
   fabricar:
     needs: reloj
+    concurrency:
+      group: fabrica-publicar
+      cancel-in-progress: false
     if: needs.reloj.outputs.si == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 90

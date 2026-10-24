@@ -1,15 +1,20 @@
-name: Efemérides (Un día como hoy)
+name: Extras (pedidos programados y efemérides)
 
 on:
   schedule:
     # Cada 30 minutos, de 11:07 a 23:37 (hora de Argentina), se fija si toca publicar.
     # El horario de cada día se cambia en config.json → "horarios".
     # Si GitHub se atrasa y se pasa la hora, publica igual apenas pueda (hasta 3 horas después).
-    - cron: "22,52 13-21 * * *"
+    - cron: "22,52 * * * *"
   workflow_dispatch:
     inputs:
+      modo:
+        description: "Qué fabricar ahora: el pedido de hoy (data/pedidos.json) o la próxima efeméride de hoy"
+        type: choice
+        default: pedido
+        options: [pedido, efemeride]
       publicar:
-        description: "¿Publicar en las redes? (si no, solo genera la próxima efeméride pendiente de hoy)"
+        description: "¿Publicar en las redes? (si no, solo genera y lo podés ver acá)"
         type: boolean
         default: true
 
@@ -18,16 +23,13 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: fabrica
-  cancel-in-progress: false
-
 jobs:
   reloj:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     outputs:
       si: ${{ steps.toca.outputs.si }}
+      modo: ${{ steps.toca.outputs.modo }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -37,22 +39,26 @@ jobs:
           python-version: "3.12"
       - run: pip install -q requests
       - id: toca
-        name: ¿Toca una efeméride ahora?
+        name: ¿Toca un video extra ahora?
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
-        run: python -m fabrica.main toca_efemeride
+          MODO_MANUAL: ${{ inputs.modo }}
+        run: python -m fabrica.main toca_extra
       - name: Guardar el ranking del día
         run: |
           git config user.name "fabrica-bot"
           git config user.email "fabrica-bot@users.noreply.github.com"
-          git add data/efemerides.json data/efemerides-calendario.md data/tendencias.json 2>/dev/null || true
-          git diff --cached --quiet || git commit -m "Ranking de efemérides $(date +%F) [skip ci]"
+          git add data/efemerides.json data/efemerides-calendario.md data/tendencias.json data/estado.json 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "Extras $(date +%F) [skip ci]"
           git push || (git pull --rebase && git push) || true
 
   fabricar:
     needs: reloj
+    concurrency:
+      group: fabrica-publicar
+      cancel-in-progress: false
     if: needs.reloj.outputs.si == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 90
@@ -60,7 +66,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     env:
-      MODO: efemeride
+      MODO: ${{ needs.reloj.outputs.modo }}
       POLLINATIONS_KEY: ${{ secrets.POLLINATIONS_KEY }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       YT_API_KEY: ${{ secrets.YT_API_KEY }}
@@ -136,6 +142,10 @@ jobs:
           done
           echo "Los archivos no aparecieron online"; exit 1
 
+      - name: Esperar a la hora del pedido
+        if: ${{ steps.gen.outputs.hay == 'true' && github.event_name == 'schedule' }}
+        run: python -m fabrica.main esperar_pedido
+
       - name: Publicar en las redes
         if: ${{ steps.gen.outputs.hay == 'true' && (github.event_name == 'schedule' || inputs.publicar) }}
         run: python -m fabrica.main publicar --base-url "${{ steps.deployment.outputs.page_url }}"
@@ -151,5 +161,5 @@ jobs:
           git config user.email "fabrica-bot@users.noreply.github.com"
           git add data 2>/dev/null || true
           git add publicaciones 2>/dev/null || true
-          git diff --cached --quiet || git commit -m "Efeméride $(date +%F) [skip ci]"
+          git diff --cached --quiet || git commit -m "Video extra $(date +%F) [skip ci]"
           git push || (git pull --rebase && git push)
