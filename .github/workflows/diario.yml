@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       serie:
-        description: "Forzar una serie (inventos, laplata, caso, personaje, viral, leyendas). Vacío = la del día"
+        description: "Forzar una serie (mitos, actualidad, previa, undia, quefue, ascenso, cuanto, records, insolitos, pases, apodos, cabalas). Vacío = la del día"
         required: false
         default: ""
       tema:
@@ -66,6 +66,7 @@ jobs:
       CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
       CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
       PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+      FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
       IG_TOKEN: ${{ secrets.IG_TOKEN }}
       IG_FB_TOKEN: ${{ secrets.IG_FB_TOKEN }}
       IG_FB_ID: ${{ secrets.IG_FB_ID }}
@@ -102,7 +103,7 @@ jobs:
           sudo apt-get install -y -qq ffmpeg fonts-noto-color-emoji > /dev/null
           pip install -q -r requirements.txt
           mkdir -p fonts
-          for f in ofl/anton/Anton-Regular.ttf ofl/poppins/Poppins-Regular.ttf ofl/poppins/Poppins-SemiBold.ttf ofl/poppins/Poppins-Bold.ttf ofl/poppins/Poppins-ExtraBold.ttf ofl/poppins/Poppins-Black.ttf; do
+          for f in ofl/anton/Anton-Regular.ttf ofl/abrilfatface/AbrilFatface-Regular.ttf ofl/oldstandardtt/OldStandard-Bold.ttf ofl/poppins/Poppins-Regular.ttf ofl/poppins/Poppins-SemiBold.ttf ofl/poppins/Poppins-Bold.ttf ofl/poppins/Poppins-ExtraBold.ttf ofl/poppins/Poppins-Black.ttf; do
             curl -fsSL -o "fonts/$(basename $f)" "https://github.com/google/fonts/raw/main/$f" || echo "No bajó $f"
           done
 
