@@ -128,9 +128,9 @@ def _limpiar_audio(origen, destino, tempo=1.0):
 
 
 # ---------------------------------------------------------------- tiempos de las palabras
-def _whisper(wav, texto):
+def _whisper(wav, texto, nombre=None):
     from faster_whisper import WhisperModel  # se instala en GitHub Actions
-    modelo = WhisperModel(os.getenv("WHISPER_MODELO", "base"), device="cpu", compute_type="int8")
+    modelo = WhisperModel(nombre or os.getenv("WHISPER_MODELO", "base"), device="cpu", compute_type="int8")
     segmentos, _ = modelo.transcribe(str(wav), language="es", word_timestamps=True, beam_size=1,
                                      initial_prompt=texto[:600], condition_on_previous_text=False)
     return [[float(w.start), float(w.end), w.word.strip()] for s in segmentos for w in (s.words or [])]
@@ -201,12 +201,16 @@ def _con_gemini(textos, carpeta, cfg):
         for t in d.split():
             tokens.append(t)
             escena_de.append(i)
-    try:
-        oidas = _whisper(wav, texto)
-        metodo = "whisper"
-    except Exception as e:  # noqa
-        util.log("Whisper no anduvo, reparto los tiempos a ojo:", e)
-        oidas, metodo = [], "estimado"
+    oidas, metodo, errores = [], "estimado", []
+    for nombre in (os.getenv("WHISPER_MODELO", "base"), "tiny"):
+        try:
+            oidas = _whisper(wav, texto, nombre)
+            metodo = "whisper" if nombre == "base" else f"whisper {nombre}"
+            break
+        except Exception as e:  # noqa
+            errores.append(f"{nombre}: {type(e).__name__}: {str(e)[:200]}")
+    if not oidas:
+        util.avisar("Whisper no anduvo: los subtítulos van con tiempos estimados", " | ".join(errores) or "sin palabras")
     tiempos = alinear(tokens, oidas, dur)
     palabras = [[t[0], t[1], tok, esc] for t, tok, esc in zip(tiempos, tokens, escena_de)]
     return wav, palabras, f"gemini · {voz} · tiempos {metodo}"

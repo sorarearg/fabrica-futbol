@@ -39,7 +39,17 @@ def _archivo_principal(nombre):
 
 
 def _limpio(html):
-    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", html or "")).strip()
+    t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html or "")).strip()
+    # Commons a veces repite el nombre dos veces seguidas ("Fulano Fulano"): queda una sola
+    mitad = len(t) // 2
+    if t and len(t) % 2 == 0 and t[:mitad] == t[mitad:]:
+        t = t[:mitad]
+    m = re.match(r"^(.+?)\s+\1$", t)
+    if m:
+        t = m.group(1)
+    if t.lower() in ("unknown author", "unknown", "autor desconocido", "desconocido"):
+        t = "autor desconocido"
+    return t
 
 
 def foto(nombre, destino):
