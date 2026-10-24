@@ -1,18 +1,18 @@
 {
- "titulo": "La huella que la delató",
- "descripcion": "En 1892 una huella con sangre en una puerta de Necochea resolvió un crimen y cambió la investigación policial en todo el mundo. ¿La conocías?",
- "hashtags": ["#historiaargentina", "#casoreal", "#laplata", "#curiosidades", "#argentina", "#historias"],
- "miniatura": {"linea1": "La huella que la delató", "linea2": "Necochea, 1892", "emoji": "🖐️",
-               "prompt": "a bloody fingerprint on an old wooden door frame, 1890s Argentina, candle light, dramatic shadows"},
- "fuentes": ["Wikipedia: Juan Vucetich", "Wikipedia: Francisca Rojas"],
+ "titulo": "¿Argentina drogó a Brasil?",
+ "descripcion": "Mundial 90: Branco tomó agua de un bidón argentino y dijo que se mareó. Maradona lo insinuó años después y Bilardo nunca lo negó del todo. ¿Vos qué decís: mito o verdad?",
+ "hashtags": ["#futbol", "#futbolargentino", "#mundial", "#mitos", "#seleccionargentina"],
+ "miniatura": {"linea1": "¿Argentina drogó a Brasil?", "linea2": "El bidón de Branco", "emoji": "🥤", "foto": "Branco", "prompt": "a plastic water bottle on the grass of a 1990 World Cup stadium at night, dramatic light"},
+ "veredicto": "NUNCA SE PROBÓ",
+ "fuentes": ["Wikipedia: Branco", "Wikipedia: Copa Mundial de Fútbol de 1990"],
  "escenas": [
-  {"texto_voz": "En mil ochocientos noventa y dos, una madre de Necochea juró que un vecino había matado a sus dos hijos.", "texto_pantalla": "Necochea, 1892", "prompt": "a distressed woman in 1890s rural Argentine clothing pointing accusingly, police officers around, dusk", "broll": [], "emoji": "😱"},
-  {"texto_voz": "Pero en el marco de la puerta había una mancha de sangre. Con una huella.", "texto_pantalla": "", "prompt": "close-up of an old wooden door frame with a dark fingerprint mark, candle light", "broll": [], "emoji": "🖐️"},
-  {"texto_voz": "Y esa huella no era del vecino.", "texto_pantalla": "", "prompt": "a 1890s police inspector with a thick mustache staring at a door frame in shock", "broll": [], "emoji": "🔍"},
-  {"texto_voz": "En La Plata, un policía llamado Juan Vucetich había inventado un sistema para comparar huellas digitales.", "texto_pantalla": "", "prompt": "a 1890s police office in La Plata, a man with a mustache studying fingerprint cards under a lamp", "broll": [], "emoji": "🗂️"},
-  {"texto_voz": "El inspector cortó ese pedazo de madera y lo mandó a comparar.", "texto_pantalla": "", "prompt": "a 1890s Argentine police inspector cutting a piece of wooden door frame with a saw", "broll": [], "emoji": "🪚"},
-  {"texto_voz": "La huella era de ella. Francisca Rojas terminó confesando.", "texto_pantalla": "", "prompt": "a woman in 1890s clothing lowering her head in a police room, dim light, silhouettes", "broll": [], "emoji": "⚖️"},
-  {"texto_voz": "Fue el primer crimen del mundo resuelto por una huella digital. Y el método salió de La Plata.", "texto_pantalla": "", "prompt": "a giant glowing fingerprint over a vintage map of Argentina, painterly", "broll": [], "emoji": "🌎"},
-  {"texto_voz": "Mandáselo a alguien que ame los policiales.", "texto_pantalla": "", "prompt": "an old detective notebook and magnifying glass on a wooden desk", "broll": [], "emoji": "📲"}
+  {"texto_voz": "Mundial noventa, octavos de final. Brasil le está pasando por arriba a Argentina.", "texto_pantalla": "Italia 1990", "foto": "", "prompt": "a packed 1990 Italian stadium at night, yellow and light blue fans, dramatic floodlights", "broll": [], "emoji": "🏟️"},
+  {"texto_voz": "En una pausa, Branco toma agua de un bidón argentino. Y dice que empieza a marearse.", "texto_pantalla": "", "foto": "Branco", "prompt": "a Brazilian left back in a yellow shirt drinking from a plastic bottle, dizzy", "broll": [], "emoji": "🥤"},
+  {"texto_voz": "Minutos después, Maradona arranca, deja a tres en el camino y se la da a Caniggia.", "texto_pantalla": "", "foto": "Diego Maradona", "prompt": "a curly-haired Argentine playmaker dribbling past defenders", "broll": [], "emoji": "⚽"},
+  {"texto_voz": "Gol. Argentina gana uno a cero y Brasil se vuelve a casa.", "texto_pantalla": "", "foto": "Claudio Caniggia", "prompt": "a long-haired blond striker celebrating a goal, 1990", "broll": [], "emoji": "🥅"},
+  {"texto_voz": "Años después, Maradona insinuó en la tele que esa agua tenía algo.", "texto_pantalla": "", "foto": "Diego Maradona", "prompt": "an old television studio with a famous footballer being interviewed, 2000s", "broll": [], "emoji": "📺"},
+  {"texto_voz": "Bilardo nunca lo negó del todo.", "texto_pantalla": "", "foto": "Carlos Bilardo", "prompt": "a serious Argentine coach with a big nose and mustache shrugging", "broll": [], "emoji": "🤷"},
+  {"texto_voz": "Veredicto: nunca se probó, pero los protagonistas alimentaron el mito.", "texto_pantalla": "", "foto": "", "prompt": "a dusty old case file stamped on a wooden desk", "broll": [], "emoji": "📁"},
+  {"texto_voz": "¿Vos qué decís: mito o verdad?", "texto_pantalla": "", "foto": "", "prompt": "a football resting on a wooden table under a single lamp", "broll": [], "emoji": "❓"}
  ]
 }

@@ -1,9 +1,10 @@
 {
-  "_ayuda": "Editá este archivo desde GitHub (ícono del lápiz). fabrica_activa: en false el reloj no publica nada (las muestras andan igual); ponela en true cuando conectemos la primera red. usuario: tu @ en las redes (si lo dejás vacío, el video sale sin marca). email_aviso: adónde llega el mail diario. plan_semanal: qué serie sale cada día (1=lunes ... 7=domingo). horarios: a qué hora sale cada día (hora de Argentina). publicar: poné true en cada red a medida que la conectes. segundos_max: tope de duración del video; la historia dura lo que necesite, sin relleno. titulo_max: largo máximo del título. fondos: 'ilustraciones' (dibujos hechos con IA, como Cuyo News) o 'clips' (videos de Pixabay). estilo_imagen: cómo se dibujan las ilustraciones (en inglés). voz_gemini: Charon (narrador grave), Puck, Orus, Fenrir, o 'auto'. voz_estilo: cómo tiene que sonar el narrador. musica: archivo mp3 en la carpeta assets (si no está, va sin música); musica_volumen: 0.08 es bajita. Para probar una historia puntual, usá Actions → 'Muestra corta' y escribí el tema.",
+  "_ayuda": "Editá este archivo desde GitHub (ícono del lápiz). fabrica_activa: en false el reloj no publica nada (las muestras andan igual); ponela en true cuando conectemos la primera red. usuario: tu @ en las redes (vacío = sin marca). email_aviso: adónde llega el mail diario y los avisos. plan_semanal: qué serie sale cada día (1=lunes ... 7=domingo); si ponés una lista, rota entre esas series y elige la que tenga la mejor idea. series_respaldo: qué serie sale si ninguna de las del día tiene una idea buena. puntaje_minimo: de 1 a 10, el mínimo que tiene que tener una idea para publicarse (si no llega, cambia de serie y te avisa por mail). horarios: a qué hora sale cada día (hora de Argentina). publicar: poné true en cada red a medida que la conectes. segundos_max: tope de duración del video. titulo_max: largo máximo del título. voz_gemini: Charon, Puck, Orus, Fenrir o 'auto'. musica: mp3 en la carpeta assets. diario_nombre: el nombre del diario que aparece en la portada. efemerides: videos EXTRA de 'Un día como hoy' que salen solo cuando hay un cumpleaños o aniversario importante; umbral: puntaje mínimo de 1 a 10 (8 = ídolos enormes); horarios: en cada uno sale como máximo una efeméride (sumá horarios si querés que puedan salir más por día); activas: false para apagarlas. usar_tendencias: si conecta las ideas con lo que es tendencia hoy en el fútbol.",
   "fabrica_activa": false,
   "usuario": "",
   "email_aviso": "rventrura95@gmail.com",
-  "firma": "Historias reales contadas con ilustraciones hechas con IA.",
+  "firma": "Historias del fútbol contadas con fotos libres e ilustraciones hechas con IA.",
+  "diario_nombre": "El Vestuario",
   "gemini_modelos": [
     "gemini-3.8-flash",
     "gemini-flash-latest",
@@ -16,10 +17,10 @@
   "voz_velocidad": "+10%",
   "voz_pausa_maxima": 0.32,
   "voz_motor": "gemini",
-  "voz_gemini": "Charon",
+  "voz_gemini": "Puck",
   "voz_genero": "hombre",
   "voz_tempo": 1.0,
-  "voz_estilo": "Español rioplatense de Buenos Aires, con voseo y acento porteño natural. Narrador de historias que atrapa: tono intrigante y cercano, como alguien que te cuenta un secreto increíble en voz baja y después remata con energía. Ritmo ágil, pausas cortas solo antes de los giros, sin sonar a locutor de noticiero ni a alguien leyendo.",
+  "voz_estilo": "Español rioplatense de Buenos Aires, con voseo y acento porteño natural. Un futbolero que te cuenta una anécdota increíble en la previa del partido: cercano, con picardía y energía, que sube el tono en el dato fuerte y baja la voz para el suspenso. Ritmo ágil, nada de locutor de noticiero ni de relator gritando.",
   "voz_gemini_modelos": [
     "gemini-3.8-flash-tts",
     "gemini-3.8-flash-lite-tts",
@@ -31,27 +32,46 @@
   "palabras_max": 150,
   "titulo_max": 40,
   "fondos": "ilustraciones",
-  "estilo_imagen": "Cinematic digital painting, storybook illustration style, warm dramatic lighting, rich colors, painterly brush strokes, detailed but clean, single clear focal subject in the center, vertical portrait composition, no text, no letters, no words, no numbers, no logos, no watermark. Scene: ",
+  "estilo_imagen": "Cinematic digital painting, vintage football storybook illustration, warm dramatic stadium lighting, rich colors, painterly brush strokes, film grain, single clear focal subject in the center, vertical portrait composition, generic plain kits without club crests or sponsor logos, no text, no letters, no numbers on shirts, no logos, no watermark. Scene: ",
   "oscurecer": 0.12,
   "postales_por_video": 0,
   "fuentes_por_video": 2,
   "plan_semanal": {
-    "1": "inventos",
-    "2": "laplata",
-    "3": "caso",
-    "4": "personaje",
-    "5": "viral",
-    "6": "laplata",
-    "7": "leyendas"
+    "1": "actualidad",
+    "2": "mitos",
+    "3": "quefue",
+    "4": [
+      "ascenso",
+      "cuanto"
+    ],
+    "5": "previa",
+    "6": "mitos",
+    "7": [
+      "records",
+      "insolitos",
+      "pases",
+      "apodos",
+      "cabalas"
+    ]
   },
   "horarios": {
-    "1": "20:00",
-    "2": "19:00",
-    "3": "21:00",
-    "4": "20:30",
+    "1": "18:30",
+    "2": "20:00",
+    "3": "20:00",
+    "4": "20:00",
     "5": "19:00",
     "6": "13:00",
-    "7": "13:30"
+    "7": "20:30"
+  },
+  "efemerides": {
+    "activas": true,
+    "umbral": 8,
+    "horarios": [
+      "10:30",
+      "12:00",
+      "15:30",
+      "17:00"
+    ]
   },
   "carrusel_dias": [],
   "publicar": {
@@ -64,35 +84,95 @@
   "youtube_privacidad": "public",
   "tiktok_privacidad": "SELF_ONLY",
   "series": {
-    "inventos": {
-      "nombre": "Lo hizo un argentino",
-      "prompt": "Serie: LO HIZO UN ARGENTINO.\nUn invento, un descubrimiento o un \"primero del mundo\" hecho por un argentino o en Argentina (la birome, la huella digital, el colectivo, el bypass, la transfusión con sangre citratada, el dulce de leche como mito, etcétera). Elegí uno con una historia humana detrás: quién era, qué problema tenía, qué le salió mal, cómo se enteró el mundo.\n- Si el \"invento argentino\" es discutido o es un mito, decilo y contá qué hay de cierto: eso también engancha.",
+    "actualidad": {
+      "nombre": "Actualidad del finde",
+      "fuente": "actualidad",
+      "prompt": "Serie: ACTUALIDAD DEL FINDE (sale el lunes).\nLo más picante del fin de semana de fútbol, usando SOLO los DATOS DEL FINDE que te paso: un batacazo, un argentino que la rompió (en cualquier liga del mundo, aunque sea exótica: dos goles en Japón, campeón en Corea), un equipo chico arriba en la tabla, una racha rara, quién lidera la pelea por el título o por el goleo.\n- Elegí UNA historia principal (la más fuerte) y como mucho dos datos de yapa al final.\n- Todo número (goles, puntos, posiciones) tiene que estar en los datos. Si no está, no lo digas.\n- Prioridad: argentinos que la rompieron > batacazos > rachas raras > punteros.",
       "canales": []
     },
-    "laplata": {
-      "nombre": "La Plata secreta",
-      "prompt": "Serie: LA PLATA SECRETA.\nUna historia real, curiosa y poco conocida de la ciudad de La Plata (provincia de Buenos Aires): su fundación y sus rarezas (la ciudad planificada, las diagonales, los números de las calles, la Catedral sin terminar durante un siglo, el Museo de Ciencias Naturales, la República de los Niños, la Universidad, personajes platenses, crímenes, mitos urbanos, el Bosque, los estadios, la quema del muñeco de fin de año, edificios abandonados, etcétera).\n- Tiene que interesarle también a alguien que nunca pisó La Plata: contala como algo increíble que pasó en una ciudad argentina.\n- Nombrá lugares concretos (calles, plazas, edificios) solo si estás seguro.",
+    "previa": {
+      "nombre": "La previa",
+      "fuente": "actualidad",
+      "prompt": "Serie: LA PREVIA (sale el viernes).\nCon los DATOS que te paso (tablas, goleadores, últimos resultados), contá lo más interesante que se viene el fin de semana: quién puede salir campeón o escaparse, un partido clave, un argentino en racha que puede seguir sumando, un equipo chico que sueña.\n- Todo número tiene que estar en los datos.\n- Nada de pronósticos como si fueran seguros: decí qué está en juego.",
       "canales": []
     },
-    "caso": {
-      "nombre": "Caso real",
-      "prompt": "Serie: CASO REAL.\nUn crimen, un robo, una estafa o un misterio real de Argentina que se resolvió (o que sigue abierto y tiene una vuelta increíble). Ejemplos del tipo: el primer crimen resuelto por huella digital, el robo del siglo en el Banco Río, estafas famosas, fugas de película.\n- Respeto por las víctimas: nada morboso ni detalles de violencia gráfica. El foco está en la investigación, la vuelta inesperada o el ingenio.\n- Si hay personas condenadas, contá solo lo que dijo la Justicia. Si es una sospecha, decí que es una sospecha.",
+    "mitos": {
+      "nombre": "Mitos del fútbol",
+      "fuente": "wiki",
+      "prompt": "Serie: MITOS DEL FÚTBOL.\nUn mito, leyenda o historia famosa del fútbol (sobre todo argentino o mundial muy conocido) y qué hay de cierto: el bidón de Branco, la mano de Dios, las cábalas de Bilardo, la maldición de un club, una frase famosa que nunca se dijo así, etcétera.\n- Al final SIEMPRE un veredicto claro en el campo \"veredicto\": VERDAD, MITO, A MEDIAS o NUNCA SE PROBÓ, y la última escena lo dice con tus palabras.\n- Solo hechos documentados. Si algo es versión popular, decilo así.\n- Nombres de jugadores, clubes, años y cifras solo si estás seguro o si están en el MATERIAL.",
       "canales": []
     },
-    "personaje": {
-      "nombre": "El argentino que...",
-      "prompt": "Serie: EL ARGENTINO QUE...\nUn argentino o argentina con una historia increíble y poco conocida: el hacker que encontró Estados Unidos espiando sus redes, el que se escapó de algo imposible, la primera en lograr algo, alguien que llegó lejísimos desde abajo, un ídolo olvidado.\n- El título y el gancho arrancan por lo que HIZO, no por quién era (\"El pibe que hackeó a la Marina de Estados Unidos\").\n- Personas vivas: solo hechos públicos y verificables, nada de su vida privada.",
+    "undia": {
+      "nombre": "Un día como hoy",
+      "fuente": "efemeride",
+      "prompt": "Serie: UN DÍA COMO HOY.\nUna efeméride futbolera de la FECHA DE HOY (te paso la lista de lo que pasó un día como hoy): un gol, un debut, un título, un partido histórico o el nacimiento de un ídolo.\n- Solo ídolos históricos de verdad: jugadores de 60 años o más (o ya fallecidos), leyendas de la Selección o de un club, incluidos ídolos de equipos chicos o del ascenso.\n- Arrancá con \"Un día como hoy\" o con el año, y contá la historia, no solo el dato.\n- Solo hechos documentados. Si algo es versión popular, decilo así.\n- Nombres de jugadores, clubes, años y cifras solo si estás seguro o si están en el MATERIAL.",
       "canales": []
     },
-    "viral": {
-      "nombre": "Se hizo viral",
-      "prompt": "Serie: SE HIZO VIRAL.\nUna historia argentina que explotó en redes, en la tele o en los diarios (un video, un personaje, una noticia insólita, un récord, un meme con historia real detrás) y qué pasó después, o lo que casi nadie sabe de esa historia.\n- Contá el momento viral en la primera frase y después la parte que la gente no conoce.\n- Personas comunes que se volvieron virales: con respeto, sin burlarte y sin datos privados.\n- Si no estás seguro de un detalle (fechas, cifras, vistas), no lo pongas.",
+    "quefue": {
+      "nombre": "¿Qué fue de...?",
+      "fuente": "wiki",
+      "prompt": "Serie: ¿QUÉ FUE DE...?\nUn jugador que fue furor y hoy tiene un presente llamativo.\n- Internacionales: solo conocidos en todo el mundo o protagonistas de algo enorme (también brasileños que brillaron en Europa).\n- Argentinos: solo si el presente es realmente sorprendente (trabaja de algo inesperado, tiene una empresa conocida, la está pasando mal).\n- Si la está pasando mal: con respeto, sin morbo y solo lo que ya se publicó en los medios.\n- Solo hechos documentados. Si algo es versión popular, decilo así.\n- Nombres de jugadores, clubes, años y cifras solo si estás seguro o si están en el MATERIAL.",
       "canales": []
     },
-    "leyendas": {
-      "nombre": "Leyendas argentinas",
-      "prompt": "Serie: LEYENDAS ARGENTINAS.\nUna leyenda, mito popular o creencia argentina (el lobizón y el séptimo hijo varón, la Difunta Correa, el Gauchito Gil, la Llorona, el Pombero, la Salamanca, fantasmas famosos, mitos urbanos de ciudades argentinas) y qué hay de real detrás.\n- Contala con clima, como un cuento de fogón, y al final separá lo que es leyenda de lo que es historia comprobada (por ejemplo, la ley del padrinazgo presidencial del séptimo hijo existe de verdad).\n- Con respeto por las creencias religiosas y populares: contás, no te burlás.",
+    "ascenso": {
+      "nombre": "Ídolos del ascenso",
+      "fuente": "wiki",
+      "prompt": "Serie: ÍDOLOS DEL ASCENSO.\nUn ídolo histórico de un equipo chico o del ascenso argentino (o de un club chico del mundo) con una historia que cualquier futbolero quiere escuchar: goleador histórico, récord de partidos, la vez que eliminó a un grande, el que rechazó a un grande por amor a la camiseta.\n- Solo hechos documentados. Si algo es versión popular, decilo así.\n- Nombres de jugadores, clubes, años y cifras solo si estás seguro o si están en el MATERIAL.",
+      "canales": []
+    },
+    "cuanto": {
+      "nombre": "¿Cuánto ganaba...?",
+      "fuente": "wiki",
+      "prompt": "Serie: ¿CUÁNTO GANABA...?\nSueldos, premios y pases históricos llevados a valores de hoy (por ejemplo, cuánto pagó el Napoli por Maradona o cuánto cobraba un campeón del mundo del 78).\n- La cifra original solo si está documentada. La conversión a hoy decila como aproximada y explicá contra qué la comparás (por ejemplo, en dólares de hoy ajustados por inflación).\n- Solo hechos documentados. Si algo es versión popular, decilo así.\n- Nombres de jugadores, clubes, años y cifras solo si estás seguro o si están en el MATERIAL.",
+      "canales": []
+    },
+    "records": {
+      "nombre": "Récords raros",
+      "fuente": "wiki",
+      "prompt": "Serie: RÉCORDS RAROS.\nUn récord insólito del fútbol: el gol más rápido, el arquero goleador, el más joven o el más viejo, rachas imposibles, goleadas absurdas, más expulsiones, más clubes en una carrera.\n- Solo hechos documentados. Si algo es versión popular, decilo así.\n- Nombres de jugadores, clubes, años y cifras solo si estás seguro o si están en el MATERIAL.",
+      "canales": []
+    },
+    "insolitos": {
+      "nombre": "Partidos insólitos",
+      "fuente": "wiki",
+      "prompt": "Serie: PARTIDOS INSÓLITOS.\nUn partido real que parece inventado: el 149 a 0 de Madagascar, partidos suspendidos por cosas absurdas, jugadores que terminaron atajando, partidos que se jugaron en dos días.\n- Solo hechos documentados. Si algo es versión popular, decilo así.\n- Nombres de jugadores, clubes, años y cifras solo si estás seguro o si están en el MATERIAL.",
+      "canales": []
+    },
+    "pases": {
+      "nombre": "Pases insólitos",
+      "fuente": "wiki",
+      "prompt": "Serie: PASES INSÓLITOS.\nUn pase o fichaje increíble: jugadores cambiados por pelotas, camisetas o comida, y fichajes carísimos que fueron un desastre.\n- Solo hechos documentados. Si algo es versión popular, decilo así.\n- Nombres de jugadores, clubes, años y cifras solo si estás seguro o si están en el MATERIAL.",
+      "canales": []
+    },
+    "apodos": {
+      "nombre": "Apodos con historia",
+      "fuente": "wiki",
+      "prompt": "Serie: APODOS CON HISTORIA.\nPor qué a un jugador conocido le dicen como le dicen (el Burrito, la Pulga, el Matador, el Loco, la Brujita, el Mono, el Pato...). Contá la anécdota real del origen; si hay varias versiones, decilo.\n- Solo hechos documentados. Si algo es versión popular, decilo así.\n- Nombres de jugadores, clubes, años y cifras solo si estás seguro o si están en el MATERIAL.",
+      "canales": []
+    },
+    "cabalas": {
+      "nombre": "Cábalas",
+      "fuente": "wiki",
+      "prompt": "Serie: CÁBALAS.\nLas supersticiones más locas de jugadores, técnicos e hinchas (Bilardo es una mina de oro): qué hacían, por qué y si funcionó.\n- Solo cábalas documentadas, contadas con humor y sin burlarse.\n- Solo hechos documentados. Si algo es versión popular, decilo así.\n- Nombres de jugadores, clubes, años y cifras solo si estás seguro o si están en el MATERIAL.",
       "canales": []
     }
-  }
+  },
+  "puntaje_minimo": 7,
+  "series_respaldo": [
+    "mitos",
+    "insolitos"
+  ],
+  "ligas": [
+    "PL",
+    "PD",
+    "SA",
+    "BL1",
+    "FL1",
+    "CL",
+    "BSA",
+    "PPL",
+    "DED",
+    "ELC"
+  ],
+  "usar_tendencias": true
 }

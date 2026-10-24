@@ -228,6 +228,100 @@ def portada_historia(img_path, l1, l2, usuario, path):
     im.save(path, "JPEG", quality=92)
 
 
+ROJO_SELLO = (196, 22, 34)
+PAPEL = (243, 235, 216)
+TINTA = (28, 24, 20)
+
+
+def sello(texto, path, ancho=760):
+    """Sello de veredicto (MITO, VERDAD, A MEDIAS, NUNCA SE PROBÓ), torcido como un sello de goma."""
+    from PIL import ImageFilter
+    alto = 230
+    im = Image.new("RGBA", (ancho, alto), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    color = (22, 140, 60, 240) if texto == "VERDAD" else (ROJO_SELLO + (240,))
+    d.rounded_rectangle([10, 10, ancho - 10, alto - 10], 26, outline=color, width=16)
+    d.rounded_rectangle([34, 34, ancho - 34, alto - 34], 16, outline=color, width=4)
+    fnt, lineas = mk.ajustar(d, texto, "titulo" if mk.es_anton() else "bold", ancho - 120, 1, 130, 50)
+    d.text((ancho // 2, alto // 2), lineas[0], font=fnt, fill=color, anchor="mm")
+    # textura gastada
+    import random
+    r = random.Random(len(texto))
+    px = im.load()
+    for _ in range(ancho * alto // 9):
+        x, y = r.randrange(ancho), r.randrange(alto)
+        if px[x, y][3]:
+            px[x, y] = px[x, y][:3] + (r.randint(60, 200),)
+    im = im.filter(ImageFilter.GaussianBlur(0.6)).rotate(-9, expand=True, resample=Image.BICUBIC)
+    im.save(path)
+    return path
+
+
+def portada_diario(img_path, l1, l2, usuario, nombre_diario, fecha, veredicto, path):
+    """Tapa de diario de época. Todo lo importante (titular, foto y sello) queda entre y=285 y y=1635,
+    la zona que se ve en la grilla de Instagram (4:5) y en la vista cuadrada."""
+    import random
+    from PIL import ImageFilter, ImageOps
+    im = Image.new("RGB", (W, H), PAPEL)
+    d = ImageDraw.Draw(im)
+    r = random.Random(7)
+    for _ in range(14000):  # grano de papel
+        x, y = r.randrange(W), r.randrange(H)
+        v = r.randint(200, 232)
+        d.point((x, y), fill=(v, v - 8, v - 24))
+    # cabezal
+    fm, lm = mk.ajustar(d, nombre_diario.upper(), "diario", W - 140, 1, 120, 60)
+    d.text((W // 2, 330), lm[0], font=fm, fill=TINTA, anchor="mm")
+    d.line([(60, 410), (W - 60, 410)], fill=TINTA, width=7)
+    d.line([(60, 423), (W - 60, 423)], fill=TINTA, width=2)
+    fs = mk.fuente("diario_texto", 34)
+    d.text((70, 440), fecha or "Edición especial", font=fs, fill=TINTA)
+    d.text((W - 70, 440), "Edición especial" if fecha else "", font=fs, fill=TINTA, anchor="ra")
+    d.line([(60, 492), (W - 60, 492)], fill=TINTA, width=2)
+    # titular
+    ft, lt = mk.ajustar(d, (l1 or "").upper(), "diario", W - 120, 2, 150, 70)
+    y = 515
+    for ln in lt:
+        d.text((W // 2, y), ln, font=ft, fill=TINTA, anchor="ma")
+        y += int(ft.size * 1.05)
+    if l2:
+        f2, l2s = mk.ajustar(d, l2, "diario_texto", W - 200, 1, 58, 36)
+        d.text((W // 2, y + 6), l2s[0], font=f2, fill=(90, 70, 50), anchor="ma")
+        y += int(f2.size * 1.4)
+    # foto en blanco y negro con marco, como en un diario
+    tope = 1560
+    caja_y0 = max(y + 24, 760)
+    caja_alto = tope - caja_y0
+    foto = Image.open(img_path).convert("RGB")
+    foto = ImageOps.grayscale(foto).convert("RGB")
+    foto = ImageOps.autocontrast(foto, cutoff=1)
+    foto = Image.blend(foto, Image.new("RGB", foto.size, (120, 100, 70)), 0.12)  # tono sepia suave
+    caja_ancho = W - 220
+    foto = ImageOps.fit(foto, (caja_ancho, caja_alto), Image.LANCZOS, centering=(0.5, 0.3))
+    marco = Image.new("RGB", (caja_ancho + 24, caja_alto + 24), (250, 246, 236))
+    marco.paste(foto, (12, 12))
+    sombra = Image.new("RGBA", (marco.width + 40, marco.height + 40), (0, 0, 0, 0))
+    ImageDraw.Draw(sombra).rectangle([20, 26, marco.width + 20, marco.height + 26], fill=(0, 0, 0, 110))
+    sombra = sombra.filter(ImageFilter.GaussianBlur(12))
+    x0 = (W - marco.width) // 2
+    im.paste(sombra, (x0 - 20, caja_y0 - 20), sombra)
+    im.paste(marco, (x0, caja_y0))
+    # columnas de texto falso a los costados del pie
+    for k in range(4):
+        yy = tope + 30 + k * 26
+        d.rectangle([90, yy, W // 2 - 30, yy + 10], fill=(160, 150, 132))
+        d.rectangle([W // 2 + 30, yy, W - 90 - (60 if k == 3 else 0), yy + 10], fill=(160, 150, 132))
+    if veredicto:
+        tmp = Path(str(path) + ".sello.png")
+        sello(veredicto, tmp, 700)
+        s_im = Image.open(tmp)
+        im.paste(s_im, ((W - s_im.width) // 2, tope - s_im.height - 40), s_im)
+        tmp.unlink(missing_ok=True)
+    if usuario:
+        d.text((W // 2, 1735), usuario, font=mk.fuente("bold", 40), fill=TINTA, anchor="mm")
+    im.save(path, "JPEG", quality=92)
+
+
 # ---------------------------------------------------------------- voz
 async def tts_edge(text, mp3_path):
     import edge_tts

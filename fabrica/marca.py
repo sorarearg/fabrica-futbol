@@ -19,6 +19,8 @@ _BUSQUEDA = {
     "bold": ["Poppins-Bold.ttf", "DejaVuSans-Bold.ttf"],
     "semibold": ["Poppins-SemiBold.ttf", "Poppins-Medium.ttf", "DejaVuSans-Bold.ttf"],
     "regular": ["Poppins-Regular.ttf", "Poppins-Medium.ttf", "DejaVuSans.ttf"],
+    "diario": ["AbrilFatface-Regular.ttf", "DejaVuSerif-Bold.ttf"],
+    "diario_texto": ["OldStandard-Bold.ttf", "DejaVuSerif-Bold.ttf", "DejaVuSerif.ttf"],
 }
 _CARPETAS = [FONTS, Path("/usr/share/fonts/truetype/google-fonts"), Path("/usr/share/fonts/truetype/dejavu")]
 

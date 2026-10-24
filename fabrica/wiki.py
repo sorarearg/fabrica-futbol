@@ -5,7 +5,7 @@ import re
 from . import util
 
 API = "https://{idioma}.wikipedia.org/w/api.php"
-CABECERA = {"User-Agent": "fabrica-historias/1.0 (https://github.com; bot educativo)"}
+CABECERA = {"User-Agent": "fabrica-futbol/1.0 (https://github.com; bot educativo)"}
 
 
 def _get(idioma, **params):
@@ -69,3 +69,33 @@ def material(consultas, maximo_total=12000):
 
 def como_texto(articulos):
     return "\n\n".join(f'ARTÍCULO DE WIKIPEDIA ({a["idioma"]}): {a["titulo"]}\n{a["texto"]}' for a in articulos)
+
+
+MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre",
+         "noviembre", "diciembre"]
+_FUTBOL = re.compile(r"f[úu]tbol|futbolista|gol(es)?\b|mundial|copa |selecci[óo]n|libertadores|campe[óo]n|"
+                     r"club atl[ée]tico|boca juniors|river plate|independiente|racing|san lorenzo|estudiantes|"
+                     r"gimnasia|newell|rosario central|v[ée]lez|hurac[áa]n|lan[úu]s|banfield|arquero|delantero|"
+                     r"centrocampista|defensor|entrenador de f|footballer|football", re.I)
+
+
+def efemerides(fecha):
+    """Lo que pasó un día como hoy en el fútbol, según las páginas de Wikipedia del día (español e inglés)."""
+    lineas = []
+    paginas = [("es", f"{fecha.day} de {MESES[fecha.month - 1]}"),
+               ("en", fecha.strftime("%B ") + str(fecha.day))]
+    for idioma, titulo in paginas:
+        e = extracto(titulo, idioma, maximo=60000)
+        if not e:
+            continue
+        seccion = ""
+        for ln in e["texto"].splitlines():
+            ln = ln.strip()
+            if not ln:
+                continue
+            if len(ln) < 40 and not re.match(r"^\d", ln):
+                seccion = ln
+                continue
+            if _FUTBOL.search(ln) and re.match(r"^\d{3,4}", ln):
+                lineas.append(f"[{idioma} · {seccion}] {ln[:220]}")
+    return lineas[:80]

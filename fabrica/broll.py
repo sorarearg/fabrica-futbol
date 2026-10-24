@@ -144,7 +144,7 @@ def recortar(origen, dur, destino, desde=None):
 def clip_de_imagen(img, dur, destino, acercar=True):
     """Imagen cuadrada → fondo vertical desenfocado + imagen al centro con zoom lento."""
     base = Image.open(img).convert("RGB")
-    if base.height / base.width > 1.3:
+    if base.height / base.width > 1.6:
         # imagen vertical: ocupa toda la pantalla
         esc = max(W / base.width, H / base.height)
         grande = base.resize((int(base.width * esc + 1), int(base.height * esc + 1)), Image.LANCZOS)
@@ -152,10 +152,15 @@ def clip_de_imagen(img, dur, destino, acercar=True):
         fondo = grande.crop((x, y, x + W, y + H))
     else:
         # imagen cuadrada: fondo desenfocado y la imagen entera al centro
-        fondo = base.resize((H, H)).crop(((H - W) // 2, 0, (H - W) // 2 + W, H)).filter(ImageFilter.GaussianBlur(40))
+        esc_f = max(W / base.width, H / base.height)
+        fondo = base.resize((int(base.width * esc_f) + 1, int(base.height * esc_f) + 1))
+        fondo = fondo.crop(((fondo.width - W) // 2, (fondo.height - H) // 2, (fondo.width - W) // 2 + W,
+                            (fondo.height - H) // 2 + H)).filter(ImageFilter.GaussianBlur(40))
         fondo = Image.eval(fondo, lambda v: int(v * 0.72))
-        lado = 1080
-        fondo.paste(base.resize((lado, lado), Image.LANCZOS), ((W - lado) // 2, (H - lado) // 2 - 80))
+        # la imagen entera, sin deformar, lo más grande posible al centro
+        esc = min(W / base.width, 1300 / base.height)
+        frente = base.resize((int(base.width * esc), int(base.height * esc)), Image.LANCZOS)
+        fondo.paste(frente, ((W - frente.width) // 2, (H - frente.height) // 2 - 80))
     compuesto = Path(destino).with_suffix(".png")
     fondo.save(compuesto)
     cuadros = max(1, round(dur * FPS))

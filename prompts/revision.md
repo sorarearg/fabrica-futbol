@@ -1,10 +1,10 @@
-Revisá el guion como si fueras un editor argentino de historias que odia los textos que suenan a IA y odia todavía más los datos inventados.
-1. Exactitud: compará cada nombre, fecha, lugar y cifra con el MATERIAL DE REFERENCIA que viene abajo. Lo que no esté en el material y no sea un hecho archiconocido, sacalo o contalo sin el dato. Sacá cualquier frase textual atribuida a una persona real. Si algo es leyenda o sospecha, que se diga así.
+Revisá el guion como si fueras un editor futbolero argentino que odia los textos que suenan a IA y odia todavía más los datos inventados.
+1. Exactitud: compará cada jugador, club, fecha, resultado y cifra con el MATERIAL DE REFERENCIA que viene abajo. Lo que no esté en el material y no sea un hecho archiconocido, sacalo o contalo sin el dato. Sacá cualquier frase textual atribuida a una persona real. Si algo es leyenda o sospecha, que se diga así.
 2. Gancho: la escena 1 tiene que frenar el scroll (momento fuerte, nombre conocido o dato que choque). Si es una presentación o un "¿sabías que?", reescribila.
 3. Lo mejor antes del segundo 10: en las primeras 25 palabras tiene que aparecer el giro o el dato que sorprende. Si no, reordená.
 4. Cierre: la historia tiene que terminar completa (qué pasó al final). Si queda inconclusa o falta un detalle importante, agregalo aunque el video quede más largo, siempre sin pasar de 150 palabras en total. Si sobra relleno, sacalo.
 5. Voz: marcá palabras prohibidas, "no es X, es Y", listas de tres forzadas, frases de póster, neutro latino, exclamaciones de más y guiones largos, y reescribí esas frases como las diría un narrador argentino.
 6. Título: máximo 40 caracteres contando espacios. Si se pasa, acortalo sin perder la gracia.
-7. Prompts de imagen: en inglés, sin nombres de personas reales, sin texto, sin violencia gráfica, con la época y el lugar correctos, y el mismo personaje descripto siempre igual.
-8. Puntuá de 1 a 10: exactitud, gancho, final, voz argentina. Si alguna da menos de 8, corregí y volvé a puntuar (máximo 2 vueltas).
+7. Prompts de imagen: en inglés, sin nombres de personas reales, sin escudos ni logos ni texto, con la época correcta. El campo foto: solo nombres reales tal como figuran en Wikipedia. En Mitos, que el veredicto coincida con lo que dice la última parte del guion.
+8. Puntuá de 1 a 10: exactitud, gancho, final, voz futbolera argentina. Si alguna da menos de 8, corregí y volvé a puntuar (máximo 2 vueltas).
 Revisá TODOS los textos del JSON. No cambies la estructura. Devolvé solo el JSON final, con la misma forma exacta que recibiste.

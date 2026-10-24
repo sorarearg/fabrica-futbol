@@ -1,8 +1,8 @@
-# Política de privacidad — Fábrica de Historias
+# Política de privacidad — Fábrica de Fútbol
 
 *Última actualización: 23 de octubre de 2026*
 
-**Fábrica de Historias** es una herramienta de uso personal de Ramiro Ventura. Sirve para crear videos cortos de historias reales y curiosas de Argentina y para publicarlos automáticamente en **sus propias cuentas** de YouTube e Instagram. No es un servicio abierto al público: nadie más inicia sesión ni conecta cuentas.
+**Fábrica de Fútbol** es una herramienta de uso personal de Ramiro Ventura. Sirve para crear videos cortos de historias, mitos y actualidad del fútbol y para publicarlos automáticamente en **sus propias cuentas** de YouTube e Instagram. No es un servicio abierto al público: nadie más inicia sesión ni conecta cuentas.
 
 ## Qué datos usa
 
@@ -41,4 +41,4 @@ Por consultas sobre esta política: un *issue* en este repositorio.
 
 ### English summary
 
-Fábrica de Historias is a personal tool used only by its author to create short videos and publish them to his own YouTube and Instagram accounts. It does not collect personal data from third parties, does not sell or share data, and stores access credentials encrypted in GitHub Actions secrets. It uses YouTube API Services; see the [YouTube Terms of Service](https://www.youtube.com/t/terms) and the [Google Privacy Policy](https://policies.google.com/privacy). Access can be revoked at any time at [Google security settings](https://myaccount.google.com/permissions).
+Fábrica de Fútbol is a personal tool used only by its author to create short videos and publish them to his own YouTube and Instagram accounts. It does not collect personal data from third parties, does not sell or share data, and stores access credentials encrypted in GitHub Actions secrets. It uses YouTube API Services; see the [YouTube Terms of Service](https://www.youtube.com/t/terms) and the [Google Privacy Policy](https://policies.google.com/privacy). Access can be revoked at any time at [Google security settings](https://myaccount.google.com/permissions).

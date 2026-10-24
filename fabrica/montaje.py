@@ -118,7 +118,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 COMODINES = ["old newspaper", "old photographs", "vintage typewriter", "Buenos Aires street",
              "old map", "candle in the dark", "rain on window", "clock ticking"]
 
-PUNTUAR = """Sos editor de videos cortos para una cuenta argentina de historias reales y curiosas.
+PUNTUAR = """Sos editor de videos cortos para una cuenta argentina de fútbol.
 Te paso las escenas (lo que se dice) con opciones de video de fondo, y al final unos COMODINES.
 Mirá la imagen de cada opción y poné un puntaje:
 3 = muestra justo lo que se dice: la acción, el objeto o el lugar.
@@ -378,6 +378,9 @@ def _fondos(escenas, tiempos, trabajo, seed):
     return segmentos, de_video, banco, de_propios, postales_usadas
 
 
+_FOTOS = {}
+
+
 def _fondos_ilustrados(escenas, tiempos, trabajo, seed):
     """Una ilustración hecha con IA por escena (dos si la escena es larga), con zoom lento.
     Si la escena muestra un lugar real que se puede filmar, prueba primero un clip de Pixabay
@@ -412,6 +415,7 @@ def _fondos_ilustrados(escenas, tiempos, trabajo, seed):
 
     segmentos, colocados, motores, n = [], [], {}, 0
     primera_imagen = None
+    creditos, fotos_usadas = {}, {}
     for i, (esc, (ini, fin)) in enumerate(zip(escenas, tiempos)):
         dur = fin - ini
         destino = trabajo / f"fondo{n:03d}.mp4"
@@ -431,6 +435,18 @@ def _fondos_ilustrados(escenas, tiempos, trabajo, seed):
             segmentos.append(destino)
             colocados.append({"dest": destino, "largo": dur, "i": i, "clip": puesto, "n": n})
             motores["clip de " + banco] = motores.get("clip de " + banco, 0) + 1
+            n += 1
+            continue
+        foto = None
+        if esc.get("foto"):
+            from . import fotos
+            foto = fotos.foto(esc["foto"], trabajo / f"foto_{abs(hash(esc['foto'])) % 10**8}.jpg")
+        if foto:
+            creditos.setdefault(foto["credito"], foto["nombre"])
+            fotos_usadas.setdefault(foto["nombre"], foto["ruta"])
+            broll.clip_de_imagen(foto["ruta"], dur, destino, acercar=(n % 2 == 0))
+            segmentos.append(destino)
+            motores["foto de Commons"] = motores.get("foto de Commons", 0) + 1
             n += 1
             continue
         cortes = 1 if dur < 4.6 else 2
@@ -457,6 +473,8 @@ def _fondos_ilustrados(escenas, tiempos, trabajo, seed):
                 video.make_image(esc.get("prompt") or esc["texto"], "", img, seed + 999 + idx, esc.get("emoji") or "📜")
                 broll.clip_de_imagen(img, x["largo"], x["dest"])
     util.log("Fondos:", motores)
+    _FOTOS.clear()
+    _FOTOS.update({"creditos": list(creditos), "fotos": fotos_usadas})
     return segmentos, motores, primera_imagen
 
 
@@ -470,22 +488,31 @@ def _musica(cfg):
 
 
 def _portada(segmentos, contenido, destino, trabajo, primera_imagen=None, usuario="", seed=1):
-    from . import video
+    """Portada con forma de tapa de diario: titular arriba, la foto (o ilustración) al centro y,
+    en Mitos, el sello del veredicto. Todo dentro de la zona central para que no se corte en la grilla."""
+    from . import fotos, video
     mini = contenido.get("miniatura", {})
     img = trabajo / "img_portada.png"
-    cfg = util.config()
-    motor = "tarjeta"
-    if cfg.get("fondos", "ilustraciones") == "ilustraciones" and mini.get("prompt"):
-        motor = video.make_image(mini["prompt"], "", img, seed + 777, mini.get("emoji", "📜"))
-    if motor == "tarjeta":
-        if primera_imagen and Path(primera_imagen).exists():
+    listo = None
+    if mini.get("foto"):
+        listo = fotos.foto(mini["foto"], trabajo / "foto_portada.jpg")
+        if listo:
+            _FOTOS.setdefault("creditos", [])
+            if listo["credito"] not in _FOTOS["creditos"]:
+                _FOTOS["creditos"].append(listo["credito"])
+            img = listo["ruta"]
+    if not listo and (_FOTOS.get("fotos") or {}):
+        img = next(iter(_FOTOS["fotos"].values()))
+        listo = True
+    if not listo:
+        motor = video.make_image(mini.get("prompt") or contenido["escenas"][0].get("prompt", ""), "", img, seed + 777,
+                                 mini.get("emoji", "⚽"))
+        if motor == "tarjeta" and primera_imagen and Path(primera_imagen).exists():
             shutil.copy(primera_imagen, img)
-        else:
-            try:
-                _run(["ffmpeg", "-y", "-v", "error", "-ss", "0.4", "-i", str(segmentos[0]), "-frames:v", "1", str(img)])
-            except Exception:  # noqa
-                video.fallback_card("", img, mini.get("emoji", "📜"))
-    video.portada_historia(img, mini.get("linea1") or contenido["titulo"], mini.get("linea2", ""), usuario, destino)
+    cfg = util.config()
+    video.portada_diario(img, mini.get("linea1") or contenido["titulo"], mini.get("linea2", ""), usuario,
+                         cfg.get("diario_nombre", "EL VESTUARIO"), contenido.get("fecha_tapa", ""),
+                         contenido.get("veredicto", ""), destino)
 
 
 # ---------------------------------------------------------------- todo junto
@@ -496,7 +523,8 @@ def generar(contenido, serie_nombre, usuario, carpeta, segundos_max=None):
     trabajo = salida / "_trabajo"
     trabajo.mkdir(parents=True, exist_ok=True)
     escenas = [{"texto": e["texto_voz"], "pantalla": e.get("texto_pantalla", ""), "emoji": e.get("emoji", ""),
-                "prompt": e.get("prompt", ""), "broll": e.get("broll", "")} for e in contenido["escenas"]]
+                "prompt": e.get("prompt", ""), "broll": e.get("broll", ""), "foto": e.get("foto", "")}
+               for e in contenido["escenas"]]
     seed = random.randint(1, 10_000_000)
 
     # 1) voz y tiempos
@@ -530,16 +558,29 @@ def generar(contenido, serie_nombre, usuario, carpeta, segundos_max=None):
     musica = _musica(cfg)
     fonts = util.RAIZ / "fonts"
     oscuro = float(cfg.get("oscurecer", 0.22))
+    sello_desde = None
+    if contenido.get("veredicto"):
+        from . import video
+        video.sello(contenido["veredicto"], trabajo / "sello.png")
+        if segundos_max and len(escenas) < len(contenido["escenas"]):
+            sello_desde = max(0.0, total - 3.0)  # en la muestra corta se ve al final, para que lo puedas evaluar
+        else:
+            sello_desde = tiempos[-2][0] if len(tiempos) >= 2 else tiempos[-1][0]
     filtro_v = (f"[0:v]drawbox=x=0:y=0:w=iw:h=ih:color=black@{oscuro}:t=fill,"
                 f"ass={trabajo / 'subs.ass'}:fontsdir={fonts}[v0];"
                 f"color=c=0xFFD400:s={W}x14:r={FPS}[barra];"
-                f"[v0][barra]overlay=x='-w+w*t/{total}':y={H - 14}:shortest=1[v]")
+                f"[v0][barra]overlay=x='-w+w*t/{total}':y={H - 14}:shortest=1" + ("[v1];" if sello_desde is not None else "[v]"))
     cmd = ["ffmpeg", "-y", "-v", "error", "-i", str(trabajo / "fondo.mp4"), "-i", str(wav)]
+    entrada_musica = 2
+    if sello_desde is not None:
+        cmd += ["-loop", "1", "-i", str(trabajo / "sello.png")]
+        filtro_v += f"[v1][2:v]overlay=x=(W-w)/2:y=1330:enable='gte(t,{sello_desde:.2f})':shortest=1[v]"
+        entrada_musica = 3
     if musica:
         vol = float(cfg.get("musica_volumen", 0.08))
         cmd += ["-stream_loop", "-1", "-i", str(musica)]
         filtro_a = (f"[1:a]aresample=44100,apad=pad_dur=0.6[voz];"
-                    f"[2:a]aresample=44100,volume={vol},afade=t=out:st={max(0.0, total - 1.5):.2f}:d=1.5[mus];"
+                    f"[{entrada_musica}:a]aresample=44100,volume={vol},afade=t=out:st={max(0.0, total - 1.5):.2f}:d=1.5[mus];"
                     f"[voz][mus]amix=inputs=2:duration=first:dropout_transition=0:normalize=0,"
                     f"loudnorm=I=-14:TP=-1.5:LRA=11[a]")
     else:
@@ -556,7 +597,8 @@ def generar(contenido, serie_nombre, usuario, carpeta, segundos_max=None):
 
     meta = {"duracion": round(voz.duracion(salida / "video.mp4"), 2), "voz": motor, "clips": len(segmentos),
             "clips_stock": de_pexels, "banco": banco, "clips_propios": de_propios, "postales": de_postales,
-            "imagenes": motores, "musica": musica.name if musica else None, "voz_seg": round(dur_voz, 2)}
+            "imagenes": motores, "musica": musica.name if musica else None, "voz_seg": round(dur_voz, 2),
+            "creditos": _FOTOS.get("creditos", [])}
     (salida / "meta.json").write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
     util.log("Video:", json.dumps(meta, ensure_ascii=False))
     shutil.rmtree(trabajo, ignore_errors=True)

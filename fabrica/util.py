@@ -45,7 +45,7 @@ def log(*a):
 _SECRETOS = ["GEMINI_API_KEY", "YT_API_KEY", "SUPADATA_KEY", "CF_ACCOUNT_ID", "CF_API_TOKEN", "IG_TOKEN",
              "YT_CLIENT_ID", "YT_CLIENT_SECRET", "YT_REFRESH_TOKEN", "TIKTOK_CLIENT_KEY", "TIKTOK_CLIENT_SECRET",
              "TIKTOK_REFRESH_TOKEN", "SMTP_USER", "SMTP_PASS", "GH_PAT", "FB_PAGE_TOKEN", "IG_FB_TOKEN",
-             "PIXABAY_API_KEY", "PEXELS_API_KEY", "POLLINATIONS_KEY"]
+             "PIXABAY_API_KEY", "PEXELS_API_KEY", "POLLINATIONS_KEY", "FOOTBALL_DATA_KEY"]
 
 
 def ocultar(texto):
@@ -66,6 +66,18 @@ def avisar(titulo, mensaje):
     if destino:
         with open(destino, "a", encoding="utf-8") as f:
             f.write(f"> ⚠️ **{titulo}**: {msg}\n\n")
+
+
+def avisar_mail(titulo, mensaje):
+    """Aviso que además llega por mail (si están SMTP_USER y SMTP_PASS). Nunca corta la ejecución."""
+    avisar(titulo, mensaje)
+    try:
+        import html as _html
+        from . import publicar
+        cuerpo = "<br>".join(_html.escape(x) for x in ocultar(mensaje).splitlines())
+        publicar.mail(f"[Fábrica de fútbol] {titulo}", f"<p>{cuerpo}</p>")
+    except Exception as e:  # noqa
+        log("No pude mandar el mail del aviso:", ocultar(e))
 
 
 def avisar_error(accion, e):

@@ -12,11 +12,61 @@ SALIDA = util.RAIZ / "out"
 SITIO = SALIDA / "sitio"
 
 
-def _serie_del_dia(cfg):
+def _series_del_dia(cfg):
+    """Series a probar hoy, en orden. Si el día tiene una lista, rota: primero la que hace más que no sale.
+    Al final van las de respaldo, por si ninguna tiene una idea buena."""
     forzada = (os.getenv("SERIE") or "").strip().lower()
     if forzada in cfg["series"]:
-        return forzada
-    return cfg["plan_semanal"][str(util.ahora().isoweekday())]
+        return [forzada]
+    del_dia = cfg["plan_semanal"][str(util.ahora().isoweekday())]
+    lista = del_dia if isinstance(del_dia, list) else [del_dia]
+    historial = util.leer_json("data/historial.json", [])
+    ultima = {}
+    for i, h in enumerate(historial):
+        ultima[h.get("serie")] = i
+    lista = sorted(lista, key=lambda k: ultima.get(k, -1))
+    for r in cfg.get("series_respaldo", []):
+        if r not in lista and r in cfg["series"]:
+            lista.append(r)
+    return [k for k in lista if k in cfg["series"]]
+
+
+def _serie_del_dia(cfg):
+    return _series_del_dia(cfg)[0]
+
+
+def _escribir_con_respaldo(cfg, escritor, fuentes, titulos, tema):
+    """Prueba las series del día en orden; si una no tiene ideas buenas, avisa y pasa a la siguiente."""
+    avisos = []
+    for clave in _series_del_dia(cfg):
+        serie = cfg["series"][clave]
+        util.log("Serie:", serie["nombre"])
+        try:
+            contenido = escritor.escribir(serie, fuentes, titulos, tema)
+            if avisos:
+                util.avisar_mail("La fábrica cambió de serie por falta de ideas buenas",
+                            "\n".join(avisos) + f"\n\nSalió en su lugar: {serie['nombre']}.")
+            return clave, serie, contenido
+        except escritor.SinIdeas as e:
+            avisos.append(str(e))
+            util.log("Sin ideas buenas:", e)
+            if tema:
+                break
+    util.avisar_mail("La fábrica no encontró ninguna idea buena hoy", "\n".join(avisos))
+    raise RuntimeError("Ninguna serie tuvo una idea con el puntaje mínimo: " + " | ".join(avisos))
+
+
+def _fecha_tapa(contenido):
+    """Fecha para la tapa del diario: la de hoy en actualidad; si no, el año de la historia si aparece en el texto."""
+    import re as _re
+    meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre",
+             "noviembre", "diciembre"]
+    hoy = util.ahora()
+    if contenido.get("datos_futbol"):
+        return f"{hoy.day} de {meses[hoy.month - 1]} de {hoy.year}"
+    texto = " ".join([contenido.get("tema", ""), contenido["escenas"][0].get("texto_pantalla", "")])
+    m = _re.search(r"\b(18|19|20)\d{2}\b", texto)
+    return f"Año {m.group(0)}" if m else ""
 
 
 def generar(simulado=False):
@@ -26,12 +76,19 @@ def generar(simulado=False):
     os.environ.setdefault("TTS_MAX_PAUSA", str(cfg.get("voz_pausa_maxima", 0.28)))
     from . import carrusel, escritor, investigar, montaje  # importa después de fijar la voz
 
-    if not simulado:
+    efe = None
+    if os.getenv("MODO") == "efemeride":
+        efe = _efemeride_pendiente(cfg)
+        if not efe:
+            util.log("No hay efemérides pendientes para publicar ahora.")
+            return
+        os.environ["SERIE"] = "undia"
+        os.environ["TEMA"] = efe["tema"]
+    elif not simulado:
         _sumar_intento()
     clave_serie = _serie_del_dia(cfg)
     serie = cfg["series"][clave_serie]
     fecha = util.ahora().strftime("%Y-%m-%d")
-    util.log("Serie de hoy:", serie["nombre"])
 
     historial = util.leer_json("data/historial.json", [])
     usados = {f for h in historial for f in h.get("fuentes", [])}
@@ -48,12 +105,15 @@ def generar(simulado=False):
 
     if simulado:
         contenido = escritor.validar(json.loads((util.RAIZ / "data" / "ejemplo_contenido.json").read_text(encoding="utf-8")))
-        contenido["wikipedia"] = [{"titulo": "Juan Vucetich", "url": "https://es.wikipedia.org/wiki/Juan_Vucetich",
+        contenido["wikipedia"] = [{"titulo": "Branco", "url": "https://es.wikipedia.org/wiki/Branco",
                                    "idioma": "es"}]
     else:
-        contenido = escritor.escribir(serie, fuentes, titulos, (os.getenv("TEMA") or "").strip() or None)
+        clave_serie, serie, contenido = _escribir_con_respaldo(cfg, escritor, fuentes, titulos,
+                                                               (os.getenv("TEMA") or "").strip() or None)
+    contenido["fecha_tapa"] = _fecha_tapa(contenido)
 
-    carpeta = SITIO / fecha
+    nombre_carpeta = fecha + (f"-efe{efe['n']}" if efe else "")
+    carpeta = SITIO / nombre_carpeta
     if SALIDA.exists():
         shutil.rmtree(SALIDA)
     carpeta.mkdir(parents=True)
@@ -65,7 +125,7 @@ def generar(simulado=False):
     (carpeta / "spec.json").unlink(missing_ok=True)
     meta_video = util.leer_json(str((carpeta / "meta.json").relative_to(util.RAIZ)), {}) or {}
     (carpeta / "meta.json").unlink(missing_ok=True)
-    (SITIO / "index.html").write_text("<meta charset='utf-8'><p>Fábrica de historias</p>", encoding="utf-8")
+    (SITIO / "index.html").write_text("<meta charset='utf-8'><p>Fábrica de fútbol</p>", encoding="utf-8")
 
     firma = _firma(cfg, contenido, meta_video)
     tags = " ".join(contenido["hashtags"])
@@ -81,8 +141,10 @@ def generar(simulado=False):
         "fuentes": [f["id"] for f in fuentes],
         "fuentes_detalle": [{"canal": f["canal"], "titulo": f["titulo"], "score": f.get("score") or f.get("pais", "")}
                             for f in fuentes],
-        "archivos": {"video": f"{fecha}/video.mp4", "portada": f"{fecha}/thumb.jpg",
-                     "placas": [f"{fecha}/{p.name}" for p in placas]},
+        "archivos": {"video": f"{nombre_carpeta}/video.mp4", "portada": f"{nombre_carpeta}/thumb.jpg",
+                     "placas": [f"{nombre_carpeta}/{p.name}" for p in placas]},
+        "extra": bool(efe),
+        "efemeride_n": efe["n"] if efe else None,
         "contenido": contenido,
         "video": meta_video,
     }
@@ -92,11 +154,14 @@ def generar(simulado=False):
 
 def _firma(cfg, contenido, meta_video):
     lineas = [cfg.get("firma", "")]
+    if contenido.get("datos_futbol"):
+        lineas.append("Datos: football-data.org.")
     wiki = contenido.get("wikipedia") or []
     if wiki:
         lineas.append("Fuente: Wikipedia (" + ", ".join(w["titulo"] for w in wiki) + ").")
-    if meta_video.get("clips_stock"):
-        lineas.append(f'Algunas tomas: {meta_video.get("banco")}.')
+    creditos = meta_video.get("creditos") or []
+    if creditos:
+        lineas.append("Fotos: " + "; ".join(creditos) + ".")
     return "\n".join(x for x in lineas if x)
 
 
@@ -134,8 +199,11 @@ def publicar(base_url):
 
     historial = util.leer_json("data/historial.json", [])
     historial.append({"fecha": p["fecha"], "hora": util.ahora().strftime("%H:%M"), "serie": p["serie"],
-                      "titulo": p["titulo"], "fuentes": p["fuentes"], "resultados": resultados})
+                      "titulo": p["titulo"], "fuentes": p["fuentes"], "resultados": resultados,
+                      "extra": p.get("extra", False)})
     util.guardar_json("data/historial.json", historial[-400:])
+    if p.get("efemeride_n") is not None:
+        _marcar_efemeride(p["fecha"], p["efemeride_n"], "publicada")
     _registro(p, resultados, base)
     _mail_diario(p, resultados, base)
     resumen(base_url, resultados)
@@ -248,13 +316,12 @@ def muestra():
     os.environ.setdefault("TTS_RATE", str(cfg.get("voz_velocidad", "+10%")))
     os.environ.setdefault("TTS_MAX_PAUSA", str(cfg.get("voz_pausa_maxima", 0.32)))
     from . import escritor, montaje
-    clave_serie = _serie_del_dia(cfg)
-    serie = cfg["series"][clave_serie]
     tema = (os.getenv("TEMA") or "").strip() or None
     segundos = float(os.getenv("SEGUNDOS") or 12)
-    util.log("Muestra de la serie:", serie["nombre"], "· tema:", tema or "lo elige la IA")
+    util.log("Muestra · tema:", tema or "lo elige la IA")
     titulos = [h["titulo"] for h in reversed(util.leer_json("data/historial.json", []))]
-    contenido = escritor.escribir(serie, [], titulos, tema)
+    clave_serie, serie, contenido = _escribir_con_respaldo(cfg, escritor, [], titulos, tema)
+    contenido["fecha_tapa"] = _fecha_tapa(contenido)
     carpeta = SALIDA / "muestra"
     shutil.rmtree(carpeta, ignore_errors=True)
     carpeta.mkdir(parents=True)
@@ -266,6 +333,7 @@ def muestra():
                     str(carpeta / "muestra.gif")], check=False)
     tope = int(cfg.get("titulo_max", 40))
     md = [f'# Muestra · {serie["nombre"]}', "",
+          f'**Idea elegida:** {contenido.get("tema", "")} (puntaje {contenido.get("puntaje", "?")})', "",
           f'**Título:** {contenido["titulo"]} ({len(contenido["titulo"])} de {tope} caracteres)', "",
           f'**Duración del video completo:** {meta["voz_seg"]:.0f} segundos · {contenido["palabras"]} palabras · '
           f'{len(contenido["escenas"])} escenas', "",
@@ -278,6 +346,12 @@ def muestra():
            "## De dónde salen los datos", ""]
     md += [f'- [{w["titulo"]}]({w["url"]})' for w in contenido.get("wikipedia") or []] or ["- (sin artículo de Wikipedia)"]
     md += [f"- {x}" for x in contenido.get("fuentes") or []]
+    md += [f'- [{w.get("titulo") or "noticia"}]({w["url"]})' for w in contenido.get("web") or [] if w.get("url")]
+    if meta.get("creditos"):
+        md += ["", "## Fotos", ""] + [f"- {c}" for c in meta["creditos"]]
+    if contenido.get("veredicto"):
+        md.insert(4, f'**Veredicto:** {contenido["veredicto"]}')
+        md.insert(5, "")
     (carpeta / "README.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     util.guardar_json("out/muestra/contenido.json", contenido)
     destino = os.getenv("GITHUB_STEP_SUMMARY")
@@ -334,7 +408,7 @@ def toca():
             si, motivo = False, "la fábrica está apagada (config.json → fabrica_activa: false)"
         elif objetivo is None:
             si, motivo = False, "hoy no tiene horario"
-        elif any(h.get("fecha") == hoy for h in util.leer_json("data/historial.json", [])):
+        elif any(h.get("fecha") == hoy and not h.get("extra") for h in util.leer_json("data/historial.json", [])):
             si, motivo = False, "hoy ya se publicó"
         elif _intentos(hoy) >= INTENTOS_MAX:
             si, motivo = False, f"hoy ya se intentó {INTENTOS_MAX} veces y falló; mañana sigue normal"
@@ -349,6 +423,156 @@ def toca():
             else:
                 si, motivo = False, f"faltan {faltan:.0f} minutos para las {objetivo:%H:%M}"
     util.log("¿Toca publicar?", "sí" if si else "no", "·", motivo)
+    salida = os.getenv("GITHUB_OUTPUT")
+    if salida:
+        with open(salida, "a", encoding="utf-8") as f:
+            f.write(f"si={'true' if si else 'false'}\n")
+
+
+# ---------------------------------------------------------------- efemérides (videos extra)
+def _ranking_dia(cfg, fecha):
+    """Ranking de las efemérides futboleras de una fecha: quedan las de puntaje mayor o igual al umbral."""
+    from . import escritor, wiki
+    umbral = float(cfg.get("efemerides", {}).get("umbral", 8))
+    lineas = wiki.efemerides(fecha)
+    if not lineas:
+        return []
+    pedido = (f"Fecha: {fecha.day} de {wiki.MESES[fecha.month - 1]} de {fecha.year}. Estas son las efemérides futboleras de "
+              "un día como ese según Wikipedia:\n" + "\n".join(lineas) + "\n\n"
+              "Armá un ranking de las que valen un video para una cuenta argentina de fútbol. Reglas: solo ídolos "
+              f"históricos de verdad (jugadores o técnicos nacidos en {fecha.year - 60} o antes, o ya fallecidos), "
+              "leyendas de la Selección o de un club (también de equipos chicos o del ascenso), o hechos históricos "
+              "(goles, títulos, partidos) que un futbolero argentino reconoce. Puntaje de 1 a 10 por importancia global "
+              "para el público argentino: 10 = Maradona, Messi, Pelé, un Mundial ganado; 8 = ídolo enorme de un club "
+              "grande o figura mundial; 6 = ídolo de un club chico conocido; menos = poco conocido. Cada candidata "
+              "basada en UNA línea de la lista. Respondé solo JSON: {\"ranking\": [{\"tema\": \"...\", "
+              "\"wikipedia\": [\"...\"], \"puntaje\": 9}]}")
+    r = escritor.gemini("Sos un historiador del fútbol argentino, riguroso y exigente.", pedido, temperatura=0.4)
+    elegidas = []
+    for c in r.get("ranking", []):
+        try:
+            pts = float(c.get("puntaje", 0))
+        except (TypeError, ValueError):
+            pts = 0
+        if c.get("tema") and pts >= umbral:
+            elegidas.append({"tema": c["tema"], "wikipedia": c.get("wikipedia") or [], "puntaje": pts,
+                             "estado": "pendiente", "intentos": 0})
+    elegidas.sort(key=lambda c: -c["puntaje"])
+    for i, c in enumerate(elegidas):
+        c["n"] = i + 1
+    return elegidas
+
+
+def _planear_mes(cfg, hoy):
+    """Calendario de efemérides: arma de una vez el ranking de todos los días que faltan del mes
+    (y desde el día 25, también el mes que viene). Te avisa por mail y queda en data/efemerides-calendario.md."""
+    import calendar
+    import datetime as _dt
+    datos = util.leer_json("data/efemerides.json", {})
+    dias = []
+    meses = [(hoy.year, hoy.month)]
+    if hoy.day >= 25:
+        meses.append((hoy.year + (hoy.month == 12), hoy.month % 12 + 1))
+    for anio, mes in meses:
+        for d in range(1, calendar.monthrange(anio, mes)[1] + 1):
+            f = _dt.date(anio, mes, d)
+            if f >= hoy and f.isoformat() not in datos:
+                dias.append(f)
+    if not dias:
+        return datos
+    util.log(f"Planifico las efemérides de {len(dias)} días…")
+    nuevos = 0
+    for f in dias:
+        try:
+            datos[f.isoformat()] = _ranking_dia(cfg, f)
+            nuevos += 1
+        except Exception as e:  # noqa
+            util.log("Ranking del", f, "falló:", util.ocultar(e))
+    datos = {k: v for k, v in datos.items() if k >= (hoy - _dt.timedelta(days=45)).isoformat()}
+    util.guardar_json("data/efemerides.json", datos)
+    # calendario legible
+    nombres_dias = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
+    md = ["# Calendario de efemérides (Un día como hoy)", "",
+          "Se arma solo a principio de mes. Para descartar una, cambiá su \"estado\" a \"descartada\" en "
+          "`data/efemerides.json`.", ""]
+    for k in sorted(datos):
+        if k < hoy.isoformat() or not datos[k]:
+            continue
+        f = _dt.date.fromisoformat(k)
+        md.append(f"**{nombres_dias[f.weekday()]} {f.day}/{f.month}**")
+        md += [f'- {c["tema"]} ({c["puntaje"]:g}) · {c["estado"]}' for c in datos[k]]
+        md.append("")
+    if len(md) == 4:
+        md.append("Por ahora no hay efemérides importantes en las próximas semanas.")
+    (util.RAIZ / "data" / "efemerides-calendario.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+    if nuevos:
+        util.avisar_mail("Calendario de efemérides listo", "\n".join(md[4:]) or "Sin efemérides importantes.")
+    return datos
+
+
+def _ranking_efemerides(cfg, hoy):
+    datos = util.leer_json("data/efemerides.json", {})
+    if hoy.isoformat() not in datos or (hoy.day >= 25 and not any(k > hoy.replace(day=28).isoformat() for k in datos)):
+        datos = _planear_mes(cfg, hoy)
+    return datos
+
+
+def _marcar_efemeride(fecha, n, estado):
+    datos = util.leer_json("data/efemerides.json", {})
+    for c in datos.get(fecha, []):
+        if c.get("n") == n:
+            c["estado"] = estado
+    util.guardar_json("data/efemerides.json", datos)
+
+
+def _efemeride_pendiente(cfg):
+    """La próxima efeméride importante de hoy que todavía no salió (y que no falló dos veces)."""
+    hoy = util.ahora().date()
+    datos = _ranking_efemerides(cfg, hoy)
+    for c in datos.get(hoy.isoformat(), []):
+        if c.get("estado") == "pendiente" and c.get("intentos", 0) < 2:
+            c["intentos"] = c.get("intentos", 0) + 1
+            util.guardar_json("data/efemerides.json", datos)
+            return c
+    return None
+
+
+def toca_efemeride():
+    """Reloj de los videos extra de "Un día como hoy": en cada horario de efemérides publica la siguiente
+    efeméride importante del día, si la hay. Si no hay ninguna importante, no sale nada."""
+    cfg = util.config()
+    conf = cfg.get("efemerides", {})
+    si, motivo = False, ""
+    ahora = util.ahora()
+    hoy = ahora.date()
+    if os.getenv("GITHUB_EVENT_NAME") != "schedule":
+        si, motivo = True, "ejecución manual"
+    elif not cfg.get("fabrica_activa", True):
+        motivo = "la fábrica está apagada (config.json → fabrica_activa: false)"
+    elif not conf.get("activas", True):
+        motivo = "las efemérides están apagadas (config.json → efemerides.activas)"
+    else:
+        horarios = []
+        for h in conf.get("horarios", ["10:30", "12:00", "15:30", "17:00"]):
+            hh, mm = (int(x) for x in h.split(":"))
+            horarios.append(ahora.replace(hour=hh, minute=mm, second=0, microsecond=0))
+        vencidos = [h for h in horarios if h <= ahora]
+        publicadas_hoy = sum(1 for x in util.leer_json("data/historial.json", [])
+                             if x.get("fecha") == hoy.isoformat() and x.get("extra"))
+        if not vencidos:
+            motivo = "todavía no llegó el primer horario de efemérides"
+        elif publicadas_hoy >= len(vencidos):
+            motivo = f"ya salieron {publicadas_hoy} efemérides hoy; la próxima, en el siguiente horario"
+        elif (ahora - vencidos[-1]).total_seconds() > 150 * 60 and len(vencidos) == len(horarios):
+            motivo = "ya pasaron los horarios de hoy"
+        else:
+            pendientes = [c for c in _ranking_efemerides(cfg, hoy).get(hoy.isoformat(), [])
+                          if c.get("estado") == "pendiente" and c.get("intentos", 0) < 2]
+            if pendientes:
+                si, motivo = True, f'toca la efeméride: {pendientes[0]["tema"]} ({pendientes[0]["puntaje"]:g})'
+            else:
+                motivo = "hoy no hay (más) efemérides importantes"
+    util.log("¿Toca efeméride?", "sí" if si else "no", "·", motivo)
     salida = os.getenv("GITHUB_OUTPUT")
     if salida:
         with open(salida, "a", encoding="utf-8") as f:
@@ -400,8 +624,8 @@ def reporte():
         f'{f["pct_shorts"]}% Shorts\n' + "\n".join(
             f'  - "{t["titulo"]}" ({t["vistas"]} vistas, {t["veces"]} veces lo normal)' for t in f["top"])
         for f in filas)
-    sistema = ("Sos analista de contenido de una cuenta argentina sin cara de Shorts, Reels y TikTok de historias "
-               "reales, virales y curiosas de Argentina y de La Plata. Respondé en español rioplatense natural.")
+    sistema = ("Sos analista de contenido de una cuenta argentina sin cara de Shorts y Reels de fútbol: mitos, "
+               "historias, récords insólitos, ídolos de antes y actualidad. Respondé en español rioplatense natural.")
     pedido = ("Con estas métricas de canales de referencia, devolvé un JSON con: "
               '{"patrones": ["..."], "formatos_que_rinden": ["..."], "estructuras_virales": ["..."], '
               '"ideas": [{"serie": "...", "titulo": "...", "miniatura": "..."}]} '
@@ -464,7 +688,7 @@ def reporte():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("accion", choices=["generar", "publicar", "resumen", "reporte", "toca", "esperar", "probar", "muestra"])
+    ap.add_argument("accion", choices=["generar", "publicar", "resumen", "reporte", "toca", "esperar", "probar", "muestra", "toca_efemeride"])
     ap.add_argument("--base-url", default="")
     ap.add_argument("--simulado", action="store_true")
     a = ap.parse_args()
@@ -481,6 +705,8 @@ if __name__ == "__main__":
             resumen(a.base_url)
         elif a.accion == "muestra":
             muestra()
+        elif a.accion == "toca_efemeride":
+            toca_efemeride()
         elif a.accion == "probar":
             from . import probar
             probar.probar()
