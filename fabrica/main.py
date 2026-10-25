@@ -25,6 +25,18 @@ def _series_del_dia(cfg):
     for i, h in enumerate(historial):
         ultima[h.get("serie")] = i
     lista = sorted(lista, key=lambda k: ultima.get(k, -1))
+    # las prioritarias (por ejemplo, anécdotas de series en tendencia) van primero si no salieron hace poco
+    import datetime as _dt
+    hoy = util.ahora().date()
+    for k, dias in (cfg.get("prioritarias") or {}).items():
+        if k in lista:
+            fechas = [h.get("fecha", "") for h in historial if h.get("serie") == k]
+            reciente = any(f and (hoy - _dt.date.fromisoformat(f)).days < int(dias) for f in fechas)
+            lista.remove(k)
+            if reciente:
+                lista.append(k)
+            else:
+                lista.insert(0, k)
     for r in cfg.get("series_respaldo", []):
         if r not in lista and r in cfg["series"]:
             lista.append(r)

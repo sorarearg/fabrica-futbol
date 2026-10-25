@@ -60,6 +60,7 @@ def _descubrir(clave):
 
 
 ULTIMAS_FUENTES = []  # páginas que usó Gemini en la última búsqueda con Google
+PRODUCCION_ELEGIDA = []  # serie o película del catálogo usada en el guion de hoy
 
 
 def _cuerpo(sistema, usuario, temperatura, modelo, con_pensamiento, con_seguridad=True, buscar=False):
@@ -286,6 +287,55 @@ def _material_de_la_serie(serie, tema=None):
             raise SinIdeas(f"No hay datos de football-data: {e}")
         otras, fuentes_web = datos_futbol.buscar_otras_ligas(modo)
         return (datos + ("\n\n" + otras if otras else "")), fuentes_web
+    if fuente == "pantalla_archivo":
+        # una serie, película o documental del catálogo (las menos usadas primero) y lo que los medios levantaron de ella
+        from . import producciones
+        PRODUCCION_ELEGIDA.clear()
+        for _ in range(3):
+            prod = producciones.elegir()
+            if not prod:
+                break
+            nombre = f'{prod["titulo"]} ({prod.get("plataforma", "?")}, {prod.get("anio", "?")})'
+            try:
+                r = gemini("Sos un periodista de espectáculos y deportes argentino, muy riguroso. Nunca inventás datos.",
+                           f"Buscá en Google notas de diarios y portales sobre {nombre}, sobre {prod.get('protagonista', '')}. "
+                           "Quiero las anécdotas, historias y datos curiosos que cuenta esa producción y que los medios "
+                           "replicaron (las que más pegaron), y qué dicen los medios sobre si pasaron de verdad. Solo lo que "
+                           'aparezca en las notas. Respondé solo JSON: {"anecdotas": [{"anecdota": "...", "que_dicen": "..."}]}',
+                           temperatura=0.3, buscar=True)
+                items = [x for x in r.get("anecdotas", []) if isinstance(x, dict) and x.get("anecdota")][:10]
+            except Exception as e:  # noqa
+                util.log("La búsqueda sobre", nombre, "falló:", util.ocultar(e))
+                items = []
+            if items:
+                PRODUCCION_ELEGIDA.append(prod["titulo"])
+                return (f"ANÉCDOTAS DE {nombre.upper()} QUE REPLICARON LOS MEDIOS:\n" +
+                        "\n".join(f'- {x["anecdota"]}' + (f' · Qué dicen los medios: {x["que_dicen"]}'
+                                                          if x.get("que_dicen") else "") for x in items)), \
+                    list(ULTIMAS_FUENTES)
+            producciones.sumar_uso(prod["titulo"])  # sin anécdotas: que no la vuelva a elegir enseguida
+        raise SinIdeas("No encontré anécdotas en las producciones del catálogo")
+    if fuente == "pantalla":
+        # series, películas y documentales de fútbol que están dando que hablar (Gemini busca en Google)
+        hoy = util.ahora().date()
+        try:
+            r = gemini("Sos un periodista de espectáculos y deportes argentino, muy riguroso. Nunca inventás datos.",
+                       f"Hoy es {hoy:%d/%m/%Y}. Buscá en Google notas de las últimas tres semanas sobre series, películas o "
+                       "documentales de fútbol (Netflix, Prime Video, Disney+, Max, Star+, YouTube, cine) que estén dando "
+                       "que hablar en Argentina, y las anécdotas, historias o datos curiosos de esas producciones que los "
+                       "diarios y portales están replicando. Para cada anécdota: la producción, la plataforma, qué cuenta y "
+                       "qué dicen los medios sobre si pasó de verdad. Solo lo que aparezca en las notas. Respondé solo JSON: "
+                       '{"anecdotas": [{"produccion": "...", "plataforma": "...", "anecdota": "...", "que_dicen": "..."}]}',
+                       temperatura=0.3, buscar=True)
+            items = [x for x in r.get("anecdotas", []) if isinstance(x, dict) and x.get("anecdota")][:12]
+            if items:
+                return ("ANÉCDOTAS DE SERIES Y PELÍCULAS DE FÚTBOL QUE ESTÁN DANDO QUE HABLAR (notas de estas semanas):\n" +
+                        "\n".join(f'- [{x.get("produccion", "?")}, {x.get("plataforma", "?")}] {x["anecdota"]}'
+                                  + (f' · Qué dicen los medios: {x["que_dicen"]}' if x.get("que_dicen") else "")
+                                  for x in items)), list(ULTIMAS_FUENTES)
+        except Exception as e:  # noqa
+            util.log("La búsqueda de series y películas falló:", util.ocultar(e))
+        raise SinIdeas("No encontré anécdotas frescas de series o películas de fútbol en las noticias")
     if fuente == "especial" and tema:
         # pedido puntual: lo que dicen las noticias de estos días sobre ese tema (Gemini busca en Google)
         hoy = util.ahora().date()
@@ -320,7 +370,7 @@ def elegir_tema(serie, titulos_previos, tema=None, material_yt=""):
     minimo = float(cfg.get("puntaje_minimo", 7))
     fuente = serie.get("fuente", "wiki")
     datos, fuentes_web = _material_de_la_serie(serie, tema)
-    solo_datos = bool(datos) and fuente in ("actualidad", "efemeride")  # las ideas tienen que salir de esos datos
+    solo_datos = bool(datos) and fuente in ("actualidad", "efemeride", "pantalla", "pantalla_archivo")  # las ideas tienen que salir de esos datos
     tend = ""
     if cfg.get("usar_tendencias", True):
         try:
@@ -367,7 +417,7 @@ def elegir_tema(serie, titulos_previos, tema=None, material_yt=""):
             break
         consultas = [x for x in (c.get("wikipedia") or []) if x][:3] + ([tema] if tema else [])
         articulos = wiki.material(consultas, maximo_total=9000)
-        if articulos or (fuente == "actualidad" and solo_datos) or (fuente == "especial" and datos):
+        if articulos or (fuente in ("actualidad", "pantalla", "pantalla_archivo") and solo_datos) or (fuente == "especial" and datos):
             util.log("Tema elegido:", c["tema"], f"({puntos(c):g})",
                      "· respaldo:", ", ".join(a["titulo"] for a in articulos) or "datos de la semana")
             return c, articulos, datos, fuentes_web
@@ -454,4 +504,7 @@ def escribir(serie, fuentes, titulos_previos, tema=None):
     final["datos_futbol"] = bool(datos) and serie.get("fuente") == "actualidad"
     final["tema"] = (candidata or {}).get("tema", "")
     final["puntaje"] = (candidata or {}).get("puntaje")
+    if serie.get("fuente") == "pantalla_archivo" and PRODUCCION_ELEGIDA:
+        from . import producciones
+        producciones.sumar_uso(PRODUCCION_ELEGIDA[0])
     return final

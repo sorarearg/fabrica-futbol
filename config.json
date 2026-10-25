@@ -1,5 +1,5 @@
 {
-  "_ayuda": "Editá este archivo desde GitHub (ícono del lápiz). fabrica_activa: en false el reloj no publica nada (las muestras andan igual); ponela en true cuando conectemos la primera red. usuario: tu @ en las redes (vacío = sin marca). email_aviso: adónde llega el mail diario y los avisos. plan_semanal: qué serie sale cada día (1=lunes ... 7=domingo); si ponés una lista, rota entre esas series y elige la que tenga la mejor idea. series_respaldo: qué serie sale si ninguna de las del día tiene una idea buena. puntaje_minimo: de 1 a 10, el mínimo que tiene que tener una idea para publicarse (si no llega, cambia de serie y te avisa por mail). horarios: a qué hora sale cada día (hora de Argentina). publicar: poné true en cada red a medida que la conectes. segundos_max: tope de duración del video. titulo_max: largo máximo del título. voz_gemini: Charon, Puck, Orus, Fenrir o 'auto'. musica: mp3 en la carpeta assets. diario_nombre: el nombre del diario que aparece en la portada. efemerides: videos EXTRA de 'Un día como hoy' que salen solo cuando hay un cumpleaños o aniversario importante; umbral: puntaje mínimo de 1 a 10 (8 = ídolos enormes); horarios: en cada uno sale como máximo una efeméride (sumá horarios si querés que puedan salir más por día); activas: false para apagarlas. usar_tendencias: si conecta las ideas con lo que es tendencia hoy en el fútbol. Pedidos programados: se escriben en data/pedidos.json (ver el README); la serie 'especial' es la que usan por defecto.",
+  "_ayuda": "Editá este archivo desde GitHub (ícono del lápiz). fabrica_activa: en false el reloj no publica nada (las muestras andan igual); ponela en true cuando conectemos la primera red. usuario: tu @ en las redes (vacío = sin marca). email_aviso: adónde llega el mail diario y los avisos. plan_semanal: qué serie sale cada día (1=lunes ... 7=domingo); si ponés una lista, rota entre esas series y elige la que tenga la mejor idea. series_respaldo: qué serie sale si ninguna de las del día tiene una idea buena. puntaje_minimo: de 1 a 10, el mínimo que tiene que tener una idea para publicarse (si no llega, cambia de serie y te avisa por mail). horarios: a qué hora sale cada día (hora de Argentina). publicar: poné true en cada red a medida que la conectes. segundos_max: tope de duración del video. titulo_max: largo máximo del título. voz_gemini: Charon, Puck, Orus, Fenrir o 'auto'. musica: mp3 en la carpeta assets. diario_nombre: el nombre del diario que aparece en la portada. efemerides: videos EXTRA de 'Un día como hoy' que salen solo cuando hay un cumpleaños o aniversario importante; umbral: puntaje mínimo de 1 a 10 (8 = ídolos enormes); horarios: en cada uno sale como máximo una efeméride (sumá horarios si querés que puedan salir más por día); activas: false para apagarlas. usar_tendencias: si conecta las ideas con lo que es tendencia hoy en el fútbol. Pedidos programados: se escriben en data/pedidos.json (ver el README); la serie 'especial' es la que usan por defecto. prioritarias: series que van primero en los días que rotan, siempre que haya material fresco y no hayan salido en los últimos N días (por ejemplo, pantalla: 4); si no hay nada bueno, rota normal.",
   "fabrica_activa": false,
   "usuario": "",
   "email_aviso": "rventrura95@gmail.com",
@@ -41,17 +41,20 @@
     "2": "mitos",
     "3": "quefue",
     "4": [
-      "ascenso",
-      "cuanto"
+      "pantalla",
+      "pantalla_archivo"
     ],
     "5": "previa",
     "6": "mitos",
     "7": [
+      "pantalla",
       "records",
       "insolitos",
       "pases",
       "apodos",
-      "cabalas"
+      "cabalas",
+      "ascenso",
+      "cuanto"
     ]
   },
   "horarios": {
@@ -161,6 +164,18 @@
       "fuente": "especial",
       "canales": [],
       "prompt": "Serie: ESPECIAL (un pedido puntual, normalmente la previa de un partido grande o una fecha especial).\nContá la historia que pide el tema con emoción de previa de partido grande: los antecedentes, los datos que cualquier hincha quiere saber, los nombres propios y el momento más épico o insólito. Si hay un partido que se viene, usá el CONTEXTO ACTUAL para el gancho o el cierre (\"y mañana...\").\n- Resultados, fechas, goleadores y rivales solo si están en el MATERIAL o el CONTEXTO ACTUAL o si estás seguro.\n- Sin agredir al rival ni a otras hinchadas: pasión sí, bronca no."
+    },
+    "pantalla": {
+      "nombre": "¿Pasó de verdad?",
+      "fuente": "pantalla",
+      "canales": [],
+      "prompt": "Serie: ¿PASÓ DE VERDAD? (anécdotas de series, películas y documentales de fútbol).\nUna anécdota o dato curioso que cuenta una serie, película o documental de fútbol que está dando que hablar (por ejemplo, una serie de Netflix sobre un personaje del fútbol argentino) y que los diarios y portales están levantando. Contá la historia REAL detrás: qué muestra la serie y qué pasó de verdad, según lo que publicaron los medios y lo que está documentado.\n- Gancho: la escena o anécdota que todos comentan (\"En la serie de... hay una escena que parece inventada\").\n- Si la serie exagera o cambia algo, decilo: eso engancha. Si no se sabe, decí que no está confirmado.\n- Al final, veredicto en el campo \"veredicto\" si aplica: VERDAD, A MEDIAS, MITO o NUNCA SE PROBÓ.\n- Nombrá la serie o película y la plataforma, pero nunca describas escenas como si las estuvieras mostrando ni cuentes el final (sin spoilers grandes). Las imágenes son fotos libres de las personas reales o ilustraciones, nunca de la serie.\n- Personas reales: solo hechos publicados; nada de su vida privada que no sea parte pública de la historia."
+    },
+    "pantalla_archivo": {
+      "nombre": "¿Pasó de verdad?",
+      "fuente": "pantalla_archivo",
+      "canales": [],
+      "prompt": "Serie: ¿PASÓ DE VERDAD? (anécdotas de series, películas y documentales de fútbol).\nUna anécdota o dato curioso que cuenta una serie, película o documental de fútbol (de cualquier año: biografías y documentales de leyendas como Maradona, Messi, Tévez, Pelé o Neymar) que los diarios y portales levantaron. Contá la historia REAL detrás: qué muestra la serie y qué pasó de verdad, según lo que publicaron los medios y lo que está documentado.\n- Gancho: la escena o anécdota que todos comentan (\"En la serie de... hay una escena que parece inventada\").\n- Si la serie exagera o cambia algo, decilo: eso engancha. Si no se sabe, decí que no está confirmado.\n- Al final, veredicto en el campo \"veredicto\" si aplica: VERDAD, A MEDIAS, MITO o NUNCA SE PROBÓ.\n- Nombrá la serie o película y la plataforma, pero nunca describas escenas como si las estuvieras mostrando ni cuentes el final (sin spoilers grandes). Las imágenes son fotos libres de las personas reales o ilustraciones, nunca de la serie.\n- Personas reales: solo hechos publicados; nada de su vida privada que no sea parte pública de la historia."
     }
   },
   "puntaje_minimo": 7,
@@ -180,5 +195,8 @@
     "DED",
     "ELC"
   ],
-  "usar_tendencias": true
+  "usar_tendencias": true,
+  "prioritarias": {
+    "pantalla": 4
+  }
 }

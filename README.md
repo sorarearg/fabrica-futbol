@@ -18,10 +18,12 @@ Genera y publica solo un video corto por día (Reels y Shorts) de fútbol. Todo 
 | Lunes | Actualidad del finde | 18:30 |
 | Martes | Mitos del fútbol | 20:00 |
 | Miércoles | ¿Qué fue de...? | 20:00 |
-| Jueves | Rota: Ídolos del ascenso / ¿Cuánto ganaba...? | 20:00 |
+| Jueves | ¿Pasó de verdad? (lo fresco si hay; si no, del catálogo de series y películas) | 20:00 |
 | Viernes | La previa | 19:00 |
 | Sábado | Mitos del fútbol | 13:00 |
-| Domingo | Rota: Récords raros / Partidos insólitos / Pases insólitos / Apodos / Cábalas | 20:30 |
+| Domingo | Rota: Récords raros / Partidos insólitos / Pases insólitos / Apodos / Cábalas / Ídolos del ascenso / ¿Cuánto ganaba...? (y ¿Pasó de verdad? primero si hay algo fresco que no salió en los últimos 4 días) | 20:30 |
+
+**¿Pasó de verdad?** cuenta las anécdotas de series, películas y documentales de fútbol que están dando que hablar y que los diarios replican: qué muestra la serie y qué pasó de verdad. Tiene dos versiones: `pantalla` (lo que está dando que hablar estas semanas) va primera los jueves y, si no salió en los últimos 4 días, también los domingos (`prioritarias` en `config.json`); `pantalla_archivo` sale los jueves cuando no hay nada fresco y toma una producción del catálogo de todas las series, películas y documentales de fútbol (Maradona, Messi, Tévez, Pelé, Neymar, Coppola...), empezando por las menos usadas. El catálogo se arma solo, se actualiza una vez por mes con los estrenos y se puede ver en `data/producciones.md` (para sumar una a mano, agregala en `data/producciones.json`). Nunca usa imágenes de la serie: fotos libres de las personas reales o ilustraciones.
 
 Se cambia en `config.json` (`plan_semanal` y `horarios`).
 
