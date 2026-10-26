@@ -4,5 +4,15 @@
     "tema": "Las finales de Boca en la Copa Sudamericana",
     "hora": "19:00",
     "en_lugar_del_del_dia": false
+  },
+  "2026-11-18": {
+    "tema": "Boca y la Copa Sudamericana: jugó dos finales y ganó las dos (2004 contra Bolívar y 2005 contra Pumas). Contexto actual confirmado: el sábado 21 de noviembre de 2026 juega su tercera final, en el estadio Metropolitano de Barranquilla, y puede convertirse en el primer tricampeón del torneo. Contá esas dos finales y el dato del posible tricampeonato.",
+    "hora": "18:00",
+    "en_lugar_del_del_dia": false
+  },
+  "2026-11-25": {
+    "tema": "La primera final de Copa Libertadores de Estudiantes de La Plata: 1968 contra Palmeiras, con partido desempate en el estadio Centenario de Montevideo. Chequeá si para Palmeiras también era su primera final o si ya había jugado otra antes. Contexto actual confirmado: la final de la Libertadores 2026 se juega el sábado 28 de noviembre en el mismo estadio Centenario de Montevideo.",
+    "hora": "18:00",
+    "en_lugar_del_del_dia": false
   }
 }

@@ -1,0 +1,61 @@
+{
+  "actualizado": null,
+  "lista": [
+    {
+      "titulo": "Coppola, el representante",
+      "plataforma": "Star+ / Disney+",
+      "anio": 2024,
+      "protagonista": "Guillermo Coppola",
+      "usos": 0
+    },
+    {
+      "titulo": "Maradona: Sueño bendito",
+      "plataforma": "Prime Video",
+      "anio": 2021,
+      "protagonista": "Diego Maradona",
+      "usos": 0
+    },
+    {
+      "titulo": "Apache: La vida de Carlos Tevez",
+      "plataforma": "Netflix",
+      "anio": 2019,
+      "protagonista": "Carlos Tevez",
+      "usos": 0
+    },
+    {
+      "titulo": "Pelé",
+      "plataforma": "Netflix",
+      "anio": 2021,
+      "protagonista": "Pelé",
+      "usos": 0
+    },
+    {
+      "titulo": "Neymar: El caos perfecto",
+      "plataforma": "Netflix",
+      "anio": 2022,
+      "protagonista": "Neymar",
+      "usos": 0
+    },
+    {
+      "titulo": "El Mundial de Messi: el ascenso de la leyenda",
+      "plataforma": "Apple TV+",
+      "anio": 2024,
+      "protagonista": "Lionel Messi",
+      "usos": 0
+    },
+    {
+      "titulo": "Bilardo, el doctor del fútbol",
+      "plataforma": "HBO Max",
+      "anio": 2022,
+      "protagonista": "Carlos Bilardo",
+      "usos": 0
+    },
+    {
+      "titulo": "Ronaldinho: el único",
+      "plataforma": "Netflix",
+      "anio": 2026,
+      "protagonista": "Ronaldinho",
+      "usos": 0
+    }
+  ]
+}
