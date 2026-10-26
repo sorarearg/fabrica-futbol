@@ -103,6 +103,8 @@ _BUSQUEDA = {"anda": None, "aviso": False}
 def gemini(sistema, usuario, temperatura=0.9, buscar=False, sin_busqueda_ok=False):
     """buscar=True: Gemini busca en Google antes de responder (gratis dentro del cupo diario del nivel gratuito).
     Si la búsqueda no está disponible y sin_busqueda_ok=True, responde con lo que sabe (solo para temas históricos)."""
+    if buscar and not util.config().get("usar_busqueda_google", False):
+        _BUSQUEDA["anda"] = False  # apagada en config.json: ni lo intenta (no pierde tiempo)
     if buscar:
         if _BUSQUEDA["anda"] is not False:
             try:
