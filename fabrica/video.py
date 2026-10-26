@@ -106,11 +106,21 @@ def gen_image_cloudflare(prompt, seed):
     if not (acc and tok):
         return None
     url = f"https://api.cloudflare.com/client/v4/accounts/{acc}/ai/run/@cf/black-forest-labs/flux-1-schnell"
-    r = requests.post(url, headers={"Authorization": f"Bearer {tok}"},
-                      json={"prompt": (STYLE + prompt)[:2000], "steps": 6, "seed": seed}, timeout=120)
-    r.raise_for_status()
-    img_b64 = r.json()["result"]["image"]
-    return base64.b64decode(img_b64)
+    cuerpos = [{"prompt": (STYLE + prompt)[:1900], "steps": 6, "seed": int(seed) % 2_000_000_000},
+               {"prompt": (STYLE + prompt)[:1000]}]
+    ultimo = ""
+    for cuerpo in cuerpos:
+        r = requests.post(url, headers={"Authorization": f"Bearer {tok}"}, json=cuerpo, timeout=120)
+        if r.status_code == 200:
+            datos = r.json().get("result") or {}
+            if datos.get("image"):
+                return base64.b64decode(datos["image"])
+            ultimo = f"200 sin imagen: {str(r.text)[:200]}"
+            continue
+        ultimo = f"{r.status_code}: {r.text[:300]}"
+        if r.status_code in (401, 403, 404):
+            break
+    raise RuntimeError("Cloudflare " + ultimo)
 
 
 def gen_image_pollinations(prompt, seed):
@@ -167,9 +177,23 @@ def fallback_card(text, path, emoji=""):
     im.save(path)
 
 
+def _avisar_motor(nombre, texto):
+    try:
+        from . import util
+        util.avisar(f"El motor de imágenes {MOTORES_IMAGEN.get(nombre, nombre)} no anda",
+                    texto[:600] + " · Sigo con el siguiente motor (o con tarjetas).")
+    except Exception:  # noqa
+        pass
+
+
+_ROTOS = {}  # motores que fallaron de forma permanente en esta ejecución (no se reintentan con cada imagen)
+
+
 def make_image(prompt, fallback_text, path, seed, emoji=""):
     """Devuelve el nombre del motor que dibujó la imagen, o "tarjeta" si ninguno anduvo."""
     for fn in (gen_image_cloudflare, gen_image_pollinations, gen_image_pollinations_libre):
+        if _ROTOS.get(fn.__name__, 0) >= 2:
+            continue
         for attempt in range(3):
             try:
                 data = fn(prompt, seed + attempt)
@@ -180,7 +204,14 @@ def make_image(prompt, fallback_text, path, seed, emoji=""):
                 ULTIMO_MOTOR["nombre"] = MOTORES_IMAGEN.get(fn.__name__, fn.__name__)
                 return ULTIMO_MOTOR["nombre"]
             except Exception as e:  # noqa
-                print(f"[img] {fn.__name__} intento {attempt+1}: {str(e)[:160]}")
+                texto = str(e)
+                print(f"[img] {fn.__name__} intento {attempt+1}: {texto[:400]}")
+                if any(c in texto for c in ("400", "401", "402", "403", "404")):
+                    # error de configuración o de pago: no tiene sentido insistir con este motor
+                    _ROTOS[fn.__name__] = _ROTOS.get(fn.__name__, 0) + 1
+                    if _ROTOS[fn.__name__] == 2:
+                        _avisar_motor(fn.__name__, texto)
+                    break
                 time.sleep(6 * (attempt + 1))
     fallback_card(fallback_text, path, emoji)
     return "tarjeta"
