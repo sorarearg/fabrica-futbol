@@ -56,7 +56,19 @@ def tablero(img, l1, l2, dato, usuario):
         for y in (330, 790):
             d.ellipse([x, y, x + 8, y + 8], fill=(60, 55, 20))
     y = _texto(d, (W // 2, 360), (l1 or "").upper(), "titulo" if mk.es_anton() else "bold", W - 220, 2, 96, 50, (235, 235, 235))
-    _texto(d, (W // 2, max(y + 10, 520)), (dato or "").upper(), "titulo" if mk.es_anton() else "bold", W - 200, 1, 230, 90, AMARILLO)
+    # el número grande entra SIEMPRE dentro del tablero: se achica hasta caber entre el título y las luces de abajo
+    arriba, abajo = y + 10, 770
+    texto = (dato or "").upper()
+    if texto:
+        estilo = "titulo" if mk.es_anton() else "bold"
+        tam = 230
+        while tam > 40:
+            fnt = mk.fuente(estilo, tam)
+            x0b, y0b, x1b, y1b = d.textbbox((0, 0), texto, font=fnt)
+            if x1b - x0b <= W - 240 and y1b - y0b <= abajo - arriba - 10:
+                break
+            tam -= 8
+        d.text((W // 2, (arriba + abajo) // 2), texto, font=fnt, fill=AMARILLO, anchor="mm")
     _pegar_con_sombra(im, _foto(img, W - 240, 620, gris=False), 108, 900, color_borde=(40, 44, 48))
     if l2:
         d.rounded_rectangle([140, 1555, W - 140, 1640], 14, fill=AMARILLO)
