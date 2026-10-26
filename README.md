@@ -27,6 +27,12 @@ Genera y publica solo un video corto por día (Reels y Shorts) de fútbol. Todo 
 
 Se cambia en `config.json` (`plan_semanal` y `horarios`).
 
+## Buzón de notas y reserva de anécdotas
+
+- **Buzón (`data/notas.md`)**: pegá links de notas que te gusten, uno por línea (con un comentario si querés). Los jueves, *¿Pasó de verdad?* usa primero estas notas, una por video: lee la nota, escribe el guion con sus palabras y cita la fuente.
+- **Reserva (`data/anecdotas.json`)**: anécdotas de series, películas y documentales de fútbol, cada una con el link de la nota de donde sale. Se usan de a una y no se repiten.
+- **Orden de los jueves**: buzón → reserva → búsqueda en Google (si anda) → artículos de Wikipedia de la producción y su protagonista. Lo usado queda anotado en `data/estado.json`.
+
 ## Pedidos programados (videos a pedido para una fecha)
 
 Para un video puntual en un día puntual (por ejemplo, la historia de las finales de Boca en la Sudamericana el día antes de la final), editá `data/pedidos.json` desde GitHub (abrilo → ícono del lápiz) y agregá una línea por fecha:
