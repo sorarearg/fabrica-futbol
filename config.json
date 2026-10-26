@@ -80,7 +80,7 @@
   "publicar": {
     "instagram_reel": false,
     "instagram_carrusel": false,
-    "youtube": false,
+    "youtube": true,
     "tiktok": false,
     "facebook": false
   },
