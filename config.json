@@ -1,5 +1,5 @@
 {
-  "_ayuda": "Editá este archivo desde GitHub (ícono del lápiz). fabrica_activa: en false el reloj no publica nada (las muestras andan igual); ponela en true cuando conectemos la primera red. usuario: tu @ en las redes (vacío = sin marca). email_aviso: adónde llega el mail diario y los avisos. plan_semanal: qué serie sale cada día (1=lunes ... 7=domingo); si ponés una lista, rota entre esas series y elige la que tenga la mejor idea. series_respaldo: qué serie sale si ninguna de las del día tiene una idea buena. puntaje_minimo: de 1 a 10, el mínimo que tiene que tener una idea para publicarse (si no llega, cambia de serie y te avisa por mail). horarios: a qué hora sale cada día (hora de Argentina). publicar: poné true en cada red a medida que la conectes. segundos_max: tope de duración del video. titulo_max: largo máximo del título. voz_gemini: Charon, Puck, Orus, Fenrir o 'auto'. musica: mp3 en la carpeta assets. diario_nombre: el nombre del diario que aparece en la portada. efemerides: videos EXTRA de 'Un día como hoy' que salen solo cuando hay un cumpleaños o aniversario importante; umbral: puntaje mínimo de 1 a 10 (8 = ídolos enormes); horarios: en cada uno sale como máximo una efeméride (sumá horarios si querés que puedan salir más por día); activas: false para apagarlas. usar_tendencias: si conecta las ideas con lo que es tendencia hoy en el fútbol. Pedidos programados: se escriben en data/pedidos.json (ver el README); la serie 'especial' es la que usan por defecto. prioritarias: series que van primero en los días que rotan, siempre que haya material fresco y no hayan salido en los últimos N días (por ejemplo, pantalla: 4); si no hay nada bueno, rota normal.",
+  "_ayuda": "Editá este archivo desde GitHub (ícono del lápiz). fabrica_activa: en false el reloj no publica nada (las muestras andan igual); ponela en true cuando conectemos la primera red. usuario: tu @ en las redes (vacío = sin marca). email_aviso: adónde llega el mail diario y los avisos. plan_semanal: qué serie sale cada día (1=lunes ... 7=domingo); si ponés una lista, rota entre esas series y elige la que tenga la mejor idea. series_respaldo: qué serie sale si ninguna de las del día tiene una idea buena. puntaje_minimo: de 1 a 10, el mínimo que tiene que tener una idea para publicarse (si no llega, cambia de serie y te avisa por mail). horarios: a qué hora sale cada día (hora de Argentina). publicar: poné true en cada red a medida que la conectes. segundos_max: tope de duración del video. titulo_max: largo máximo del título. voz_gemini: Charon, Puck, Orus, Fenrir o 'auto'. musica: mp3 en la carpeta assets. diario_nombre: el nombre del diario que aparece en la portada. efemerides: videos EXTRA de 'Un día como hoy' que salen solo cuando hay un cumpleaños o aniversario importante; umbral: puntaje mínimo de 1 a 10 (8 = ídolos enormes); horarios: en cada uno sale como máximo una efeméride (sumá horarios si querés que puedan salir más por día); activas: false para apagarlas. usar_tendencias: si conecta las ideas con lo que es tendencia hoy en el fútbol. Pedidos programados: se escriben en data/pedidos.json (ver el README); la serie 'especial' es la que usan por defecto. prioritarias: series que van primero en los días que rotan, siempre que haya material fresco y no hayan salido en los últimos N días (por ejemplo, pantalla: 4); si no hay nada bueno, rota normal. intro_tapa: el video arranca sobre la tapa del diario con la foto del protagonista. aperturas: qué diseño abre cada serie (diario, tablero, entrada, almanaque, recibo, contrato, figurita, vitrina).",
   "fabrica_activa": false,
   "usuario": "",
   "email_aviso": "rventrura95@gmail.com",
@@ -198,5 +198,23 @@
   "usar_tendencias": true,
   "prioritarias": {
     "pantalla": 4
+  },
+  "intro_tapa": true,
+  "aperturas": {
+    "mitos": "diario",
+    "pantalla": "diario",
+    "pantalla_archivo": "diario",
+    "quefue": "diario",
+    "actualidad": "tablero",
+    "records": "tablero",
+    "insolitos": "tablero",
+    "previa": "entrada",
+    "especial": "entrada",
+    "undia": "almanaque",
+    "cuanto": "recibo",
+    "pases": "contrato",
+    "ascenso": "figurita",
+    "apodos": "figurita",
+    "cabalas": "vitrina"
   }
 }
