@@ -20,6 +20,30 @@ def _guardar(datos):
     (util.RAIZ / "data" / "producciones.md").write_text("\n".join(lineas) + "\n", encoding="utf-8")
 
 
+CATEGORIAS = [("es", "Categoría:Películas sobre fútbol"), ("es", "Categoría:Documentales sobre fútbol"),
+              ("es", "Categoría:Series de televisión sobre fútbol"), ("es", "Categoría:Películas biográficas sobre deportistas"),
+              ("en", "Category:Association football films"),
+              ("en", "Category:Documentary films about association football"),
+              ("en", "Category:Association football television series"),
+              ("en", "Category:Documentary television series about association football")]
+
+
+def _desde_wikipedia():
+    """Títulos de las categorías de películas, series y documentales de fútbol de Wikipedia (gratis, sin clave)."""
+    titulos = []
+    for idioma, cat in CATEGORIAS:
+        try:
+            r = util.pedir("GET", f"https://{idioma}.wikipedia.org/w/api.php",
+                           params={"action": "query", "list": "categorymembers", "cmtitle": cat, "cmtype": "page",
+                                   "cmlimit": 500, "format": "json", "formatversion": 2},
+                           headers={"User-Agent": "fabrica-futbol/1.0 (bot educativo)"}, intentos=2, timeout=40)
+            miembros = ((r.json().get("query") or {}).get("categorymembers") or []) if r is not None and r.status_code == 200 else []
+            titulos += [f'{m["title"]} [{idioma}]' for m in miembros]
+        except Exception as e:  # noqa
+            util.log("Categoría de Wikipedia falló:", cat, util.ocultar(e))
+    return titulos
+
+
 def catalogo():
     """Devuelve el catálogo, actualizándolo si pasaron más de 30 días."""
     from . import escritor
@@ -40,11 +64,27 @@ def catalogo():
               '"protagonista": "...", "tipo": "serie|película|documental"}]}')
     try:
         r = escritor.gemini("Sos un especialista en cine y series de deportes. Nunca inventás títulos.", pedido,
-                            temperatura=0.2, buscar=True)
+                            temperatura=0.2, buscar=True, sin_busqueda_ok=True)
         nuevas = [p for p in r.get("producciones", []) if isinstance(p, dict) and p.get("titulo")]
     except Exception as e:  # noqa
         util.log("No pude actualizar el catálogo de producciones:", util.ocultar(e))
         nuevas = []
+    # Wikipedia: categorías de películas, series y documentales de fútbol, filtradas por la IA (sin búsqueda)
+    try:
+        de_wiki = _desde_wikipedia()
+        if de_wiki:
+            r = escritor.gemini("Sos un especialista en cine y series de deportes. Nunca inventás títulos.",
+                                "Estos son títulos de Wikipedia de películas, series y documentales de fútbol. Quedate SOLO "
+                                "con los que tratan sobre futbolistas, técnicos, dirigentes, representantes, selecciones o "
+                                "clubes REALES y que le pueden interesar a un futbolero argentino (leyendas argentinas y "
+                                "mundiales, Mundiales, grandes clubes). Descartá ficción pura sin personas reales."
+                                + (("\nYa tengo estas (no las repitas): " + "; ".join(conocidas[:150])) if conocidas else "") +
+                                '\nRespondé solo JSON: {"producciones": [{"titulo": "...", "plataforma": "...", "anio": 2021, '
+                                '"protagonista": "...", "tipo": "serie|película|documental", "wikipedia": "título exacto"}]}'
+                                "\n\n" + "\n".join(de_wiki[:900]), temperatura=0.2)
+            nuevas += [p for p in r.get("producciones", []) if isinstance(p, dict) and p.get("titulo")]
+    except Exception as e:  # noqa
+        util.log("No pude sumar el catálogo de Wikipedia:", util.ocultar(e))
     lista = datos.get("lista", [])
     vistos = {str(p.get("titulo", "")).lower() for p in lista}
     for p in nuevas:
@@ -52,7 +92,9 @@ def catalogo():
             p["usos"] = 0
             lista.append(p)
             vistos.add(str(p["titulo"]).lower())
-    datos = {"actualizado": hoy.isoformat() if nuevas or lista else None, "lista": lista}
+    sin_busqueda = escritor._BUSQUEDA.get("anda") is False
+    fecha = (hoy - dt.timedelta(days=27)) if sin_busqueda else hoy  # sin búsqueda, vuelve a intentar en 3 días
+    datos = {"actualizado": fecha.isoformat() if nuevas or lista else None, "lista": lista}
     _guardar(datos)
     util.log(f"Catálogo de producciones: {len(lista)} ({len(nuevas)} nuevas)")
     return datos

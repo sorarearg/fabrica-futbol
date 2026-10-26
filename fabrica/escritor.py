@@ -61,6 +61,8 @@ def _descubrir(clave):
 
 ULTIMAS_FUENTES = []  # páginas que usó Gemini en la última búsqueda con Google
 PRODUCCION_ELEGIDA = []  # serie o película del catálogo usada en el guion de hoy
+NOTA_ELEGIDA = []  # nota del buzón usada hoy
+RESERVA_ELEGIDA = []  # ids de anécdotas de la reserva que se le pasaron a la IA
 
 
 def _cuerpo(sistema, usuario, temperatura, modelo, con_pensamiento, con_seguridad=True, buscar=False):
@@ -95,8 +97,34 @@ def _mensaje(r):
         return (getattr(r, "text", "") or "")[:220]
 
 
-def gemini(sistema, usuario, temperatura=0.9, buscar=False):
-    """buscar=True: Gemini busca en Google antes de responder (gratis dentro del cupo diario del nivel gratuito)."""
+_BUSQUEDA = {"anda": None, "aviso": False}
+
+
+def gemini(sistema, usuario, temperatura=0.9, buscar=False, sin_busqueda_ok=False):
+    """buscar=True: Gemini busca en Google antes de responder (gratis dentro del cupo diario del nivel gratuito).
+    Si la búsqueda no está disponible y sin_busqueda_ok=True, responde con lo que sabe (solo para temas históricos)."""
+    if buscar:
+        if _BUSQUEDA["anda"] is not False:
+            try:
+                r = _gemini(sistema, usuario, temperatura, True)
+                _BUSQUEDA["anda"] = True
+                return r
+            except Bloqueado:
+                raise
+            except Exception as e:  # noqa
+                _BUSQUEDA["anda"] = False
+                if not _BUSQUEDA["aviso"]:
+                    _BUSQUEDA["aviso"] = True
+                    util.avisar("La búsqueda en Google de Gemini no anduvo", util.ocultar(str(e))[:900])
+        ULTIMAS_FUENTES.clear()
+        if not sin_busqueda_ok:
+            raise RuntimeError("Búsqueda en Google no disponible")
+        usuario += ("\n\n(IMPORTANTE: no pudiste buscar en Google. Respondé SOLO con lo que sabés con total seguridad "
+                    "sobre hechos ya ocurridos y ampliamente conocidos; si no estás seguro, devolvé la lista vacía.)")
+    return _gemini(sistema, usuario, temperatura, False)
+
+
+def _gemini(sistema, usuario, temperatura=0.9, buscar=False):
     global _modelo_ok
     clave = util.secreto("GEMINI_API_KEY")
     if not clave:
@@ -287,14 +315,45 @@ def _material_de_la_serie(serie, tema=None):
             raise SinIdeas(f"No hay datos de football-data: {e}")
         otras, fuentes_web = datos_futbol.buscar_otras_ligas(modo)
         return (datos + ("\n\n" + otras if otras else "")), fuentes_web
+    if fuente in ("pantalla", "pantalla_archivo"):
+        # 1) lo que pegaste vos en el buzón (data/notas.md) va primero
+        from . import notas
+        NOTA_ELEGIDA.clear()
+        RESERVA_ELEGIDA.clear()
+        b = notas.buzon()
+        if b:
+            url, comentario, texto = b
+            NOTA_ELEGIDA.append(url)
+            util.log("Uso una nota del buzón:", url)
+            return ("NOTA DEL BUZÓN (elegida a mano" + (f': "{comentario}"' if comentario else "") + "):\n" + texto), \
+                [{"titulo": "nota del buzón", "url": url}]
     if fuente == "pantalla_archivo":
-        # una serie, película o documental del catálogo (las menos usadas primero) y lo que los medios levantaron de ella
-        from . import producciones
+        from . import notas, producciones
         PRODUCCION_ELEGIDA.clear()
+        # 2) la reserva de anécdotas con sus notas (data/anecdotas.json)
+        res = notas.reserva()
+        if res:
+            prod, lista = res
+            textos, fuentes = [], []
+            for a in lista[:3]:
+                if a.get("fuente_url") and len(textos) < 2:
+                    t = notas.texto_de(a["fuente_url"], maximo=5000)
+                    if t:
+                        textos.append(t)
+                if a.get("fuente_url"):
+                    fuentes.append({"titulo": a.get("fuente_medio", "nota"), "url": a["fuente_url"]})
+            RESERVA_ELEGIDA[:] = [a.get("id") for a in lista]
+            util.log("Uso la reserva de anécdotas:", prod, f"({len(lista)} sin usar)")
+            return (f"ANÉCDOTAS DE LA RESERVA SOBRE {prod.upper()} (cada una con su id):\n" +
+                    "\n".join(f'- [id {a.get("id")}] {a["anecdota"]}' + (f' (fuente: {a.get("fuente_medio", "")})'
+                                                                       if a.get("fuente_medio") else "") for a in lista[:8]) +
+                    ("\n\nTEXTO DE LAS NOTAS:\n" + "\n\n".join(textos) if textos else "")), fuentes
+        probadas = []
         for _ in range(3):
             prod = producciones.elegir()
             if not prod:
                 break
+            probadas.append(prod["titulo"])
             nombre = f'{prod["titulo"]} ({prod.get("plataforma", "?")}, {prod.get("anio", "?")})'
             try:
                 r = gemini("Sos un periodista de espectáculos y deportes argentino, muy riguroso. Nunca inventás datos.",
@@ -302,7 +361,7 @@ def _material_de_la_serie(serie, tema=None):
                            "Quiero las anécdotas, historias y datos curiosos que cuenta esa producción y que los medios "
                            "replicaron (las que más pegaron), y qué dicen los medios sobre si pasaron de verdad. Solo lo que "
                            'aparezca en las notas. Respondé solo JSON: {"anecdotas": [{"anecdota": "...", "que_dicen": "..."}]}',
-                           temperatura=0.3, buscar=True)
+                           temperatura=0.3, buscar=True, sin_busqueda_ok=True)
                 items = [x for x in r.get("anecdotas", []) if isinstance(x, dict) and x.get("anecdota")][:10]
             except Exception as e:  # noqa
                 util.log("La búsqueda sobre", nombre, "falló:", util.ocultar(e))
@@ -314,7 +373,26 @@ def _material_de_la_serie(serie, tema=None):
                                                           if x.get("que_dicen") else "") for x in items)), \
                     list(ULTIMAS_FUENTES)
             producciones.sumar_uso(prod["titulo"])  # sin anécdotas: que no la vuelva a elegir enseguida
-        raise SinIdeas("No encontré anécdotas en las producciones del catálogo")
+        # 4) sin búsqueda: los artículos de Wikipedia de la producción y de su protagonista
+        from . import wiki
+        for _ in range(3):
+            prod = producciones.elegir()
+            if not prod:
+                break
+            articulos = wiki.material([x for x in (prod.get("wikipedia") or prod["titulo"], prod.get("protagonista")) if x],
+                                      maximo_total=10000)
+            if articulos:
+                PRODUCCION_ELEGIDA.append(prod["titulo"])
+                util.log("Uso Wikipedia para", prod["titulo"])
+                return (f'PRODUCCIÓN: {prod["titulo"]} ({prod.get("plataforma", "?")}, {prod.get("anio", "?")}). Contá una '
+                        "anécdota o dato curioso que aparezca en estos artículos y que esté relacionado con lo que cuenta "
+                        "la producción o con su protagonista:\n\n" + wiki.como_texto(articulos)), \
+                    [{"titulo": "Wikipedia: " + a["titulo"], "url": a["url"]} for a in articulos]
+            producciones.sumar_uso(prod["titulo"])
+            probadas.append(prod["titulo"])
+        if not probadas:
+            raise SinIdeas("El catálogo de series y películas está vacío (no se pudo armar)")
+        raise SinIdeas("No encontré anécdotas en: " + "; ".join(probadas))
     if fuente == "pantalla":
         # series, películas y documentales de fútbol que están dando que hablar (Gemini busca en Google)
         hoy = util.ahora().date()
@@ -395,7 +473,7 @@ def elegir_tema(serie, titulos_previos, tema=None, material_yt=""):
                '(cómo se engancha con la actualidad: el club juega hoy, el jugador es noticia, se cumple un aniversario, '
                'se habla de un pase parecido; vacío si no hay una conexión real). '
                'Respondé solo JSON: {"candidatas": [{"tema": "...", "gancho": "...", "wikipedia": ["..."], "puntaje": 8, '
-               '"conexion": "..."}]}')
+               '"conexion": "...", "id": "id de la anécdota de la reserva si usaste una, o vacío"}]}')
     try:
         candidatas = [c for c in gemini(_prompt("maestro.md"), pedido, temperatura=1.0).get("candidatas", [])
                       if isinstance(c, dict) and c.get("tema")]
@@ -417,7 +495,8 @@ def elegir_tema(serie, titulos_previos, tema=None, material_yt=""):
             break
         consultas = [x for x in (c.get("wikipedia") or []) if x][:3] + ([tema] if tema else [])
         articulos = wiki.material(consultas, maximo_total=9000)
-        if articulos or (fuente in ("actualidad", "pantalla", "pantalla_archivo") and solo_datos) or (fuente == "especial" and datos):
+        if articulos or (fuente in ("actualidad", "pantalla") and solo_datos) or \
+                (fuente == "pantalla_archivo" and solo_datos and fuentes_web) or (fuente == "especial" and datos):
             util.log("Tema elegido:", c["tema"], f"({puntos(c):g})",
                      "· respaldo:", ", ".join(a["titulo"] for a in articulos) or "datos de la semana")
             return c, articulos, datos, fuentes_web
@@ -507,4 +586,13 @@ def escribir(serie, fuentes, titulos_previos, tema=None):
     if serie.get("fuente") == "pantalla_archivo" and PRODUCCION_ELEGIDA:
         from . import producciones
         producciones.sumar_uso(PRODUCCION_ELEGIDA[0])
+    if NOTA_ELEGIDA or RESERVA_ELEGIDA:
+        from . import notas
+        for url in NOTA_ELEGIDA:
+            notas.marcar_usada(url)
+        elegido = str((candidata or {}).get("id") or "").strip()
+        if RESERVA_ELEGIDA:
+            notas.marcar_usada(elegido if elegido in RESERVA_ELEGIDA else RESERVA_ELEGIDA[0])
+        NOTA_ELEGIDA.clear()
+        RESERVA_ELEGIDA.clear()
     return final
