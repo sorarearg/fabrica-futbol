@@ -1,71 +1,86 @@
 {
-  "titulo": "¿Maradona y la Ferrari negra es real?",
-  "descripcion": "En la serie de Guillermo Coppola muestran el capricho del Diez: pedir una Ferrari que no fuera roja. ¿Pasó posta o fue puro chamuyo de tele? ¿Vos qué decís: mito o verdad?",
+  "titulo": "¿Maradona pidió una Ferrari negra?",
+  "descripcion": "Coppola cuenta que Diego le pidió una Ferrari F40 con una condición insólita para la época: que no fuera roja. Mirá cómo terminó la historia.",
   "hashtags": [
     "#futbol",
     "#futbolargentino",
     "#maradona",
     "#coppola",
-    "#historiasdelfutbol",
-    "#mitos"
+    "#historiasdelfutbol"
   ],
   "miniatura": {
     "linea1": "LA FERRARI NEGRA",
     "linea2": "DE MARADONA",
-    "emoji": "🚗",
-    "prompt": "An intense retro scene from the late 1980s showing a stylish sports car enthusiast looking at an all-black sleek Italian sports car parked on an Italian runway, cinematic vintage lighting",
+    "emoji": "🏎️",
+    "prompt": "An intense meeting in an executive office between an Italian automotive executive in an elegant suit and a charismatic football manager, late 1980s atmosphere, cinematic dramatic lighting.",
     "foto": "Diego Maradona"
   },
   "veredicto": "VERDAD",
   "fuentes": [
     "El Marplatense: Las mejores anécdotas de Guillermo Coppola con Diego Maradona",
-    "Libro: Guillote. Acá está. Esta es mi vida (2009)"
+    "Serie 'Coppola, el representante' (Star+)"
   ],
   "escenas": [
     {
-      "texto_voz": "Diego Maradona quería una Ferrari, pero con una sola condición: que no fuera roja.",
-      "texto_pantalla": "¿LA FERRARI NEGRA FUE REAL?",
+      "texto_voz": "Diego Maradona quería una Ferrari F cuarenta, pero con un capricho imposible: no la quería roja, la quería negra.",
+      "texto_pantalla": "¿UNA FERRARI NEGRA?",
       "emoji": "🏎️",
-      "prompt": "A pristine sleek black 1980s Italian supercar parked inside a luxury garage, dramatic studio spotlight reflecting on polished metallic black hood",
-      "foto": "",
-      "broll": []
-    },
-    {
-      "texto_voz": "La quería negra. El tema es que la marca solo fabricaba ese modelo en color rojo.",
-      "texto_pantalla": "",
-      "emoji": "🔴",
-      "prompt": "Row of identical red vintage Italian sports cars inside an Italian luxury car factory in the late 1980s, overhead industrial lighting",
-      "foto": "",
-      "broll": []
-    },
-    {
-      "texto_voz": "Guillermo Coppola tuvo que meterse en el barro e ir a pedir la excepción directo con Enzo Ferrari.",
-      "texto_pantalla": "",
-      "emoji": "🤝",
-      "prompt": "A high-stakes business meeting in Maranello Italy between a sharp manager and an elderly Italian automotive patriarch wearing dark sunglasses, late 1980s aesthetic",
-      "foto": "",
-      "broll": []
-    },
-    {
-      "texto_voz": "Y se la pintaron de negro nomás. Pasó de verdad. ¿Vos qué decís: mito o verdad?",
-      "texto_pantalla": "",
-      "emoji": "⭐",
-      "prompt": "A stylish athletic man with dark curly hair celebrating next to a glossy black Italian supercar under bright sunny skies, late 1980s photo look",
+      "prompt": "",
       "foto": "Diego Maradona",
+      "broll": []
+    },
+    {
+      "texto_voz": "En esa época la fábrica italiana no te cambiaba el color por nada del mundo: salían todas rojas.",
+      "texto_pantalla": "ROJO FERRARI",
+      "emoji": "🏭",
+      "prompt": "A pristine vintage red supercar inside an Italian factory in the late 1980s, industrial ambient lighting reflecting on glossy red paint.",
+      "foto": "",
+      "broll": []
+    },
+    {
+      "texto_voz": "Guillermo Coppola contó que tuvo que sentarse a pedirle la excepción directamente al mismísimo Enzo Ferrari.",
+      "texto_pantalla": "REUNIÓN CON ENZO",
+      "emoji": "💼",
+      "prompt": "",
+      "foto": "Guillermo Coppola",
+      "broll": []
+    },
+    {
+      "texto_voz": "Y lo logró. La marca rompió su propia tradición y pintó el auto de negro para el Diez.",
+      "texto_pantalla": "PINTADA DE NEGRO",
+      "emoji": "✨",
+      "prompt": "A sleek black late 1980s Italian supercar parked on an empty asphalt road under streetlights, deep glossy black finish, cinematic side view.",
+      "foto": "",
+      "broll": []
+    },
+    {
+      "texto_voz": "Veredicto: verdad. Una anécdota delirante que el propio Coppola se encargó de confirmar.",
+      "texto_pantalla": "VERDAD",
+      "emoji": "✔️",
+      "prompt": "",
+      "foto": "Diego Maradona",
+      "broll": []
+    },
+    {
+      "texto_voz": "¿Lo sabías? Te leo.",
+      "texto_pantalla": "TE LEO",
+      "emoji": "💬",
+      "prompt": "Two friends sitting at an authentic Buenos Aires cafe table, chatting animatedly over coffee, warm nostalgic lighting.",
+      "foto": "",
       "broll": []
     }
   ],
   "carrusel": [],
-  "palabras": 64,
+  "palabras": 88,
   "wikipedia": [
     {
-      "titulo": "Diego Maradona",
-      "url": "https://es.wikipedia.org/wiki/Diego_Maradona",
+      "titulo": "Guillermo Coppola",
+      "url": "https://es.wikipedia.org/wiki/Guillermo_Coppola",
       "idioma": "es"
     },
     {
-      "titulo": "Ferrari F40",
-      "url": "https://es.wikipedia.org/wiki/Ferrari_F40",
+      "titulo": "Diego Maradona",
+      "url": "https://es.wikipedia.org/wiki/Diego_Maradona",
       "idioma": "es"
     }
   ],
@@ -84,7 +99,7 @@
     }
   ],
   "datos_futbol": false,
-  "tema": "El insólito capricho de Diego Maradona de conseguir una Ferrari F40 negra cuando solo se fabricaban en rojo.",
+  "tema": "Maradona exigió una Ferrari F40 negra cuando solo existían rojas y Coppola tuvo que negociarla con el propio Enzo Ferrari.",
   "puntaje": 9,
   "fecha_tapa": ""
 }
