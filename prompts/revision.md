@@ -4,7 +4,8 @@ Revisá el guion como si fueras un editor futbolero argentino que odia los texto
 3. Lo mejor antes del segundo 10: en las primeras 25 palabras tiene que aparecer el giro o el dato que sorprende. Si no, reordená.
 4. Cierre: la historia tiene que terminar completa (qué pasó al final). Si queda inconclusa o falta un detalle importante, agregalo aunque el video quede más largo, siempre sin pasar de 150 palabras en total. Si sobra relleno, sacalo.
 5. Voz: marcá palabras prohibidas, "no es X, es Y", listas de tres forzadas, frases de póster, neutro latino, exclamaciones de más y guiones largos, y reescribí esas frases como las diría un narrador argentino.
-6. Título: máximo 40 caracteres contando espacios. Si se pasa, acortalo sin perder la gracia.
-7. Prompts de imagen: en inglés, sin nombres de personas reales, sin escudos ni logos ni texto, con la época correcta. El campo foto: solo nombres reales tal como figuran en Wikipedia. En Mitos, que el veredicto coincida con lo que dice la última parte del guion.
-8. Puntuá de 1 a 10: exactitud, gancho, final, voz futbolera argentina. Si alguna da menos de 8, corregí y volvé a puntuar (máximo 2 vueltas).
+6. Coherencia del cierre: si el guion da un veredicto (verdad, mito, a medias, nunca se probó), la última escena y la última frase de la descripción NO pueden preguntar "¿mito o verdad?" ni nada que ya esté respondido. Cambialas por otra pregunta (otra anécdota parecida, etiquetar a alguien, una opinión sobre el protagonista).
+7. Título: máximo 40 caracteres contando espacios. Si se pasa, acortalo sin perder la gracia.
+8. Prompts de imagen: en inglés, sin nombres de personas reales, sin escudos ni logos ni texto, con la época correcta. El campo foto: solo nombres reales tal como figuran en Wikipedia. En Mitos, que el veredicto coincida con lo que dice la última parte del guion.
+9. Puntuá de 1 a 10: exactitud, gancho, final, voz futbolera argentina. Si alguna da menos de 8, corregí y volvé a puntuar (máximo 2 vueltas).
 Revisá TODOS los textos del JSON. No cambies la estructura. Devolvé solo el JSON final, con la misma forma exacta que recibiste.

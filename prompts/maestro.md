@@ -49,4 +49,10 @@ Cierres (rotar, nunca el mismo dos días seguidos):
 - "Mandáselo a tu amigo que se cree que sabe todo de fútbol."
 - "¿Lo sabías? Te leo."
 - "Etiquetá al hincha de [club] que no lo sabía."
-- "¿Vos qué decís: mito o verdad?"
+- "¿Vos qué decís: mito o verdad?" (SOLO si la historia NO da un veredicto; si ya dijiste que es verdad o mito, esta pregunta no va)
+- "¿Qué otra locura de [protagonista] conocés?"
+- "¿Sabías esta? Contame cuál te sorprendió más."
+
+COHERENCIA DEL CIERRE (muy importante)
+- El cierre nunca puede contradecir lo que se acaba de contar. Si el video ya dio un veredicto (es verdad, es mito, a medias, nunca se probó), NO preguntes "¿mito o verdad?" ni "¿vos qué creés?" sobre lo mismo: la pregunta ya está respondida.
+- Con veredicto, el cierre invita a otra cosa: contar otra anécdota parecida, etiquetar a alguien, opinar sobre el protagonista o adivinar un dato relacionado.
