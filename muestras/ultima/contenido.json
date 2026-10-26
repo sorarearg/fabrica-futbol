@@ -1,94 +1,90 @@
 {
-  "titulo": "Enzo Pérez al arco: la noche épica",
-  "descripcion": "Sin arqueros, con once jugadores justos y noventa minutos por Copa Libertadores. Mirá la noche más insólita de River. ¿Te acordás dónde viste este partido?",
+  "titulo": "¿Maradona y la Ferrari negra es real?",
+  "descripcion": "En la serie de Guillermo Coppola muestran el capricho del Diez: pedir una Ferrari que no fuera roja. ¿Pasó posta o fue puro chamuyo de tele? ¿Vos qué decís: mito o verdad?",
   "hashtags": [
     "#futbol",
     "#futbolargentino",
-    "#copalibertadores",
-    "#riverplate",
-    "#enzoperez",
-    "#historiasdelfutbol"
+    "#maradona",
+    "#coppola",
+    "#historiasdelfutbol",
+    "#mitos"
   ],
   "miniatura": {
-    "linea1": "ATAJÓ DESGARRADO",
-    "linea2": "EN LIBERTADORES",
-    "emoji": "🧤",
-    "prompt": "An Argentine midfielder wearing a bright green goalkeeper jersey and goalie gloves, standing between the goalposts under intense stadium floodlights, looking determined.",
-    "foto": "Enzo Pérez"
+    "linea1": "LA FERRARI NEGRA",
+    "linea2": "DE MARADONA",
+    "emoji": "🚗",
+    "prompt": "An intense retro scene from the late 1980s showing a stylish sports car enthusiast looking at an all-black sleek Italian sports car parked on an Italian runway, cinematic vintage lighting",
+    "foto": "Diego Maradona"
   },
-  "veredicto": "",
+  "veredicto": "VERDAD",
   "fuentes": [
-    "Wikipedia: Enzo Pérez",
-    "Wikipedia: Club Atlético River Plate",
-    "Conmebol Libertadores 2021"
+    "El Marplatense: Las mejores anécdotas de Guillermo Coppola con Diego Maradona",
+    "Libro: Guillote. Acá está. Esta es mi vida (2009)"
   ],
   "escenas": [
     {
-      "texto_voz": "Mayo de dos mil veintiuno. River tiene que jugar por Copa Libertadores y no tiene arquero. Ni uno solo.",
-      "texto_pantalla": "Sin arqueros en la Libertadores",
-      "emoji": "🦠",
-      "prompt": "A soccer locker room with empty seats and hanging jerseys under dim lights.",
-      "foto": "Club Atlético River Plate",
-      "broll": []
-    },
-    {
-      "texto_voz": "Un brote de contagios le baja medio plantel. Conmebol no lo deja sumar juveniles y quedan once jugadores justos.",
-      "texto_pantalla": "",
-      "emoji": "📋",
-      "prompt": "A soccer team sheet on a clipboard held by a referee under bright stadium lights.",
+      "texto_voz": "Diego Maradona quería una Ferrari, pero con una sola condición: que no fuera roja.",
+      "texto_pantalla": "¿LA FERRARI NEGRA FUE REAL?",
+      "emoji": "🏎️",
+      "prompt": "A pristine sleek black 1980s Italian supercar parked inside a luxury garage, dramatic studio spotlight reflecting on polished metallic black hood",
       "foto": "",
       "broll": []
     },
     {
-      "texto_voz": "Y acá viene lo mejor: Enzo Pérez, desgarrado, pide ponerse los guantes.",
+      "texto_voz": "La quería negra. El tema es que la marca solo fabricaba ese modelo en color rojo.",
       "texto_pantalla": "",
-      "emoji": "🧤",
-      "prompt": "A focused midfielder putting on green goalkeeper gloves in a stadium tunnel.",
-      "foto": "Enzo Pérez",
-      "broll": []
-    },
-    {
-      "texto_voz": "Buzo verde flúo, sin suplentes en el banco y a bancar la parada contra Independiente Santa Fe.",
-      "texto_pantalla": "",
-      "emoji": "🥅",
-      "prompt": "A soccer player acting as a goalkeeper standing inside the penalty box at night.",
-      "foto": "Enzo Pérez",
-      "broll": []
-    },
-    {
-      "texto_voz": "River metió dos goles de arranque, defendió cada pelota con el alma y terminó ganando dos a uno.",
-      "texto_pantalla": "",
-      "emoji": "⚽",
-      "prompt": "Soccer players in white and red sash jerseys celebrating a victory in a massive stadium.",
+      "emoji": "🔴",
+      "prompt": "Row of identical red vintage Italian sports cars inside an Italian luxury car factory in the late 1980s, overhead industrial lighting",
       "foto": "",
       "broll": []
     },
     {
-      "texto_voz": "Noventa minutos atajando en una pierna y victoria para la historia. Etiquetá al hincha de River que no se olvida más.",
+      "texto_voz": "Guillermo Coppola tuvo que meterse en el barro e ir a pedir la excepción directo con Enzo Ferrari.",
       "texto_pantalla": "",
-      "emoji": "🏆",
-      "prompt": "A player wearing a green goalkeeper kit raising his arms in triumph under stadium lights.",
-      "foto": "Enzo Pérez",
+      "emoji": "🤝",
+      "prompt": "A high-stakes business meeting in Maranello Italy between a sharp manager and an elderly Italian automotive patriarch wearing dark sunglasses, late 1980s aesthetic",
+      "foto": "",
+      "broll": []
+    },
+    {
+      "texto_voz": "Y se la pintaron de negro nomás. Pasó de verdad. ¿Vos qué decís: mito o verdad?",
+      "texto_pantalla": "",
+      "emoji": "⭐",
+      "prompt": "A stylish athletic man with dark curly hair celebrating next to a glossy black Italian supercar under bright sunny skies, late 1980s photo look",
+      "foto": "Diego Maradona",
       "broll": []
     }
   ],
   "carrusel": [],
-  "palabras": 106,
+  "palabras": 64,
   "wikipedia": [
     {
-      "titulo": "Enzo Pérez",
-      "url": "https://es.wikipedia.org/wiki/Enzo_P%C3%A9rez",
+      "titulo": "Diego Maradona",
+      "url": "https://es.wikipedia.org/wiki/Diego_Maradona",
       "idioma": "es"
     },
     {
-      "titulo": "Club Atlético River Plate",
-      "url": "https://es.wikipedia.org/wiki/Club_Atl%C3%A9tico_River_Plate",
+      "titulo": "Ferrari F40",
+      "url": "https://es.wikipedia.org/wiki/Ferrari_F40",
       "idioma": "es"
     }
   ],
-  "web": [],
+  "web": [
+    {
+      "titulo": "El Marplatense",
+      "url": "https://www.elmarplatense.com/las-mejores-anecdotas-de-guillermo-coppola-con-diego-maradona"
+    },
+    {
+      "titulo": "El Marplatense",
+      "url": "https://www.elmarplatense.com/las-mejores-anecdotas-de-guillermo-coppola-con-diego-maradona"
+    },
+    {
+      "titulo": "Río Negro",
+      "url": "https://www.rionegro.com.ar/erre-n/mira-el-primer-adelanto-de-la-serie-sobre-guillermo-coppola-en-la-que-apareceran-retratados-scioli-y-cuneo-libarona-3394691/?amp=1"
+    }
+  ],
   "datos_futbol": false,
-  "tema": "Enzo Pérez atajando los noventa minutos con un desgarro en River contra Santa Fe por Copa Libertadores en 2021",
+  "tema": "El insólito capricho de Diego Maradona de conseguir una Ferrari F40 negra cuando solo se fabricaban en rojo.",
   "puntaje": 9,
-  "fecha_tapa": "Año 2021"
+  "fecha_tapa": ""
 }

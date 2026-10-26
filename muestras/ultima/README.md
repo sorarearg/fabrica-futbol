@@ -1,12 +1,14 @@
-# Muestra · Partidos insólitos
+# Muestra · ¿Pasó de verdad?
 
-**Idea elegida:** Enzo Pérez atajando los noventa minutos con un desgarro en River contra Santa Fe por Copa Libertadores en 2021 (puntaje 9)
+**Idea elegida:** El insólito capricho de Diego Maradona de conseguir una Ferrari F40 negra cuando solo se fabricaban en rojo. (puntaje 9)
 
-**Título:** Enzo Pérez al arco: la noche épica (34 de 40 caracteres)
+**Veredicto:** VERDAD
 
-**Duración del video completo:** 38 segundos · 106 palabras · 6 escenas
+**Título:** ¿Maradona y la Ferrari negra es real? (37 de 40 caracteres)
 
-**Esta muestra:** primeros 38 segundos · voz: gemini · Puck · tiempos estimado · imágenes: foto de Commons (1), Pollinations (libre) (9)
+**Duración del video completo:** 21 segundos · 64 palabras · 4 escenas
+
+**Esta muestra:** primeros 21 segundos · voz: gemini · Puck · tiempos estimado · imágenes: tarjeta (2), Pollinations (libre) (4), foto de Commons (1)
 
 ![Muestra](muestra.gif) ![Portada](thumb.jpg)
 
@@ -14,27 +16,27 @@
 
 ## Guion completo
 
-1. Mayo de dos mil veintiuno. River tiene que jugar por Copa Libertadores y no tiene arquero. Ni uno solo.
-2. Un brote de contagios le baja medio plantel. Conmebol no lo deja sumar juveniles y quedan once jugadores justos.
-3. Y acá viene lo mejor: Enzo Pérez, desgarrado, pide ponerse los guantes.
-4. Buzo verde flúo, sin suplentes en el banco y a bancar la parada contra Independiente Santa Fe.
-5. River metió dos goles de arranque, defendió cada pelota con el alma y terminó ganando dos a uno.
-6. Noventa minutos atajando en una pierna y victoria para la historia. Etiquetá al hincha de River que no se olvida más.
+1. Diego Maradona quería una Ferrari, pero con una sola condición: que no fuera roja.
+2. La quería negra. El tema es que la marca solo fabricaba ese modelo en color rojo.
+3. Guillermo Coppola tuvo que meterse en el barro e ir a pedir la excepción directo con Enzo Ferrari.
+4. Y se la pintaron de negro nomás. Pasó de verdad. ¿Vos qué decís: mito o verdad?
 
 ## Texto para publicar
 
-Sin arqueros, con once jugadores justos y noventa minutos por Copa Libertadores. Mirá la noche más insólita de River. ¿Te acordás dónde viste este partido?
+En la serie de Guillermo Coppola muestran el capricho del Diez: pedir una Ferrari que no fuera roja. ¿Pasó posta o fue puro chamuyo de tele? ¿Vos qué decís: mito o verdad?
 
-#futbol #futbolargentino #copalibertadores #riverplate #enzoperez #historiasdelfutbol
+#futbol #futbolargentino #maradona #coppola #historiasdelfutbol #mitos
 
 ## De dónde salen los datos
 
-- [Enzo Pérez](https://es.wikipedia.org/wiki/Enzo_P%C3%A9rez)
-- [Club Atlético River Plate](https://es.wikipedia.org/wiki/Club_Atl%C3%A9tico_River_Plate)
-- Wikipedia: Enzo Pérez
-- Wikipedia: Club Atlético River Plate
-- Conmebol Libertadores 2021
+- [Diego Maradona](https://es.wikipedia.org/wiki/Diego_Maradona)
+- [Ferrari F40](https://es.wikipedia.org/wiki/Ferrari_F40)
+- El Marplatense: Las mejores anécdotas de Guillermo Coppola con Diego Maradona
+- Libro: Guillote. Acá está. Esta es mi vida (2009)
+- [El Marplatense](https://www.elmarplatense.com/las-mejores-anecdotas-de-guillermo-coppola-con-diego-maradona)
+- [El Marplatense](https://www.elmarplatense.com/las-mejores-anecdotas-de-guillermo-coppola-con-diego-maradona)
+- [Río Negro](https://www.rionegro.com.ar/erre-n/mira-el-primer-adelanto-de-la-serie-sobre-guillermo-coppola-en-la-que-apareceran-retratados-scioli-y-cuneo-libarona-3394691/?amp=1)
 
 ## Fotos
 
-- Club Atlético River Plate (Public domain), Wikimedia Commons
+- autor desconocido (Public domain), Wikimedia Commons
