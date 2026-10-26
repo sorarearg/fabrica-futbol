@@ -487,7 +487,7 @@ def _musica(cfg):
     return random.choice(temas) if temas else None
 
 
-def _portada(segmentos, contenido, destino, trabajo, primera_imagen=None, usuario="", seed=1):
+def _portada(segmentos, contenido, destino, trabajo, primera_imagen=None, usuario="", seed=1, con_sello=True):
     """Portada con forma de tapa de diario: titular arriba, la foto (o ilustración) al centro y,
     en Mitos, el sello del veredicto. Todo dentro de la zona central para que no se corte en la grilla."""
     from . import fotos, video
@@ -510,9 +510,18 @@ def _portada(segmentos, contenido, destino, trabajo, primera_imagen=None, usuari
         if motor == "tarjeta" and primera_imagen and Path(primera_imagen).exists():
             shutil.copy(primera_imagen, img)
     cfg = util.config()
+    tipo = (cfg.get("aperturas") or {}).get(contenido.get("serie_clave", ""), "diario")
+    if tipo != "diario":
+        from . import aperturas
+        try:
+            aperturas.armar(tipo, img, mini.get("linea1") or contenido["titulo"], mini.get("linea2", ""),
+                            mini.get("dato", ""), usuario, contenido.get("veredicto", "") if con_sello else "", destino)
+            return
+        except Exception as e:  # noqa
+            util.log(f"La apertura '{tipo}' falló, uso la tapa del diario:", util.ocultar(e))
     video.portada_diario(img, mini.get("linea1") or contenido["titulo"], mini.get("linea2", ""), usuario,
                          cfg.get("diario_nombre", "EL VESTUARIO"), contenido.get("fecha_tapa", ""),
-                         contenido.get("veredicto", ""), destino)
+                         contenido.get("veredicto", "") if con_sello else "", destino)
 
 
 # ---------------------------------------------------------------- todo junto
@@ -537,8 +546,39 @@ def generar(contenido, serie_nombre, usuario, carpeta, segundos_max=None):
         util.log(f"Muestra: {n} escenas, {tiempos[-1][1]:.1f} s")
     total = round(tiempos[-1][1], 3)
 
-    # 2) fondos
-    if cfg.get("fondos", "ilustraciones") == "ilustraciones":
+    # 1b) cada protagonista con al menos una foto: si un nombre solo figura en la miniatura o en otra escena,
+    #     se le asigna a la primera escena que lo nombra y no tiene foto
+    nombres = []
+    for n in [contenido.get("miniatura", {}).get("foto", "")] + [e.get("foto", "") for e in escenas]:
+        if n and n not in nombres:
+            nombres.append(n)
+    for n in nombres:
+        if any(e.get("foto") == n for e in escenas[1:]):
+            continue
+        apellido = n.split()[-1].lower()
+        for e in escenas[1:]:
+            if not e.get("foto") and apellido in e["texto"].lower():
+                e["foto"] = n
+                break
+
+    # 2) fondos (con la tapa del diario como apertura: la primera escena arranca sobre la portada)
+    intro = None
+    if cfg.get("intro_tapa", True) and len(escenas) > 1:
+        try:
+            intro = trabajo / "tapa_intro.jpg"
+            _portada([], contenido, intro, trabajo, None, usuario, seed, con_sello=False)
+        except Exception as e:  # noqa
+            util.log("No pude armar la tapa de apertura:", util.ocultar(e))
+            intro = None
+    if cfg.get("fondos", "ilustraciones") == "ilustraciones" and intro:
+        dest0 = trabajo / "intro.mp4"
+        broll.clip_de_imagen(intro, tiempos[0][1], dest0, acercar=False)
+        segmentos, motores, primera = _fondos_ilustrados(escenas[1:], tiempos[1:], trabajo, seed)
+        segmentos = [dest0] + segmentos
+        motores["tapa del diario"] = 1
+        de_pexels, banco, de_propios, de_postales = sum(v for k, v in motores.items() if k.startswith("clip")), \
+            "Pixabay", 0, 0
+    elif cfg.get("fondos", "ilustraciones") == "ilustraciones":
         segmentos, motores, primera = _fondos_ilustrados(escenas, tiempos, trabajo, seed)
         de_pexels, banco, de_propios, de_postales = sum(v for k, v in motores.items() if k.startswith("clip")), \
             "Pixabay", 0, 0
@@ -552,6 +592,10 @@ def generar(contenido, serie_nombre, usuario, carpeta, segundos_max=None):
     # 3) subtítulos + gancho
     gancho = (contenido["escenas"][0].get("texto_pantalla") or contenido.get("miniatura", {}).get("linea1") or "")
     dur_gancho = min(max(tiempos[0][1], 2.2), 4.0)
+    if intro:
+        gancho = ""
+        dur_gancho = tiempos[0][1]
+        palabras = [p for p in palabras if p[3] != 0]
     subtitulos(palabras, gancho, serie_nombre, usuario, dur_gancho, total, trabajo / "subs.ass")
 
     # 4) mezcla final: fondo + subtítulos + barra de progreso + voz (+ música)

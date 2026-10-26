@@ -273,7 +273,7 @@ def sello(texto, path, ancho=760):
     color = (22, 140, 60, 240) if texto == "VERDAD" else (ROJO_SELLO + (240,))
     d.rounded_rectangle([10, 10, ancho - 10, alto - 10], 26, outline=color, width=16)
     d.rounded_rectangle([34, 34, ancho - 34, alto - 34], 16, outline=color, width=4)
-    fnt, lineas = mk.ajustar(d, texto, "titulo" if mk.es_anton() else "bold", ancho - 120, 1, 130, 50)
+    fnt, lineas = mk.ajustar(d, texto, "titulo" if mk.es_anton() else "bold", ancho - 170, 1, 120, 40)
     d.text((ancho // 2, alto // 2), lineas[0], font=fnt, fill=color, anchor="mm")
     # textura gastada
     import random
@@ -312,13 +312,16 @@ def portada_diario(img_path, l1, l2, usuario, nombre_diario, fecha, veredicto, p
     # titular
     ft, lt = mk.ajustar(d, (l1 or "").upper(), "diario", W - 120, 2, 150, 70)
     y = 515
+    fondo_texto = y
     for ln in lt:
         d.text((W // 2, y), ln, font=ft, fill=TINTA, anchor="ma")
+        fondo_texto = d.textbbox((W // 2, y), ln, font=ft, anchor="ma")[3]
         y += int(ft.size * 1.05)
+    y = max(y, fondo_texto + 22)  # que la bajada nunca pise el titular
     if l2:
         f2, l2s = mk.ajustar(d, l2, "diario_texto", W - 200, 1, 58, 36)
-        d.text((W // 2, y + 6), l2s[0], font=f2, fill=(90, 70, 50), anchor="ma")
-        y += int(f2.size * 1.4)
+        d.text((W // 2, y), l2s[0], font=f2, fill=(90, 70, 50), anchor="ma")
+        y = d.textbbox((W // 2, y), l2s[0], font=f2, anchor="ma")[3] + 10
     # foto en blanco y negro con marco, como en un diario
     tope = 1560
     caja_y0 = max(y + 24, 760)
@@ -344,9 +347,10 @@ def portada_diario(img_path, l1, l2, usuario, nombre_diario, fecha, veredicto, p
         d.rectangle([W // 2 + 30, yy, W - 90 - (60 if k == 3 else 0), yy + 10], fill=(160, 150, 132))
     if veredicto:
         tmp = Path(str(path) + ".sello.png")
-        sello(veredicto, tmp, 700)
+        sello(veredicto, tmp, 560)
         s_im = Image.open(tmp)
-        im.paste(s_im, ((W - s_im.width) // 2, tope - s_im.height - 40), s_im)
+        # abajo a la derecha, montado sobre el borde de la foto, para no tapar la cara
+        im.paste(s_im, (W - s_im.width - 30, tope - int(s_im.height * 0.62)), s_im)
         tmp.unlink(missing_ok=True)
     if usuario:
         d.text((W // 2, 1735), usuario, font=mk.fuente("bold", 40), fill=TINTA, anchor="mm")

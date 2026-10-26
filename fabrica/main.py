@@ -131,6 +131,7 @@ def generar(simulado=False):
         clave_serie, serie, contenido = _escribir_con_respaldo(cfg, escritor, fuentes, titulos,
                                                                (os.getenv("TEMA") or "").strip() or None)
     contenido["fecha_tapa"] = _fecha_tapa(contenido)
+    contenido["serie_clave"] = clave_serie
 
     nombre_carpeta = fecha + (f"-efe{efe['n']}" if efe else "") + (f"-ped{ped['n']}" if ped else "")
     carpeta = SITIO / nombre_carpeta
@@ -345,6 +346,7 @@ def muestra():
     titulos = [h["titulo"] for h in reversed(util.leer_json("data/historial.json", []))]
     clave_serie, serie, contenido = _escribir_con_respaldo(cfg, escritor, [], titulos, tema)
     contenido["fecha_tapa"] = _fecha_tapa(contenido)
+    contenido["serie_clave"] = clave_serie
     carpeta = SALIDA / "muestra"
     shutil.rmtree(carpeta, ignore_errors=True)
     carpeta.mkdir(parents=True)

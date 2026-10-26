@@ -138,7 +138,8 @@ def _whisper(wav, texto, nombre=None):
 
 def alinear(tokens, oidas, dur):
     """Pone tiempo a cada palabra del guion usando lo que Whisper escuchó.
-    Las que no se reconocen se interpolan entre sus vecinas."""
+    Solo se confía en coincidencias firmes (dos o más palabras seguidas, o palabras largas) que respeten un ritmo
+    de habla posible; el resto se interpola por cantidad de letras. Así los subtítulos no se frenan ni se aceleran."""
     n = len(tokens)
     tiempos = [None] * n
     if oidas:
@@ -146,16 +147,34 @@ def alinear(tokens, oidas, dur):
         b = [_norm(w[2]) for w in oidas]
         for blk in difflib.SequenceMatcher(None, a, b, autojunk=False).get_matching_blocks():
             for k in range(blk.size):
-                w = oidas[blk.b + k]
-                tiempos[blk.a + k] = [w[0], w[1]]
-    # interpolación por cantidad de letras entre anclas conocidas
+                if blk.size >= 2 or len(a[blk.a + k]) >= 4:
+                    w = oidas[blk.b + k]
+                    tiempos[blk.a + k] = [w[0], w[1]]
+    # descartar anclas que implican un ritmo imposible (menos de 4 o más de 30 letras por segundo)
+    letras = [max(2, len(t)) for t in tokens]
+    acum = [0]
+    for x in letras:
+        acum.append(acum[-1] + x)
+    previo_i, previo_t = -1, 0.0
+    for i in range(n):
+        if not tiempos[i]:
+            continue
+        t = tiempos[i][0]
+        chars = acum[i] - acum[previo_i + 1] if previo_i >= 0 else acum[i]
+        seg = t - previo_t
+        if seg <= 0 or (chars > 6 and not (4 <= chars / max(seg, 0.01) <= 30)) or t > dur:
+            tiempos[i] = None
+            continue
+        previo_i, previo_t = i, t
+    # interpolación por cantidad de letras entre anclas confiables
     anclas = [(-1, 0.0)] + [(i, t[0]) for i, t in enumerate(tiempos) if t] + [(n, dur)]
     for (i0, t0), (i1, t1) in zip(anclas, anclas[1:]):
         hueco = list(range(i0 + 1, i1))
         if not hueco:
             continue
         ini = tiempos[i0][1] if i0 >= 0 and tiempos[i0] else t0
-        pesos = [max(2, len(tokens[i])) for i in hueco]
+        ini = min(ini, t1)
+        pesos = [letras[i] for i in hueco]
         total = sum(pesos) or 1
         paso = max(0.0, t1 - ini) / total
         t = ini
