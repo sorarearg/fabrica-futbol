@@ -144,7 +144,7 @@ def recortar(origen, dur, destino, desde=None):
 def clip_de_imagen(img, dur, destino, acercar=True):
     """Imagen cuadrada → fondo vertical desenfocado + imagen al centro con zoom lento."""
     base = Image.open(img).convert("RGB")
-    if base.height / base.width > 1.6:
+    if base.height / base.width > 1.2:
         # imagen vertical: ocupa toda la pantalla
         esc = max(W / base.width, H / base.height)
         grande = base.resize((int(base.width * esc + 1), int(base.height * esc + 1)), Image.LANCZOS)

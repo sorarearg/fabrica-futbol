@@ -52,6 +52,35 @@ def _limpio(html):
     return t
 
 
+def _info(archivo):
+    d = _api(COMMONS, action="query", titles="File:" + archivo if not archivo.startswith("File:") else archivo,
+             prop="imageinfo", iiprop="url|extmetadata|size", iiurlwidth=1280)
+    paginas = (d.get("query") or {}).get("pages") or []
+    return (paginas[0].get("imageinfo") or [{}])[0] if paginas else {}
+
+
+def _licencia_ok(info):
+    meta = info.get("extmetadata") or {}
+    lic = _limpio((meta.get("LicenseShortName") or {}).get("value"))
+    return lic, bool(_OK.search(lic) and not _NO.search(lic))
+
+
+def _vertical_en_commons(nombre):
+    """Busca en Commons otra foto de la misma persona en formato vertical (con licencia libre)."""
+    apellido = nombre.split()[-1].lower()
+    d = _api(COMMONS, action="query", list="search", srnamespace=6, srsearch=f'"{nombre}"', srlimit=15)
+    for hit in (d.get("query") or {}).get("search") or []:
+        titulo = hit["title"]
+        if apellido not in titulo.lower() or not re.search(r"\.(jpe?g|png)$", titulo, re.I):
+            continue
+        info = _info(titulo)
+        w, h = info.get("width", 0), info.get("height", 0)
+        lic, ok = _licencia_ok(info)
+        if ok and w >= 400 and h / max(w, 1) >= 1.2:
+            return titulo.replace("File:", ""), info, lic
+    return None
+
+
 def foto(nombre, destino):
     """Baja la foto principal del artículo de Wikipedia de esa persona si su licencia es libre.
     Devuelve {"ruta", "credito"} o None."""
@@ -63,6 +92,17 @@ def foto(nombre, destino):
     resultado = None
     try:
         archivo = _archivo_principal(nombre)
+        # si la foto principal es horizontal, se prueba conseguir una vertical de la misma persona
+        if archivo:
+            inf = _info(archivo)
+            if inf.get("width", 0) > inf.get("height", 1) * 1.05:
+                try:
+                    vert = _vertical_en_commons(nombre)
+                    if vert:
+                        util.log("Foto vertical de", nombre, ":", vert[0])
+                        archivo = vert[0]
+                except Exception as e:  # noqa
+                    util.log("Búsqueda de foto vertical falló:", util.ocultar(e))
         if archivo:
             d = _api(COMMONS, action="query", titles="File:" + archivo, prop="imageinfo",
                      iiprop="url|extmetadata|size", iiurlwidth=1280)

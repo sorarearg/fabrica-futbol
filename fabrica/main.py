@@ -751,6 +751,13 @@ def reporte():
     except Exception as ex:  # noqa
         a = {"patrones": [f"No se pudo analizar: {ex}"]}
     fecha = util.ahora().strftime("%Y-%m-%d")
+    # lo aprendido queda guardado para que la fábrica lo use al elegir y escribir las ideas de la semana
+    util.guardar_json("data/aprendizajes.json", {
+        "fecha": fecha, "patrones": a.get("patrones", [])[:5], "formatos": a.get("formatos_que_rinden", [])[:5],
+        "estructuras": a.get("estructuras_virales", [])[:5], "reforzar": a.get("series_reforzar", [])[:5],
+        "cambiar": [x for x in a.get("series_cambiar", []) if isinstance(x, dict)][:5],
+        "ideas": [x for x in a.get("ideas", []) if isinstance(x, dict)][:10],
+        "mejores": [f["titulo"] for f in mejores], "peores": [f["titulo"] for f in peores]})
     md = [f"# Reporte de competencia · {fecha}", "", "| Canal | Videos/semana | Vistas típicas | % Shorts |",
           "|---|---|---|---|"]
     md += [f'| {f["canal"]} | {f["videos_por_semana"]} | {f["mediana"]:,} | {f["pct_shorts"]}% |' for f in filas]

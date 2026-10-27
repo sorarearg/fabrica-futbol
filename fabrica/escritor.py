@@ -184,7 +184,10 @@ def _gemini(sistema, usuario, temperatura=0.9, buscar=False):
 
 
 def _limpiar(s, voz=False):
-    s = str(s or "").replace("—", ", ").replace("–", ", ")
+    s = str(s or "")
+    # resultados: "2–1" o "2 - 1" se muestran "2 - 1" y se dicen "dos a uno" (antes quedaba "2,1")
+    s = re.sub(r"(\d)\s*[–—-]\s*(\d)", r"\1 a \2" if voz else r"\1 - \2", s)
+    s = s.replace("—", ", ").replace("–", ", ")
     s = re.sub(r"(\d)\s?%", r"\1 por ciento", s)
     s = EMOJI_RE.sub("", s)
     return re.sub(r"\s+", " ", s).replace(" ,", ",").strip()
@@ -443,6 +446,49 @@ def _material_de_la_serie(serie, tema=None):
     return "", []
 
 
+RESUMEN_FINDE = (
+    "FORMATO DE HOY: RESUMEN DEL FINDE (no una sola noticia). Con los DATOS DEL FINDE armá un repaso ágil:\n"
+    "1. Gancho con LO MÁS FUERTE del finde (un batacazo de verdad, un argentino que la rompió, un campeón o una racha "
+    "histórica). Si no hubo nada así, arrancá con la pelea más picante por el título.\n"
+    "2. Repaso rápido de las ligas grandes (Premier, LaLiga, Serie A, Bundesliga, Ligue 1 y, si hay datos, Brasileirão): "
+    "una frase por liga con el puntero y el dato clave (cómo le fue, cuántos puntos de ventaja, quién se le acerca).\n"
+    "3. Los argentinos destacados del finde, si los hay (goles, asistencias, figuras).\n"
+    "4. Cierre con una pregunta para comentar (\"¿Quién sale campeón en la Premier?\").\n"
+    "- Un resultado común se nombra de pasada dentro del repaso, nunca como la noticia principal.\n"
+    "- Cada número tiene que estar en los datos. Resultados escritos como 2-1 en pantalla y dichos \"dos a uno\".\n"
+    "- Una o dos escenas por liga, con foto del jugador o del estadio protagonista. Título tipo \"Así quedó el finde\" o "
+    "con lo más fuerte (máximo 40 caracteres). miniatura.dato: la fecha del finde o el resultado del batacazo.")
+
+
+def _es_resumen(serie):
+    return (serie.get("fuente") == "actualidad" and "PREVIA" not in serie.get("prompt", "")
+            and util.config().get("actualidad_resumen", True))
+
+
+def _aprendizajes(serie):
+    """Lo que aprendió el último reporte semanal (qué anduvo, qué no, ideas): se usa como guía, no como dato."""
+    a = util.leer_json("data/aprendizajes.json", {})
+    if not a or not util.config().get("usar_aprendizajes", True):
+        return ""
+    ideas = [f'{x.get("titulo", "")}' for x in a.get("ideas", []) if serie["nombre"].lower() in str(x.get("serie", "")).lower()]
+    partes = [f'APRENDIZAJES DEL ÚLTIMO REPORTE ({a.get("fecha", "")}). Usalos como guía para elegir y puntuar, nunca como '
+              "fuente de datos (los hechos salen del material):"]
+    if a.get("mejores"):
+        partes.append("- Lo que MEJOR nos anduvo: " + "; ".join(a["mejores"]))
+    if a.get("peores"):
+        partes.append("- Lo que PEOR nos anduvo (evitá ideas parecidas): " + "; ".join(a["peores"]))
+    for nombre, clave in (("Patrones que rinden", "patrones"), ("Estructuras que funcionan", "estructuras"),
+                          ("Reforzar", "reforzar")):
+        if a.get(clave):
+            partes.append(f"- {nombre}: " + "; ".join(str(x) for x in a[clave]))
+    for x in a.get("cambiar", []):
+        if serie["nombre"].lower() in str(x.get("serie", "")).lower():
+            partes.append(f'- Para esta serie: {x.get("por_que", "")} → {x.get("propuesta", "")}')
+    if ideas:
+        partes.append("- Ideas sugeridas para esta serie (podés tomarlas si tienen respaldo): " + "; ".join(ideas))
+    return "\n".join(partes) if len(partes) > 1 else ""
+
+
 def elegir_tema(serie, titulos_previos, tema=None, material_yt=""):
     """La IA propone candidatas, se puntúan y se queda con la mejor que tenga respaldo.
     Si ninguna llega al puntaje mínimo, levanta SinIdeas (la fábrica cambia de serie y avisa)."""
@@ -461,6 +507,14 @@ def elegir_tema(serie, titulos_previos, tema=None, material_yt=""):
             util.log("No pude leer las tendencias:", util.ocultar(e))
     if tend:
         datos = (datos + "\n\n" if datos else "") + "TENDENCIAS DE HOY:\n" + tend
+    apr = _aprendizajes(serie)
+    if apr:
+        datos = (datos + "\n\n" if datos else "") + apr
+    if _es_resumen(serie) and not tema:
+        if not solo_datos:
+            raise SinIdeas("No hay datos del finde para el resumen")
+        return ({"tema": "Resumen del fin de semana en las principales ligas", "gancho": "", "puntaje": 10},
+                [], datos, fuentes_web)
     if tema:
         pedido = f'Tema pedido: "{tema}".\n' + serie["prompt"] + "\n\nDevolvé UNA candidata sobre ese tema exacto. "
     else:
@@ -468,6 +522,12 @@ def elegir_tema(serie, titulos_previos, tema=None, material_yt=""):
                   _previos(titulos_previos) + "\n\n" + ((datos[:14000] + "\n\n") if datos else "") +
                   "Proponé 5 candidatas distintas" + (" usando SOLO los datos de arriba" if solo_datos else "") +
                   ", ordenadas de la que más puede explotar en redes a la que menos. ")
+    if fuente == "actualidad":
+        pedido += ("CRITERIO DE RELEVANCIA (exigente): un resultado normal NO alcanza, aunque sea contra un grande "
+                   "(que un equipo de arriba le gane a otro de arriba, o un 2 a 1 cualquiera, vale 5 o menos). Vale 8 o más "
+                   "solo si es un batacazo de verdad (un equipo de la zona baja le gana a uno de los primeros), un "
+                   "argentino que hizo algo enorme (doblete o más, récord, gol decisivo, título), un campeón definido, "
+                   "una racha histórica o algo que todo el mundo futbolero está comentando. ")
     pedido += ('Para cada una: "tema" (una frase con quién, qué y cuándo), "gancho" (la primera frase del video), '
                '"wikipedia" (de 1 a 3 títulos de artículos de Wikipedia en español que cuenten esos hechos; el título exacto '
                'si lo sabés) y "puntaje" (de 1 a 10, siendo exigente: 9-10 solo si un futbolero argentino lo mandaría a '
@@ -518,7 +578,8 @@ def _pedido(serie, titulos_previos, candidata, material):
                       f'estén en el material): {candidata["conexion"]}\n' if candidata.get("conexion") else "") + "\n")
     material = material or ("(No hay material de referencia: usá solo hechos archiconocidos y seguros. "
                             "Ante la duda, contalo sin el dato.)")
-    return (serie["prompt"] + "\n\n" + elegido + _prompt("formato.md") + "\n\n"
+    extra = (RESUMEN_FINDE + "\n\n") if _es_resumen(serie) else ""
+    return (serie["prompt"] + "\n\n" + extra + elegido + _prompt("formato.md") + "\n\n"
             "Temas ya publicados (NO repetir):\n" + _previos(titulos_previos) + "\n\n"
             "MATERIAL DE REFERENCIA (los hechos, nombres y números del guion tienen que salir de acá; el texto tiene que ser "
             "nuestro, nunca copiado ni traducido frase por frase):\n\n" + material[:16000])
