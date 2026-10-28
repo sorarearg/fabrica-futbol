@@ -86,5 +86,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-10-28",
+    "hora": "12:43",
+    "serie": "undia",
+    "titulo": "Fangio y su primer título en 1951",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": false,
+        "error": "API access blocked. (código 200, OAuthException)"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "nX0IC2njMLU"
+      },
+      "facebook": {
+        "ok": false,
+        "error": "Facebook no abrió la subida: Error validating access token: Session has expired on Sunday, 25-Oct-26 23:00:00 PDT. The current time is Wednesday, 28-Oct-26 08:43:53 PDT. (código 190, subcódigo 463, OAuthException)"
+      }
+    },
+    "extra": true
   }
 ]
