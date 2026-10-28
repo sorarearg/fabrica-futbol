@@ -1,105 +1,94 @@
 {
-  "titulo": "¿Maradona pidió una Ferrari negra?",
-  "descripcion": "Coppola cuenta que Diego le pidió una Ferrari F40 con una condición insólita para la época: que no fuera roja. Mirá cómo terminó la historia.",
+  "titulo": "El gol mil de Pelé en el Maracaná",
+  "descripcion": "En 1969, Pelé metía de penal su gol número mil ante el Vasco da Gama. Hinchas y periodistas invadieron la cancha y el partido estuvo parado 20 minutos. ¿Te acordabas de este momento?",
   "hashtags": [
+    "#pele",
+    "#maracana",
     "#futbol",
-    "#futbolargentino",
-    "#maradona",
-    "#coppola",
-    "#historiasdelfutbol"
+    "#historiasdelfutbol",
+    "#brasil",
+    "#futbolargentino"
   ],
   "miniatura": {
-    "linea1": "LA FERRARI NEGRA",
-    "linea2": "DE MARADONA",
-    "emoji": "🏎️",
-    "prompt": "An intense meeting in an executive office between an Italian automotive executive in an elegant suit and a charismatic football manager, late 1980s atmosphere, cinematic dramatic lighting.",
-    "foto": "Diego Maradona"
+    "linea1": "EL GOL MIL",
+    "linea2": "DE PELÉ",
+    "emoji": "⚽",
+    "prompt": "A legendary Brazilian football star celebrating inside a crowded vintage stadium in 1969",
+    "foto": "Pelé",
+    "dato": "1000 GOLES"
   },
-  "veredicto": "VERDAD",
+  "veredicto": "",
   "fuentes": [
-    "El Marplatense: Las mejores anécdotas de Guillermo Coppola con Diego Maradona",
-    "Serie 'Coppola, el representante' (Star+)"
+    "Wikipedia: Pelé"
   ],
   "escenas": [
     {
-      "texto_voz": "Diego Maradona quería una Ferrari F cuarenta, pero con un capricho imposible: no la quería roja, la quería negra.",
-      "texto_pantalla": "¿UNA FERRARI NEGRA?",
-      "emoji": "🏎️",
-      "prompt": "",
-      "foto": "Diego Maradona",
+      "texto_voz": "Maracaná repleto en mil novecientos sesenta y nueve. Pelé acomoda la pelota en el punto del penal para buscar su gol mil.",
+      "texto_pantalla": "El gol mil de Pelé",
+      "emoji": "⚽",
+      "prompt": "A Brazilian football star in a white jersey standing in front of a leather ball on a penalty spot in 1969",
+      "foto": "Pelé",
       "broll": []
     },
     {
-      "texto_voz": "En esa época la fábrica italiana no te cambiaba el color por nada del mundo: salían todas rojas.",
-      "texto_pantalla": "ROJO FERRARI",
-      "emoji": "🏭",
-      "prompt": "A pristine vintage red supercar inside an Italian factory in the late 1980s, industrial ambient lighting reflecting on glossy red paint.",
-      "foto": "",
+      "texto_voz": "Enfrente, el arquero del Vasco da Gama busca la hazaña. Pero Pelé le da suave, cruzado, y la mete bien pegada al palo.",
+      "texto_pantalla": "El penal histórico",
+      "emoji": "🧤",
+      "prompt": "A classic leather football hitting the side netting of a retro goal in 1969",
+      "foto": "Pelé",
       "broll": []
     },
     {
-      "texto_voz": "Guillermo Coppola contó que tuvo que sentarse a pedirle la excepción directamente al mismísimo Enzo Ferrari.",
-      "texto_pantalla": "REUNIÓN CON ENZO",
-      "emoji": "💼",
-      "prompt": "",
-      "foto": "Guillermo Coppola",
+      "texto_voz": "Ahí se armó el descontrol: fotógrafos, periodistas e hinchas invadieron el césped para abrazarlo.",
+      "texto_pantalla": "Invasión en el Maracaná",
+      "emoji": "📸",
+      "prompt": "Photographers with vintage cameras and fans rushing onto the pitch to surround a player in 1969",
+      "foto": "Pelé",
       "broll": []
     },
     {
-      "texto_voz": "Y lo logró. La marca rompió su propia tradición y pintó el auto de negro para el Diez.",
-      "texto_pantalla": "PINTADA DE NEGRO",
-      "emoji": "✨",
-      "prompt": "A sleek black late 1980s Italian supercar parked on an empty asphalt road under streetlights, deep glossy black finish, cinematic side view.",
-      "foto": "",
+      "texto_voz": "Pelé besó la pelota, la levantó bien alto y el partido estuvo parado veinte minutos.",
+      "texto_pantalla": "20 minutos frenado",
+      "emoji": "🏆",
+      "prompt": "A Brazilian football player kissing a classic leather ball while being lifted on shoulders in a stadium",
+      "foto": "Pelé",
       "broll": []
     },
     {
-      "texto_voz": "Veredicto: verdad. Una anécdota delirante que el propio Coppola se encargó de confirmar.",
-      "texto_pantalla": "VERDAD",
-      "emoji": "✔️",
-      "prompt": "",
-      "foto": "Diego Maradona",
+      "texto_voz": "Al final dieron la vuelta olímpica con la camiseta del Vasco puesta.",
+      "texto_pantalla": "Hito histórico",
+      "emoji": "👏",
+      "prompt": "Historic black and white photo aesthetic of a legendary football hero celebrating with a crowd",
+      "foto": "Pelé",
       "broll": []
     },
     {
-      "texto_voz": "¿Lo sabías? Te leo.",
-      "texto_pantalla": "TE LEO",
+      "texto_voz": "Mandáselo a tu amigo que se cree que sabe todo de fútbol.",
+      "texto_pantalla": "",
       "emoji": "💬",
-      "prompt": "Two friends sitting at an authentic Buenos Aires cafe table, chatting animatedly over coffee, warm nostalgic lighting.",
-      "foto": "",
+      "prompt": "Retro stadium illuminated at night with a glowing football in the center of the pitch",
+      "foto": "Pelé",
       "broll": []
     }
   ],
   "carrusel": [],
-  "palabras": 88,
+  "palabras": 98,
   "wikipedia": [
     {
-      "titulo": "Guillermo Coppola",
-      "url": "https://es.wikipedia.org/wiki/Guillermo_Coppola",
+      "titulo": "Pelé",
+      "url": "https://es.wikipedia.org/wiki/Pel%C3%A9",
       "idioma": "es"
     },
     {
-      "titulo": "Diego Maradona",
-      "url": "https://es.wikipedia.org/wiki/Diego_Maradona",
-      "idioma": "es"
+      "titulo": "Neymar",
+      "url": "https://en.wikipedia.org/wiki/Neymar",
+      "idioma": "en"
     }
   ],
-  "web": [
-    {
-      "titulo": "El Marplatense",
-      "url": "https://www.elmarplatense.com/las-mejores-anecdotas-de-guillermo-coppola-con-diego-maradona"
-    },
-    {
-      "titulo": "El Marplatense",
-      "url": "https://www.elmarplatense.com/las-mejores-anecdotas-de-guillermo-coppola-con-diego-maradona"
-    },
-    {
-      "titulo": "Río Negro",
-      "url": "https://www.rionegro.com.ar/erre-n/mira-el-primer-adelanto-de-la-serie-sobre-guillermo-coppola-en-la-que-apareceran-retratados-scioli-y-cuneo-libarona-3394691/?amp=1"
-    }
-  ],
+  "web": [],
   "datos_futbol": false,
-  "tema": "Maradona exigió una Ferrari F40 negra cuando solo existían rojas y Coppola tuvo que negociarla con el propio Enzo Ferrari.",
-  "puntaje": 9,
-  "fecha_tapa": ""
+  "tema": "El 19 de noviembre de 1969, Pelé anota de penal su gol número mil en el Maracaná ante Vasco da Gama.",
+  "puntaje": 8,
+  "fecha_tapa": "Año 1969",
+  "serie_clave": "undia"
 }

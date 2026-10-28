@@ -1,14 +1,12 @@
-# Muestra · ¿Pasó de verdad?
+# Muestra · Un día como hoy
 
-**Idea elegida:** Maradona exigió una Ferrari F40 negra cuando solo existían rojas y Coppola tuvo que negociarla con el propio Enzo Ferrari. (puntaje 9)
+**Idea elegida:** El 19 de noviembre de 1969, Pelé anota de penal su gol número mil en el Maracaná ante Vasco da Gama. (puntaje 8)
 
-**Veredicto:** VERDAD
+**Título:** El gol mil de Pelé en el Maracaná (33 de 40 caracteres)
 
-**Título:** ¿Maradona pidió una Ferrari negra? (34 de 40 caracteres)
+**Duración del video completo:** 33 segundos · 98 palabras · 6 escenas
 
-**Duración del video completo:** 36 segundos · 88 palabras · 6 escenas
-
-**Esta muestra:** primeros 36 segundos · voz: gemini · Puck · tiempos whisper · imágenes: foto de Commons (3), Cloudflare (4)
+**Esta muestra:** primeros 33 segundos · voz: gemini · Puck · tiempos whisper · imágenes: foto de Commons (5), tapa del diario (1)
 
 ![Muestra](muestra.gif) ![Portada](thumb.jpg)
 
@@ -16,28 +14,24 @@
 
 ## Guion completo
 
-1. Diego Maradona quería una Ferrari F cuarenta, pero con un capricho imposible: no la quería roja, la quería negra.
-2. En esa época la fábrica italiana no te cambiaba el color por nada del mundo: salían todas rojas.
-3. Guillermo Coppola contó que tuvo que sentarse a pedirle la excepción directamente al mismísimo Enzo Ferrari.
-4. Y lo logró. La marca rompió su propia tradición y pintó el auto de negro para el Diez.
-5. Veredicto: verdad. Una anécdota delirante que el propio Coppola se encargó de confirmar.
-6. ¿Lo sabías? Te leo.
+1. Maracaná repleto en mil novecientos sesenta y nueve. Pelé acomoda la pelota en el punto del penal para buscar su gol mil.
+2. Enfrente, el arquero del Vasco da Gama busca la hazaña. Pero Pelé le da suave, cruzado, y la mete bien pegada al palo.
+3. Ahí se armó el descontrol: fotógrafos, periodistas e hinchas invadieron el césped para abrazarlo.
+4. Pelé besó la pelota, la levantó bien alto y el partido estuvo parado veinte minutos.
+5. Al final dieron la vuelta olímpica con la camiseta del Vasco puesta.
+6. Mandáselo a tu amigo que se cree que sabe todo de fútbol.
 
 ## Texto para publicar
 
-Coppola cuenta que Diego le pidió una Ferrari F40 con una condición insólita para la época: que no fuera roja. Mirá cómo terminó la historia.
+En 1969, Pelé metía de penal su gol número mil ante el Vasco da Gama. Hinchas y periodistas invadieron la cancha y el partido estuvo parado 20 minutos. ¿Te acordabas de este momento?
 
-#futbol #futbolargentino #maradona #coppola #historiasdelfutbol
+#pele #maracana #futbol #historiasdelfutbol #brasil #futbolargentino
 
 ## De dónde salen los datos
 
-- [Guillermo Coppola](https://es.wikipedia.org/wiki/Guillermo_Coppola)
-- [Diego Maradona](https://es.wikipedia.org/wiki/Diego_Maradona)
-- El Marplatense: Las mejores anécdotas de Guillermo Coppola con Diego Maradona
-- Serie 'Coppola, el representante' (Star+)
-- [El Marplatense](https://www.elmarplatense.com/las-mejores-anecdotas-de-guillermo-coppola-con-diego-maradona)
-- [El Marplatense](https://www.elmarplatense.com/las-mejores-anecdotas-de-guillermo-coppola-con-diego-maradona)
-- [Río Negro](https://www.rionegro.com.ar/erre-n/mira-el-primer-adelanto-de-la-serie-sobre-guillermo-coppola-en-la-que-apareceran-retratados-scioli-y-cuneo-libarona-3394691/?amp=1)
+- [Pelé](https://es.wikipedia.org/wiki/Pel%C3%A9)
+- [Neymar](https://en.wikipedia.org/wiki/Neymar)
+- Wikipedia: Pelé
 
 ## Fotos
 
