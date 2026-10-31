@@ -23,6 +23,26 @@ ESCENAS
 - broll: lista vacía (casi nunca hace falta). Solo para algo filmable que se ve igual hoy ("stadium crowd night", "football on grass").
 - emoji: UN emoji de respaldo (⚽, 🏆, 🧤, 🥅, 📰, 💰...).
 
+CARTELES ANIMADOS (campo "cartel" de cada escena)
+En 2 a 4 escenas (nunca la primera, nunca dos seguidas) poné un cartel animado en lugar de foto o ilustración. Se dibuja con código: es claro, prolijo y no falla. Usalo donde un dato, un resultado o una frase se entiende mejor escrito o dibujado. En las demás escenas, "cartel": null.
+Cada dato del cartel (goles, años, puntos, cifras, nombres, frases textuales) tiene que estar en el material de referencia. Si no lo tenés seguro, usá otro tipo de cartel o null. Textos en castellano, cortos.
+Tipos (elegí el que mejor cuente esa escena):
+- marcador: un resultado. {"tipo":"marcador","local":"Patronato","visita":"Talleres","goles_local":1,"goles_visita":0,"detalle":"Final Copa Argentina 2022","aclaracion":"Ya había descendido"}
+- palabras: la frase clave que entra palabra por palabra (máx. 8 palabras), con 1 o 2 resaltadas. {"tipo":"palabras","texto":"Se fue a la B y salió campeón","resaltar":["campeón"]}
+- numero: una cifra que cuenta hasta el valor. {"tipo":"numero","valor":1000,"prefijo":"","sufijo":"goles","detalle":"Pelé, 1969"} (prefijo "US$ " para plata; "decimales":1 si hace falta)
+- tabla: posiciones o un ranking (2 a 6 filas: posición, nombre, número). {"tipo":"tabla","titulo":"Goleadores","filas":[[1,"Messi",13],[2,"Batistuta",10]],"resaltar":"Messi"}
+- comparacion: dos cosas cara a cara. {"tipo":"comparacion","titulo":"Goles en mundiales","izq":{"nombre":"Messi","valor":13},"der":{"nombre":"Batistuta","valor":10},"unidad":"goles"}
+- linea_tiempo: 2 a 5 momentos. {"tipo":"linea_tiempo","hitos":[["1978","Primer Mundial"],["1986","México"]]}
+- ficha: ficha de figurita de un jugador (2 a 4 datos). {"tipo":"ficha","nombre":"Martín Palermo","datos":[["Club","Boca"],["Apodo","El Titán"]]}
+- dibujo: un dibujo grande con una frase. {"tipo":"dibujo","dibujo":"tarjeta_roja","texto":"Expulsado a los 10 segundos","colores":["rojo","blanco"]}
+- dibujos: 2 o 3 dibujos en fila con su palabra. {"tipo":"dibujos","texto":"Lo que pedía","items":[{"dibujo":"billete","texto":"Plata"},{"dibujo":"avion","texto":"Pasajes"}]}
+- titular: tapa de diario con el titular (máx. 8 palabras) y un sello opcional. {"tipo":"titular","diario":"La Gaceta del Hincha","fecha":"Domingo 30/10/2022","texto":"Patronato campeón","sello":"Histórico"} (el nombre del diario siempre inventado, nunca uno real)
+- cita: una frase TEXTUAL y verificable de alguien, con su autor. {"tipo":"cita","texto":"La pelota no se mancha","autor":"Diego Maradona"}
+- jugada: pizarra con la jugada dibujándose. {"tipo":"jugada","texto":"Tres toques y gol"}
+- formacion: el once (esquema que sume 10 + arquero; nombres de atrás para adelante, arquero primero). {"tipo":"formacion","esquema":"4-3-3","texto":"El equipo de 1986","nombres":["Pumpido","..."]}
+Dibujos disponibles: pelota, pelota_vieja, arco, botin, botin_viejo, guante, copa, medalla, silbato, tarjeta_amarilla, tarjeta_roja, banderin, camiseta, estadio, cronometro, megafono, var, bombo, bandera, microfono, escudo, camara, diario, billete, avion, valija, corazon, fuego, rayo, pregunta, alerta. En camiseta, bandera y escudo podés poner "colores" (celeste, blanco, rojo, azul, amarillo, negro, verde, bordo, naranja, violeta, dorado).
+Fondo opcional ("fondo"): cancha, pizarra, diario, noche, cesped, red, papelitos o figuritas. Si no lo ponés, va el que mejor le queda al tipo.
+
 TEXTOS PARA PUBLICAR
 - titulo: MÁXIMO 40 CARACTERES contando espacios. Corto, picante, con nombre propio o una pregunta que pica ("¿Argentina drogó a Brasil?", "Lo cambiaron por pelotas"). Sin emojis.
 - descripcion: 2 o 3 frases como por WhatsApp, con el dato clave. La última invita a comentar con una pregunta concreta que no contradiga el veredicto (si ya se dijo que es verdad, no preguntes si es mito).
@@ -40,5 +60,5 @@ Respondé SOLO con un JSON válido con esta forma exacta:
   "miniatura": { "linea1": "...", "linea2": "...", "emoji": "...", "foto": "...", "dato": "...", "prompt": "..." },
   "veredicto": "",
   "fuentes": ["..."],
-  "escenas": [ { "texto_voz": "...", "texto_pantalla": "...", "foto": "", "prompt": "...", "broll": [], "emoji": "..." } ]
+  "escenas": [ { "texto_voz": "...", "texto_pantalla": "...", "foto": "", "prompt": "...", "broll": [], "emoji": "...", "cartel": null } ]
 }

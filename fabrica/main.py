@@ -6,6 +6,8 @@ import os
 import shutil
 import sys
 
+import requests
+
 from . import util
 
 SALIDA = util.RAIZ / "out"
@@ -81,6 +83,46 @@ def _fecha_tapa(contenido):
     return f"Año {m.group(0)}" if m else ""
 
 
+def _base_paginas():
+    repo = os.getenv("GITHUB_REPOSITORY", "")
+    if "/" not in repo:
+        return None
+    duenio, nombre = repo.split("/", 1)
+    return f"https://{duenio.lower()}.github.io/{nombre}/"
+
+
+def _traer_anteriores(actual):
+    """La página de GitHub se reemplaza entera en cada corrida (también con los videos extra de efemérides).
+    Traigo los videos de los últimos días (dias_en_pagina en config.json) para que los links de los mails y del resumen sigan andando."""
+    base = _base_paginas()
+    dias = int(util.config().get("dias_en_pagina", 7))
+    desde = (util.ahora() - util.timedelta(days=dias)).strftime("%Y-%m-%d")
+    quedan = [x for x in util.leer_json("data/sitio.json", []) or []
+              if x.get("fecha", "") >= desde and x.get("carpeta") != actual]
+    if not base:
+        return quedan
+    for x in quedan:
+        for rel in x.get("archivos", []):
+            try:
+                r = requests.get(base + rel, timeout=120)
+                if r.status_code == 200:
+                    destino = SITIO / rel
+                    destino.parent.mkdir(parents=True, exist_ok=True)
+                    destino.write_bytes(r.content)
+                else:
+                    util.log("No estaba online", rel, r.status_code)
+            except Exception as e:  # noqa
+                util.log("No pude traer", rel, util.ocultar(e))
+    return quedan
+
+
+def _anotar_sitio(anteriores, p):
+    a = p["archivos"]
+    carpeta = a["video"].split("/")[0]
+    util.guardar_json("data/sitio.json", anteriores + [
+        {"fecha": p["fecha"], "carpeta": carpeta, "archivos": [a["video"], a["portada"]] + a["placas"]}])
+
+
 def generar(simulado=False):
     cfg = util.config()
     os.environ.setdefault("TTS_VOICE", cfg.get("voz", "es-AR-TomasNeural"))
@@ -138,6 +180,7 @@ def generar(simulado=False):
     if SALIDA.exists():
         shutil.rmtree(SALIDA)
     carpeta.mkdir(parents=True)
+    anteriores = [] if simulado else _traer_anteriores(nombre_carpeta)
     placas = []
     if contenido.get("carrusel") and cfg.get("carrusel_dias"):
         placas = carrusel.generar(contenido, serie["nombre"], cfg["usuario"], carpeta)
@@ -171,6 +214,8 @@ def generar(simulado=False):
         "video": meta_video,
     }
     util.guardar_json("out/publicacion.json", publicacion)
+    if not simulado:
+        _anotar_sitio(anteriores, publicacion)
     util.log("Listo:", contenido["titulo"])
 
 

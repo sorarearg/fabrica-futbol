@@ -415,11 +415,31 @@ def _fondos_ilustrados(escenas, tiempos, trabajo, seed):
 
     segmentos, colocados, motores, n = [], [], {}, 0
     primera_imagen = None
+    tope_carteles = int(cfg.get("carteles_por_video", 4)) if cfg.get("carteles", True) else 0
+    hechos, previo_cartel = 0, False
     creditos, fotos_usadas = {}, {}
     for i, (esc, (ini, fin)) in enumerate(zip(escenas, tiempos)):
         dur = fin - ini
         destino = trabajo / f"fondo{n:03d}.mp4"
         puesto = None
+        cartel = esc.get("cartel")
+        if cartel and hechos < tope_carteles and not previo_cartel:
+            from . import carteles
+            if carteles.valido(cartel):
+                try:
+                    carteles.render(cartel, dur, destino, seed + i)
+                    segmentos.append(destino)
+                    clave = "cartel " + cartel["tipo"]
+                    motores[clave] = motores.get(clave, 0) + 1
+                    n += 1
+                    hechos += 1
+                    previo_cartel = True
+                    continue
+                except Exception as e:  # noqa
+                    util.log("El cartel falló, va la imagen de siempre:", util.ocultar(e))
+            else:
+                util.log("Cartel incompleto, lo salteo:", json.dumps(cartel, ensure_ascii=False)[:200])
+        previo_cartel = False
         if i in candidatos:
             buenos = sorted([(p, k) for k, p in enumerate(puntos.get(i, [])) if p >= 2], key=lambda x: -x[0])
             for _, k in buenos:
@@ -532,7 +552,8 @@ def generar(contenido, serie_nombre, usuario, carpeta, segundos_max=None):
     trabajo = salida / "_trabajo"
     trabajo.mkdir(parents=True, exist_ok=True)
     escenas = [{"texto": e["texto_voz"], "pantalla": e.get("texto_pantalla", ""), "emoji": e.get("emoji", ""),
-                "prompt": e.get("prompt", ""), "broll": e.get("broll", ""), "foto": e.get("foto", "")}
+                "prompt": e.get("prompt", ""), "broll": e.get("broll", ""), "foto": e.get("foto", ""),
+                "cartel": e.get("cartel")}
                for e in contenido["escenas"]]
     seed = random.randint(1, 10_000_000)
 

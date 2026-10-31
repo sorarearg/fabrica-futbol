@@ -141,3 +141,14 @@ TikTok exige crear una app en https://developers.tiktok.com con **Content Postin
 
 - GitHub te manda un mail automático cuando una ejecución falla, y el motivo queda arriba de todo en la ejecución.
 - Todo queda registrado en `publicaciones/` (un archivo por día) y en `data/historial.json`.
+
+## Carteles animados y dibujitos (sin IA de imágenes)
+
+En 2 a 4 escenas por video la IA pone un **cartel animado** en vez de foto o ilustración. Se dibuja con código, gratis, en GitHub (`fabrica/carteles.py` y `fabrica/dibujos_futbol.py`).
+
+- **13 tipos:** marcador, palabras que aparecen, número que cuenta, tabla de posiciones, comparación con barras, línea de tiempo, ficha de figurita, dibujo grande, 2-3 dibujos en fila, tapa de diario con sello, cita textual, jugada en pizarra y formación del equipo.
+- **8 fondos:** cancha, pizarra táctica, diario viejo, noche de estadio, césped, red de arco, papelitos y álbum de figuritas.
+- **31 dibujitos:** pelota, pelota vieja, arco, botín, botín viejo, guante, copa, medalla, silbato, tarjetas, banderín, camiseta (con colores), estadio, cronómetro, megáfono, VAR, bombo, bandera, micrófono, escudo, cámara, diario, billete, avión, valija, corazón, fuego, rayo, pregunta y alerta.
+- Nunca en la primera escena ni dos seguidos. Si un cartel viene incompleto o falla, esa escena va con foto o ilustración como siempre.
+- Los datos del cartel se chequean contra el material en la revisión del guion.
+- Para apagarlos: `"carteles": false` en `config.json`. Tope por video: `"carteles_por_video"`.

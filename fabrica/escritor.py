@@ -226,6 +226,17 @@ def _broll(b):
     return [x for x in limpias if len(x) > 2][:2]
 
 
+def _cartel(c):
+    """Deja el cartel solo si está completo (si no, la escena va con foto o ilustración)."""
+    if not isinstance(c, dict) or not c.get("tipo"):
+        return None
+    from . import carteles
+    try:
+        return c if carteles.valido(c) else None
+    except Exception:  # noqa
+        return None
+
+
 def validar(d):
     cfg = util.config()
     escenas = []
@@ -237,7 +248,8 @@ def validar(d):
                             "emoji": _emoji(e.get("emoji"), "📜"),
                             "prompt": str(e.get("prompt") or "").strip(),
                             "foto": _limpiar(e.get("foto"))[:80],
-                            "broll": _broll(e.get("broll"))})
+                            "broll": _broll(e.get("broll")),
+                            "cartel": _cartel(e.get("cartel"))})
     if escenas and not escenas[0]["texto_pantalla"]:
         escenas[0]["texto_pantalla"] = " ".join(escenas[0]["texto_voz"].split()[:6])
     carrusel = []
