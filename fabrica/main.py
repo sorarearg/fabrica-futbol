@@ -308,10 +308,23 @@ def _registro(p, res, base):
     lineas = [f'# {p["fecha"]} · {p["serie_nombre"]}', "", f'**{p["titulo"]}**', ""]
     for red, r in res.items():
         lineas.append(f'- {red}: ' + ("publicado (" + str(r["id"]) + ")" if r["ok"] else "ERROR: " + r["error"]))
+    a = p.get("archivos") or {}
+    dias = int(util.config().get("dias_en_pagina", 7))
+    if base and a.get("video"):
+        links = [f'[Video]({base}{a["video"]})']
+        if a.get("portada"):
+            links.append(f'[Portada]({base}{a["portada"]})')
+        if a.get("placas"):
+            links.append(f'[Carrusel]({base}{a["placas"][0]})')
+        lineas += ["", " · ".join(links) + f" (para bajarlos: duran {dias} días)"]
+    yt = res.get("youtube") or {}
+    if yt.get("ok") and yt.get("id"):
+        lineas += ["", f'Ver en YouTube: https://youtube.com/shorts/{yt["id"]}']
     lineas += ["", "Basado en: " + ("; ".join(f'{f["canal"]} - {f["titulo"]} (x{f["score"]})'
                                               for f in p["fuentes_detalle"]) or "tema propio"),
                "", "## Texto", "", p["caption"], "", "## Guion", "", p["guion"]]
-    ruta = util.RAIZ / "publicaciones" / f'{p["fecha"]}.md'
+    nombre = (a.get("video") or "").split("/")[0] or p["fecha"]  # los extras no pisan al del día
+    ruta = util.RAIZ / "publicaciones" / f'{nombre}.md'
     ruta.parent.mkdir(exist_ok=True)
     ruta.write_text("\n".join(lineas) + "\n", encoding="utf-8")
 
@@ -327,7 +340,7 @@ def _mail_diario(p, res, base):
               f'<p><a href="{base}{p["archivos"]["video"]}">Video</a> · '
               f'<a href="{base}{p["archivos"]["portada"]}">Portada</a> · '
               + (f' · <a href="{base}{p["archivos"]["placas"][0]}">Carrusel</a>' if p["archivos"]["placas"] else "")
-              + ' (los links duran hasta mañana)</p>'
+              + f' (los links duran {int(util.config().get("dias_en_pagina", 7))} días)</p>'
               f'<p><b>Texto:</b><br>{e(p["caption"]).replace(chr(10), "<br>")}</p>'
               f'<hr><p style="color:#666">{e(p["guion"])}</p>')
     try:
