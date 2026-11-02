@@ -155,6 +155,15 @@ def alinear(tokens, oidas, dur):
     acum = [0]
     for x in letras:
         acum.append(acum[-1] + x)
+    # 1) cada ancla tiene que caer cerca de donde "debería" estar según las letras dichas hasta ahí
+    #    (evita que una frase repetida, como un nombre que aparece al principio y al final, se enganche mal)
+    margen = max(3.0, dur * 0.2)
+    for i in range(n):
+        if tiempos[i]:
+            esperado = dur * acum[i] / max(acum[n], 1)
+            if abs(tiempos[i][0] - esperado) > margen:
+                tiempos[i] = None
+    # 2) siempre hacia adelante y con un ritmo de habla posible (ni demasiado lento ni demasiado rápido)
     previo_i, previo_t = -1, 0.0
     for i in range(n):
         if not tiempos[i]:
@@ -162,7 +171,9 @@ def alinear(tokens, oidas, dur):
         t = tiempos[i][0]
         chars = acum[i] - acum[previo_i + 1] if previo_i >= 0 else acum[i]
         seg = t - previo_t
-        if seg <= 0 or (chars > 6 and not (4 <= chars / max(seg, 0.01) <= 30)) or t > dur:
+        muy_lento = seg > 2.0 + chars / 6.0
+        muy_rapido = chars > 6 and chars / max(seg, 0.01) > 30
+        if seg < 0 or muy_lento or muy_rapido or t > dur:
             tiempos[i] = None
             continue
         previo_i, previo_t = i, t
