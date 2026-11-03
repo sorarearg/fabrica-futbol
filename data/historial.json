@@ -482,5 +482,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-03",
+    "hora": "20:48",
+    "serie": "mitos",
+    "titulo": "La leyenda de los siete gatos",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18100942844392552"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "QfXZOHMqcN4"
+      },
+      "facebook": {
+        "ok": false,
+        "error": "Facebook no abrió la subida: Error validating access token: Session has expired on Sunday, 25-Oct-26 23:00:00 PDT. The current time is Tuesday, 03-Nov-26 15:48:18 PST. (código 190, subcódigo 463, OAuthException)"
+      }
+    },
+    "extra": false
   }
 ]
