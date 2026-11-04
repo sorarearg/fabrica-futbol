@@ -548,5 +548,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-04",
+    "hora": "20:57",
+    "serie": "quefue",
+    "titulo": "Tomas Brolin: de crack a las aspiradoras",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18162525553502424"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "p9W-2ZV80nU"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "2134629777441229"
+      }
+    },
+    "extra": false
   }
 ]
