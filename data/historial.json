@@ -592,5 +592,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-05",
+    "hora": "13:58",
+    "serie": "undia",
+    "titulo": "El soviético que bailó al Bayern",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17913254943560640"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "-Dj29LeqKSM"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1124315707118366"
+      }
+    },
+    "extra": true
   }
 ]
