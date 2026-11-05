@@ -614,5 +614,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-05",
+    "hora": "16:58",
+    "serie": "undia",
+    "titulo": "Rechazó millones por amor",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18081280058543498"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "pFrpaS9ofwU"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1414940550363413"
+      }
+    },
+    "extra": true
   }
 ]
