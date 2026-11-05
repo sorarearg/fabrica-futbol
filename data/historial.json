@@ -570,5 +570,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-05",
+    "hora": "11:42",
+    "serie": "undia",
+    "titulo": "Nació Alejandro Sabella",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18130519735889500"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "0v-3tjnnB9Q"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1001089435660620"
+      }
+    },
+    "extra": true
   }
 ]
