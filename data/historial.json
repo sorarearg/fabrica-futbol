@@ -636,5 +636,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-05",
+    "hora": "20:01",
+    "serie": "pantalla_archivo",
+    "titulo": "¿Diego pidió una Ferrari negra?",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17914776153507293"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "F30fHfvOnjc"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1123989350330610"
+      }
+    },
+    "extra": false
   }
 ]
