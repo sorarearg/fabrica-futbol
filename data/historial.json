@@ -680,5 +680,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-06",
+    "hora": "19:54",
+    "serie": "previa",
+    "titulo": "Final por la punta en España",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17887263489510103"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "fL3CAVzlRD8"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1814584213159729"
+      }
+    },
+    "extra": false
   }
 ]
