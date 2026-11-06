@@ -658,5 +658,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-06",
+    "hora": "11:41",
+    "serie": "undia",
+    "titulo": "Nació la Oveja Telch",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17940847158395457"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "Rba_Ka3RXDs"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "994430503720493"
+      }
+    },
+    "extra": true
   }
 ]
