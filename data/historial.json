@@ -724,5 +724,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-07",
+    "hora": "13:06",
+    "serie": "undia",
+    "titulo": "Gigi Riva y el milagro del Cagliari",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17976816336173753"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "VgUzMWtDkUw"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1664966875371973"
+      }
+    },
+    "extra": true
   }
 ]
