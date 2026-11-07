@@ -746,5 +746,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-07",
+    "hora": "13:28",
+    "serie": "mitos",
+    "titulo": "¿Existió la maldición de Tilcara?",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18099430703440242"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "O1R5eAJ3oj0"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "2188816198650353"
+      }
+    },
+    "extra": false
   }
 ]
