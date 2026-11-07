@@ -768,5 +768,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-07",
+    "hora": "16:19",
+    "serie": "undia",
+    "titulo": "El prócer del Ferro bicampeón",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18135324571770983"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "xXlWjaiz8pY"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1118343161121424"
+      }
+    },
+    "extra": true
   }
 ]
