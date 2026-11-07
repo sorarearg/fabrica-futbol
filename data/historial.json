@@ -702,5 +702,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-07",
+    "hora": "11:21",
+    "serie": "undia",
+    "titulo": "El regreso de Palermo a River",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18117664814113081"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "H7Gslj-6EY0"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1766802821074240"
+      }
+    },
+    "extra": true
   }
 ]
