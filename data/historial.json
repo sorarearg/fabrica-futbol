@@ -812,5 +812,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-08",
+    "hora": "22:35",
+    "serie": "apodos",
+    "titulo": "¿De dónde vino el apodo del Burrito?",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17911065585577379"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "o2D9Sf4qkHU"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1877340220301665"
+      }
+    },
+    "extra": false
   }
 ]
