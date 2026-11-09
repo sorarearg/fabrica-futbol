@@ -878,5 +878,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-09",
+    "hora": "18:31",
+    "serie": "actualidad",
+    "titulo": "Batacazo al City y cómo quedó Europa",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18104630606378815"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "d1TU4dnJisg"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1831067458094492"
+      }
+    },
+    "extra": false
   }
 ]
