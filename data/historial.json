@@ -834,5 +834,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-09",
+    "hora": "12:56",
+    "serie": "undia",
+    "titulo": "El DT argentino del catenaccio",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18000872396865653"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "8m9RTjU7I-U"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1781552313107815"
+      }
+    },
+    "extra": true
   }
 ]
