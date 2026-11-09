@@ -174,5 +174,13 @@
       "2026-11-09-efe1/video.mp4",
       "2026-11-09-efe1/thumb.jpg"
     ]
+  },
+  {
+    "fecha": "2026-11-09",
+    "carpeta": "2026-11-09-efe2",
+    "archivos": [
+      "2026-11-09-efe2/video.mp4",
+      "2026-11-09-efe2/thumb.jpg"
+    ]
   }
 ]

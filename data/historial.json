@@ -856,5 +856,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-09",
+    "hora": "13:41",
+    "serie": "undia",
+    "titulo": "El patrón silencioso de México 86",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17965851639212991"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "Ape9CTqmVlA"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1548212490068296"
+      }
+    },
+    "extra": true
   }
 ]
