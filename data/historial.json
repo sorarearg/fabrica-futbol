@@ -900,5 +900,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-10",
+    "hora": "12:54",
+    "serie": "undia",
+    "titulo": "El último baile del 10",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18455415973131635"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "mGLJ8K4mhN8"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1115087871517262"
+      }
+    },
+    "extra": true
   }
 ]
