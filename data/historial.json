@@ -922,5 +922,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-10",
+    "hora": "13:48",
+    "serie": "undia",
+    "titulo": "El maestro de los pibes",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18289723357293071"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "vVf8VVnv6ss"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1629242032078940"
+      }
+    },
+    "extra": true
   }
 ]
