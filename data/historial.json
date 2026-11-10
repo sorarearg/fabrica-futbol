@@ -944,5 +944,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-10",
+    "hora": "20:44",
+    "serie": "mitos",
+    "titulo": "¿Raúl planeó callar al Camp Nou?",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18441130051197712"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "OfRdI4J-ais"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1137171718700956"
+      }
+    },
+    "extra": false
   }
 ]
