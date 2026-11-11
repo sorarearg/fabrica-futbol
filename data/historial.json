@@ -966,5 +966,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-11",
+    "hora": "15:41",
+    "serie": "undia",
+    "titulo": "Boca River: la final ida en La Bombonera",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18125403418729086"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "ADBC9z6eSqg"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "877433262097822"
+      }
+    },
+    "extra": true
   }
 ]
