@@ -1010,5 +1010,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-11",
+    "hora": "20:35",
+    "serie": "quefue",
+    "titulo": "El volante que creó un imperio verde",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18117693683160592"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "vKZw1X0rQ1M"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1830047554970740"
+      }
+    },
+    "extra": false
   }
 ]
