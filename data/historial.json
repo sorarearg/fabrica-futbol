@@ -988,5 +988,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-11",
+    "hora": "16:05",
+    "serie": "undia",
+    "titulo": "El tipo que le dio nombre a La 12",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18118131011020734"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "Hqs1YZDDZg0"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1550405803775127"
+      }
+    },
+    "extra": true
   }
 ]
