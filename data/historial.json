@@ -1032,5 +1032,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-12",
+    "hora": "11:20",
+    "serie": "undia",
+    "titulo": "El Príncipe Enzo Francescoli",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18112650599124187"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "Rs8h0-odNzw"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1684503873397447"
+      }
+    },
+    "extra": true
   }
 ]
