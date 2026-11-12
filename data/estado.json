@@ -1,11 +1,12 @@
 {
   "intentos": {
-    "2026-11-11": 1
+    "2026-11-12": 1
   },
   "ig_renovado": "2026-11-10T12:52:29.683011-03:00",
   "ig_vence_en_dias": 60,
   "notas_usadas": [
     "cop1",
-    "cop2"
+    "cop2",
+    "sue2"
   ]
 }

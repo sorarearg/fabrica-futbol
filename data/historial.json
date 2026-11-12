@@ -1054,5 +1054,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-12",
+    "hora": "20:54",
+    "serie": "pantalla_archivo",
+    "titulo": "¿Por qué Claudia rechazó la serie?",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18213025660371272"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "6oGsQYdDO4s"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1398991775383526"
+      }
+    },
+    "extra": false
   }
 ]
