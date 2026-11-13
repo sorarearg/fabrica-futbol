@@ -1076,5 +1076,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-13",
+    "hora": "10:47",
+    "serie": "undia",
+    "titulo": "Schiaffino y el Maracanazo",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18103847657068434"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "MhaKl-jibdM"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1850975082882898"
+      }
+    },
+    "extra": true
   }
 ]
