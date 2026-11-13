@@ -1098,5 +1098,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-13",
+    "hora": "20:14",
+    "serie": "previa",
+    "titulo": "Final caliente en Brasil",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18005092325808774"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "OAVXEMpe0to"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "3749768325181212"
+      }
+    },
+    "extra": false
   }
 ]
