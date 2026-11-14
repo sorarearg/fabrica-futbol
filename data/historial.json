@@ -1142,5 +1142,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-14",
+    "hora": "13:50",
+    "serie": "mitos",
+    "titulo": "¿Bilardo arrojó una flor a Brasil?",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18139548625628770"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "rxFvkjGbAzE"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1748371386223958"
+      }
+    },
+    "extra": false
   }
 ]
