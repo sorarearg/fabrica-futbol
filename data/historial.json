@@ -1120,5 +1120,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-14",
+    "hora": "10:57",
+    "serie": "undia",
+    "titulo": "El DT más pillo de la historia de Boca",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17929348710437097"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "FmV8j8uDIEo"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "40381850391428814"
+      }
+    },
+    "extra": true
   }
 ]
