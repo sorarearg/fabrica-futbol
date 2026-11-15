@@ -1164,5 +1164,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-15",
+    "hora": "11:17",
+    "serie": "undia",
+    "titulo": "El ídolo de Di Stéfano",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17969455893194309"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "b0XgdWqzLGE"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1659216998995218"
+      }
+    },
+    "extra": true
   }
 ]
