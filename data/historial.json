@@ -1186,5 +1186,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-15",
+    "hora": "12:41",
+    "serie": "undia",
+    "titulo": "Camilo Cervino: el goleador errante",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18513707965100199"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "koFNYEnXh3Q"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1044672401973307"
+      }
+    },
+    "extra": true
   }
 ]
