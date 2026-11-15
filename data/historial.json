@@ -1208,5 +1208,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-15",
+    "hora": "16:27",
+    "serie": "undia",
+    "titulo": "El pibe que cumplió la promesa",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17979122631148663"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "LMJne6xEF_4"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1830296668095329"
+      }
+    },
+    "extra": true
   }
 ]
