@@ -1274,5 +1274,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-16",
+    "hora": "20:37",
+    "serie": "actualidad",
+    "titulo": "Así quedó el fútbol este finde",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18647444377019851"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "Ki7ONT2Z8SM"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1639419267864535"
+      }
+    },
+    "extra": false
   }
 ]
