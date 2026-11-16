@@ -1252,5 +1252,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-16",
+    "hora": "11:42",
+    "serie": "undia",
+    "titulo": "Héctor Cúper y las dos finales",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18100894043662926"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "eDj3_q3Vfk8"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "2324726081639863"
+      }
+    },
+    "extra": true
   }
 ]
