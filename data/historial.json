@@ -1230,5 +1230,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-15",
+    "hora": "21:34",
+    "serie": "insolitos",
+    "titulo": "El partido que defendieron dos arcos",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18116784140595815"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "1IRZYSlF88k"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "3083418188716865"
+      }
+    },
+    "extra": false
   }
 ]
