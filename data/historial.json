@@ -1296,5 +1296,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-17",
+    "hora": "11:32",
+    "serie": "undia",
+    "titulo": "El récord inalcanzable de Pupi",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18037498472884183"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "lVk_XEjv18Q"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "4701561713399222"
+      }
+    },
+    "extra": true
   }
 ]
