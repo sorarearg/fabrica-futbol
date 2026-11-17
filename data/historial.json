@@ -1318,5 +1318,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-17",
+    "hora": "12:36",
+    "serie": "undia",
+    "titulo": "Marangoni: el cinco que jugaba de gala",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17889452766625555"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "ktnhqatPFtI"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1618747383268387"
+      }
+    },
+    "extra": true
   }
 ]
