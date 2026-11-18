@@ -1362,5 +1362,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-18",
+    "hora": "18:06",
+    "serie": "especial",
+    "titulo": "Boca bicampeón de la Sudamericana",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18084988667402671"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "Az17BhsjgH8"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1005268422621083"
+      }
+    },
+    "extra": true
   }
 ]

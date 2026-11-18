@@ -8,5 +8,11 @@
     "cop1",
     "cop2",
     "sue2"
-  ]
+  ],
+  "pedidos": {
+    "2026-11-18#1": {
+      "intentos": 1,
+      "estado": "publicado"
+    }
+  }
 }
