@@ -1340,5 +1340,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-17",
+    "hora": "21:29",
+    "serie": "mitos",
+    "titulo": "¿Ronaldinho inventó la elástica?",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18119138498024959"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "OvfVOmFXOek"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1166571755890384"
+      }
+    },
+    "extra": false
   }
 ]
