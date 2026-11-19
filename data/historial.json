@@ -1406,5 +1406,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-19",
+    "hora": "11:36",
+    "serie": "undia",
+    "titulo": "El gol mil de Pelé en el Maracaná",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17917192494520175"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "mm107U3wec8"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "2018511965487729"
+      }
+    },
+    "extra": true
   }
 ]
