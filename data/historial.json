@@ -1450,5 +1450,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-19",
+    "hora": "20:53",
+    "serie": "pantalla_archivo",
+    "titulo": "¿Por qué Tevez no se borró la cicatriz?",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17968571745220533"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "zJRb1zo6JXs"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1614295453258289"
+      }
+    },
+    "extra": false
   }
 ]
