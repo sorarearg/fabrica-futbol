@@ -1428,5 +1428,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-19",
+    "hora": "12:58",
+    "serie": "undia",
+    "titulo": "El beso que sacó campeón a Francia",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18156080203551024"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "kQZGg6NSgCA"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1701524861543577"
+      }
+    },
+    "extra": true
   }
 ]
