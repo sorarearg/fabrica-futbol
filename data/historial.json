@@ -1384,5 +1384,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-18",
+    "hora": "21:29",
+    "serie": "quefue",
+    "titulo": "Dani Osvaldo: de goleador a cantar rock",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18084358802569823"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "Dal8N2UUpbY"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1942823900013044"
+      }
+    },
+    "extra": false
   }
 ]
