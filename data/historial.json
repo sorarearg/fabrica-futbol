@@ -1516,5 +1516,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-20",
+    "hora": "19:59",
+    "serie": "previa",
+    "titulo": "Arde el Brasileirão este sábado",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18107623622566686"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "ZwQv-omymXM"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1529678398596327"
+      }
+    },
+    "extra": false
   }
 ]
