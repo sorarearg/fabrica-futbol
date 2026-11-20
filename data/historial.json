@@ -1494,5 +1494,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-20",
+    "hora": "12:35",
+    "serie": "undia",
+    "titulo": "El récord del Tata Martino en Newell's",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17875670877641354"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "K88LFO4MiAM"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1102113599461589"
+      }
+    },
+    "extra": true
   }
 ]
