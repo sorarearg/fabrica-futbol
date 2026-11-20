@@ -1472,5 +1472,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-20",
+    "hora": "11:13",
+    "serie": "undia",
+    "titulo": "El día que empezó Catar 2022",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18078942818737858"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "ez8vxWnVoRI"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1890478618787767"
+      }
+    },
+    "extra": true
   }
 ]
