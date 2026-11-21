@@ -1538,5 +1538,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-21",
+    "hora": "10:59",
+    "serie": "undia",
+    "titulo": "El día que Argentina rompió la historia",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18104530307643383"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "skv-KzvLLZY"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "2942720086098373"
+      }
+    },
+    "extra": true
   }
 ]
