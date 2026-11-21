@@ -1560,5 +1560,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-21",
+    "hora": "14:02",
+    "serie": "mitos",
+    "titulo": "¿ Bilardo pinchaba con agujas ?",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18439878961183572"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "B1ZyPQYqSsQ"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "2358222254927923"
+      }
+    },
+    "extra": false
   }
 ]
