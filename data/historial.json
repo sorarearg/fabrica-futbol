@@ -1626,5 +1626,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-22",
+    "hora": "16:46",
+    "serie": "undia",
+    "titulo": "El goleador de Boca que vendía pañales",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18015963818761171"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "SCcwvlUzh80"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "2431589550983055"
+      }
+    },
+    "extra": true
   }
 ]
