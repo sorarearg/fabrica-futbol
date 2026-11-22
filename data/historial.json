@@ -1582,5 +1582,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-22",
+    "hora": "11:55",
+    "serie": "undia",
+    "titulo": "El día del cachetazo en Qatar 2022",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18130140847917542"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "PMSrR1tOgKs"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1466769674788131"
+      }
+    },
+    "extra": true
   }
 ]
