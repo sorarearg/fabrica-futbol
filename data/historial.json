@@ -1604,5 +1604,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-22",
+    "hora": "12:46",
+    "serie": "undia",
+    "titulo": "El wing de La Máquina de River",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18085954556734737"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "6NNta3ipgqI"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1203105675578403"
+      }
+    },
+    "extra": true
   }
 ]
