@@ -1648,5 +1648,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-22",
+    "hora": "20:31",
+    "serie": "pases",
+    "titulo": "El primo trucho de George Weah",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "17990134722089387"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "Eihu6hj15UY"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1135374402539315"
+      }
+    },
+    "extra": false
   }
 ]
