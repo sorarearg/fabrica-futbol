@@ -1670,5 +1670,27 @@
       }
     },
     "extra": false
+  },
+  {
+    "fecha": "2026-11-23",
+    "hora": "17:46",
+    "serie": "undia",
+    "titulo": "Racing campeón de la Sudamericana 2024",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18647354587027205"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "e_vmRe3trUk"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "2638742983241029"
+      }
+    },
+    "extra": true
   }
 ]
