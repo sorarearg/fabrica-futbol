@@ -1,21 +1,5 @@
 [
   {
-    "fecha": "2026-11-18",
-    "carpeta": "2026-11-18-ped1",
-    "archivos": [
-      "2026-11-18-ped1/video.mp4",
-      "2026-11-18-ped1/thumb.jpg"
-    ]
-  },
-  {
-    "fecha": "2026-11-18",
-    "carpeta": "2026-11-18",
-    "archivos": [
-      "2026-11-18/video.mp4",
-      "2026-11-18/thumb.jpg"
-    ]
-  },
-  {
     "fecha": "2026-11-19",
     "carpeta": "2026-11-19-efe1",
     "archivos": [
@@ -141,6 +125,14 @@
     "archivos": [
       "2026-11-25/video.mp4",
       "2026-11-25/thumb.jpg"
+    ]
+  },
+  {
+    "fecha": "2026-11-26",
+    "carpeta": "2026-11-26-efe1",
+    "archivos": [
+      "2026-11-26-efe1/video.mp4",
+      "2026-11-26-efe1/thumb.jpg"
     ]
   }
 ]

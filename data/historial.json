@@ -1692,5 +1692,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-26",
+    "hora": "19:29",
+    "serie": "undia",
+    "titulo": "Boca campeón en la cancha de River",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18133126007311287"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "LCmBKTBuy0s"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "3642328802592433"
+      }
+    },
+    "extra": true
   }
 ]

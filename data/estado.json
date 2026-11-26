@@ -2,7 +2,7 @@
   "intentos": {
     "2026-11-25": 1
   },
-  "ig_renovado": "2026-11-17T21:27:41.173193-03:00",
+  "ig_renovado": "2026-11-26T19:28:32.605296-03:00",
   "ig_vence_en_dias": 60,
   "notas_usadas": [
     "cop1",
@@ -15,5 +15,6 @@
       "intentos": 1,
       "estado": "publicado"
     }
-  }
+  },
+  "ig_aviso": "El token de Instagram cambió y no se pudo guardar (falta GH_PAT)."
 }
