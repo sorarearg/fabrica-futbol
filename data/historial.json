@@ -1736,5 +1736,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-27",
+    "hora": "19:48",
+    "serie": "previa",
+    "titulo": "Final anticipada en Londres",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18018443810992412"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "jY4Yo42Z9nE"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1547475760489398"
+      }
+    },
+    "extra": false
   }
 ]
