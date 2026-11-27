@@ -1714,5 +1714,27 @@
       }
     },
     "extra": true
+  },
+  {
+    "fecha": "2026-11-27",
+    "hora": "11:11",
+    "serie": "undia",
+    "titulo": "Quilmes el decano del futbol",
+    "fuentes": [],
+    "resultados": {
+      "instagram_reel": {
+        "ok": true,
+        "id": "18130174903842635"
+      },
+      "youtube": {
+        "ok": true,
+        "id": "vrY6w7lX2d0"
+      },
+      "facebook": {
+        "ok": true,
+        "id": "1868539877654240"
+      }
+    },
+    "extra": true
   }
 ]
